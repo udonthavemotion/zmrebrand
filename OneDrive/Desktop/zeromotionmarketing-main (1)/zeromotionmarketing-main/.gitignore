@@ -1,0 +1,112 @@
+# OS / Editor
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+.idea/
+.vscode/
+
+# Node
+node_modules/
+.pnpm-store/
+pnpm-debug.log*
+yarn-error.log
+npm-debug.log
+*.log
+
+# Env
+.env
+.env.*.local
+
+# Astro / Build outputs
+.astro/
+dist/
+
+# Framework deploy artifacts
+.vercel/
+.netlify/
+
+# Tests / Reports
+coverage/
+playwright-report/
+test-results/
+
+# Misc
+astro-dev.log
+
+# Logs
+logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+dev-debug.log
+
+# Windows specific
+*.tmp
+*.temp
+desktop.ini
+$RECYCLE.BIN/
+*.stackdump
+*.lnk
+
+# Windows system files
+NTUSER.DAT*
+ntuser.dat*
+ntuser.ini*
+AppData/
+Application Data/
+Cookies/
+Documents/
+Downloads/
+Favorites/
+Intel/
+Links/
+Music/
+NetHood/
+PrintHood/
+Recent/
+Saved Games/
+Searches/
+SendTo/
+Start Menu/
+Templates/
+Videos/
+Local Settings/
+My Documents/
+My Music/
+My Pictures/
+My Videos/
+
+# OneDrive specific
+OneDrive/
+*.849C9593-D756-4E56-8D6E-42412F2A707B
+
+# Package managers
+package-lock.json
+package.json
+pnpm-lock.yaml
+
+# Development artifacts
+.cache/
+.chocolatey/
+.claude/
+.claude.json
+.claude.json.backup
+.codeium/
+.cursor/
+.dbus-keyrings/
+.gemini/
+.gitconfig
+.gitignore
+.lesshst
+.local/
+.node_repl_history
+.python_history
+.windsurf/
+.yarnrc
+scoop/
+
+# Task files
+# tasks.json
+# tasks/
+.vercel
