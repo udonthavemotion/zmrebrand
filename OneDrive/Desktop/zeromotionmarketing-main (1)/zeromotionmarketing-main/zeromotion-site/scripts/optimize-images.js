@@ -39,8 +39,6 @@ const CONFIG = {
     'favico/android-chrome-512x512.png',
     'assets/implementation/brisclothing.png',
     'assets/implementation/godspeedbulldogs.png',
-    'assets/implementation/southsidemobile.png',
-    'assets/implementation/cursed ink.png',
   ],
 };
 

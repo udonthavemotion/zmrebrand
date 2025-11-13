@@ -92,8 +92,6 @@ Successfully completed **all 6 core optimization tasks** targeting conversion im
 - 🏢 **Client Logos:** (Optimized with WebP)
   - Bris Clothing
   - Godspeed Bulldogs
-  - Southside Mobile
-  - Cursed Ink
   - *(Horizontal scroll on mobile, grid on desktop)*
   
 - 🎖️ **Trust Badges:**

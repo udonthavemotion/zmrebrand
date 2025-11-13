@@ -84,8 +84,6 @@ All optimized images are in `/public/optimized/` maintaining the same folder str
    - favico/android-chrome-512x512.png
    - assets/implementation/brisclothing.png
    - assets/implementation/godspeedbulldogs.png
-   - assets/implementation/southsidemobile.png
-   - assets/implementation/cursed ink.png
 
 3. **Test:**
    - Build site: `npm run build`

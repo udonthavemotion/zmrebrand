@@ -1,0 +1,321 @@
+MANUS MASTER PROMPT (copy–paste)
+
+Role: You are ZeroMotion’s Senior UX Architect + Release Manager. Your job is to produce a bulletproof Cursor Prompt Workbook that a developer can paste into Cursor to implement, test, and ship a full-site polish for ZeroMotionMarketing.com.
+
+Context (site today)
+
+Dark, luxury aesthetic with purple accent, chrome badge logo, Spline/video hero moments.
+
+Pages in scope: Home, Pricing (Plans), Services (Brand & Identity, Web Design, Ad Campaigns, AI Integration), About, plus global Navbar/Sidebar and Footer, CRM CTAs, and embedded GHL forms/calendars.
+
+Offers: Starter Website ($200–$300 build + $75–$100/mo), Growth Marketing ($1,000–$1,500 setup + $150–$300/mo), Scale & Dominate ($2,000–$5,000+/mo + ad spend).
+
+Primary CTAs: Book Free Consultation, View Pricing, Get CRM Software.
+
+Local SEO: Houma, Louisiana (NAP consistency required).
+
+Objective
+Create a single, ordered workbook of Cursor prompts that:
+
+Audits and normalizes the information architecture + navigation (mobile & desktop).
+
+Unifies CTA hierarchy and cross-page flow so every path leads to Pricing or Consult.
+
+Cleans up copy, headings, spacing, iconography, and card patterns for consistency.
+
+Standardizes components (Navbar, Footer, Hero, Section Cards, FAQs, Pricing Table, Add-on Cards) with a small design-token system.
+
+Wires analytics events, GHL forms/webhooks, and local SEO schema.
+
+Ships with performance (images/video), accessibility, SEO, QA gates, and a rollback plan.
+
+Guardrails
+
+Non-destructive: create a feature branch feat/site-polish-mmdd. Keep a changes.md with every commit.
+
+Don’t remove offers or pricing; preserve current brand colors/imagery and Houma/NAP.
+
+Mobile-first; test ≥ 360px up to 1440+.
+
+No 3rd-party CSS frameworks added. Keep current stack tidy.
+
+Before/after screenshots per page section.
+
+Deliverables (Markdown)
+
+IA & Flow Map (final): top-nav structure, footer links, CTA routes, and crosslinks between pages.
+
+Design Tokens (names only + current hex/values): colors, radii, spacing, font scale.
+
+Component Contract: props/slots and usage rules for Navbar, Footer, Hero, Card, CTA, FAQ, Pricing Table, Add-on Card, Industry Card.
+
+Cursor Prompt Workbook (numbered, copy-paste ready). Each prompt MUST include:
+
+Goal + Acceptance Criteria
+
+File targets / component names
+
+Constraints (keep brand, keep offers)
+
+Test steps (desktop/mobile)
+
+Analytics events (if any)
+
+Performance Pack: image/video handling (max sizes/bitrates), preloads, lazy-loading strategy.
+
+SEO Pack: title/meta templates, OpenGraph, JSON-LD (Organization + LocalBusiness), sitemap/robots.
+
+QA Checklist: accessibility checks, nav/route tests, forms/GHL webhook test, price integrity, CLS/LCP targets.
+
+Release Plan: branch, preview, owner sign-off, production push, rollback.
+
+Key UX improvements you must implement
+
+Navbar: sticky; transparent on hero, solid on scroll; one primary CTA (“View Pricing” on most pages; “Book Free Consultation” on Pricing/About); secondary ghost “Get CRM Software.” Clean hamburger on mobile with section anchors.
+
+Footer: consistent NAP (Houma, LA), Services, Company, Legal; add LocalBusiness schema.
+
+Home: compress hero media; sections = Pillars → Proof/Logos (placeholder ok) → Plans teaser → Services grid → CTA.
+
+Pricing/Plans: keep three tiers; align feature language across cards; add “Compare Features” table component; clear monthly vs setup.
+
+Services pages: repeatable pattern = Hero → “Why it works in Louisiana” → Features cards (3–6) → Proof block → CTA.
+
+AI Integration: unify Add-On cards with pricing and tooltips; clarify what’s in each tier; link back to Pricing.
+
+Ad Campaigns: 3-step “How we run ads,” industry tiles (Construction/Trades, Real Estate, Auto Detailing & Tint, Restaurants), CTA.
+
+About: strong “Minimalism. Functionality. Precision.” + Mission + 3 value pillars + CTA.
+
+FAQs: single accordion component used site-wide.
+
+Analytics (required)
+
+Track: cta_click, plan_selected, nav_open, faq_toggle, form_submit, cal_open, cal_submit. Include page + label.
+
+Ship with GA4/GTM (or your existing stack) and data-layer events.
+
+Performance Targets
+
+LCP < 2.5s on 4G, CLS < 0.1, TBT < 200ms.
+
+Images: <1600px hero, <1200px section, WebP/AVIF; Video hero: MP4/H.264, 1080p, ≤6–8Mbps, poster image.
+
+Preload main font weights; font-display: swap; prefer clamp() for headings.
+
+Output format
+Return one Markdown document with sections in the exact order of the Deliverables above. Keep every Cursor prompt self-contained and executable.
+
+CURSOR PROMPT WORKBOOK (ready to paste task-by-task)
+
+Use in order. Each prompt is self-contained. Run on a feature branch and commit after each acceptance pass.
+
+0) Repo Audit & Safety Net
+
+Goal: Snapshot codebase and map pages/components before touching UI.
+Do:
+
+List pages, layouts, components, assets folders, and any CMS/GHL embeds.
+
+Create changes.md. Create branch feat/site-polish-<date>.
+Accept: Tree printed; branch created; zero diffs to main.
+
+1) Design Tokens & Global Styles
+
+Goal: Centralize colors/spacing/type to stop drift and keep current brand.
+Targets: src/styles/tokens.(css|scss|ts), :root vars, global styles.
+Rules: Keep current purple and dark neutrals; don’t change brand look.
+Tokens to define (names only; map to existing values):
+
+--zm-bg, --zm-surface, --zm-text, --zm-text-muted,
+
+--zm-primary, --zm-primary-ghost, --zm-accent,
+
+--zm-radius, --zm-gap-sm/md/lg,
+
+--zm-h1..h6 via clamp().
+Accept: All components import tokens; no visual regressions; headings clamp cleanly on mobile.
+
+2) Navbar Rebuild (Flow + CTA hierarchy)
+
+Goal: Ship a sticky, minimal nav that routes clean and converts.
+IA:
+
+Logo (home)
+
+Services (mega or dropdown): Brand & Identity, Web Design, Ad Campaigns, AI Integration
+
+Pricing
+
+About
+
+Get CRM (secondary)
+
+Primary CTA:
+
+On Home/Services/About → View Pricing
+
+On Pricing → Book Free Consultation
+Behaviors: Transparent over hero → solid on scroll; active-link states; mobile drawer with the same order; reduce to one primary CTA.
+Analytics: cta_click (label = “nav_primary”), nav_open (mobile).
+Accept: No overlap with hero; tab order accessible; Lighthouse a11y passes; mobile drawer renders at 360px.
+
+3) Footer Standardization + Local SEO
+
+Goal: One clean footer across all pages with NAP consistency.
+Sections: About blurb; Services list; Company (About, Pricing, Privacy); Contact (email/phone/Houma, LA).
+Schema: Add Organization + LocalBusiness JSON-LD with NAP, area served (Terrebonne/Lafourche).
+Accept: Single component used site-wide; schema validates (no JSON errors).
+
+4) Home Flow Hardening
+
+Goal: Make Home a conversion engine.
+Sections (order):
+
+Hero (headline + subcopy + primary “View Pricing”, secondary “Get CRM”).
+
+3 Pillars (Conversion-first / Fast & SEO-ready / Automation baked-in).
+
+Plans teaser (3 cards with setup + monthly).
+
+Services grid (4 tiles).
+
+Proof/Logos placeholder (can be “Local businesses we’ve helped”).
+
+Final CTA band (“Ready to get started?” → Book Free Consultation).
+Perf: Compress hero media; set poster; lazy-load below-fold.
+Accept: Scroll path leads to Pricing in ≤2 clicks; CLS < 0.1; mobile looks tight.
+
+5) Pricing Page (Clarity + Comparison)
+
+Goal: Crystal-clear packaging that matches all other mentions.
+Do:
+
+Keep three plans and current prices.
+
+Normalize feature language across cards; add Compare Features table with rows (Pages, Hosting, SEO basics, Ad setup, Automation, Reporting, Support cadence).
+
+FAQ accordion reused from global component.
+Analytics: plan_selected (label = plan name), cta_click (“Get this plan”).
+Accept: No price mismatches vs other pages; one primary CTA per card; plan table responsive.
+
+6) Services – Brand & Identity
+
+Pattern: Hero → “Why branding with website + marketing wins” → 4–6 feature cards (Guidelines, Logo system, Voice, Social kit, Email templates) → CTA to Pricing.
+Accept: Content tone consistent; cards reuse global component.
+
+7) Services – Web Design & Development
+
+Pattern: Hero → “Looks like luxury. Performs like a machine.” → 10-day build steps (Audit, Design, Build, Launch) → Package teaser → CTA.
+Perf: Ensure images are optimized; lazy load code blocks if any.
+Accept: Steps component consistent with Brand page styling.
+
+8) Services – Ad Campaigns & Media
+
+Pattern: Hero → “How we run ads (simple and effective)” 3-step graphic → Industries tiles (Construction/Trades, Real Estate, Auto Detailing & Tint, Restaurants) → CTA.
+Accept: Each tile links to a short anchor/section explaining value props; CTA flows to Consultation.
+
+9) Services – AI Integration (and Add-Ons)
+
+Goal: Unify Add-On pricing cards.
+Do: Cards for Basic AI Add-On ($197/mo), Advanced ($397/mo), AI Analytics ($597/mo) with bullets.
+Crosslink: Button to Pricing and to “Get CRM Software.”
+Accept: No duplicate descriptions; hover and focus states match design system.
+
+10) About Page Tighten
+
+Goal: Keep “Minimalism. Functionality. Precision.” and align copy with value props.
+Do: 3 value pillars section (Lightning Fast, Heartfelt Design, Results Driven) using global card component; end with Consultation CTA.
+Accept: Reading grade ~8; no orphan CTAs.
+
+11) FAQ Component (Global)
+
+Goal: One accordion everywhere.
+Props: items[] with q, a, optional slug.
+Analytics: faq_toggle with slug.
+Accept: Keyboard accessible; expand/collapse smoothly; reused on Pricing & Services.
+
+12) Forms, Calendars, and GHL Wiring
+
+Goal: All forms fire to GHL with proper tags/pipelines.
+Do:
+
+Hidden fields: page, plan, source.
+
+Webhook: on submit → GHL contact create/update, tag lead_source:website, pipeline ZM Sales, status New Inquiry.
+
+Calendar embed styling: ensure container is full-width on mobile, brand-consistent.
+Analytics: form_submit, cal_open, cal_submit.
+Accept: End-to-end test hits GHL with correct tags; auto-reply email/SMS confirmed.
+
+13) Analytics & Events
+
+Goal: Uniform data layer.
+Do: Add GA4 (or current) init; push dataLayer events for nav, CTAs, plans, forms, calendars.
+Accept: Events visible in GA4 DebugView; labels include page + action.
+
+14) SEO Pack
+
+Goal: Proper titles/metas, OpenGraph, and JSON-LD.
+Do:
+
+Title pattern: {{Page}} · ZeroMotion Marketing — Houma, LA.
+
+Meta description 150–160 chars per page.
+
+JSON-LD: Organization + LocalBusiness with NAP and areaServed = Terrebonne & Lafourche Parish.
+
+Add sitemap.xml & robots.txt if missing.
+Accept: No validation errors; unique titles.
+
+15) Performance Pack
+
+Goal: Hit Core Web Vitals.
+Do:
+
+Compress hero video to 1080p ≤8Mbps, add poster.
+
+Convert images to WebP/AVIF; size to container; lazy-load offscreen.
+
+Preload main font; use font-display: swap.
+
+Remove unused CSS/JS; defer non-critical scripts.
+Accept: LCP <2.5s, CLS <0.1, TBT <200ms on mobile throttling.
+
+16) Accessibility Pass
+
+Goal: WCAG AA basics.
+Do: color contrast check for purple on dark; focus rings visible; landmarks and aria labels on nav, menus, accordions.
+Accept: Lighthouse a11y ≥ 95.
+
+17) Content Cleanup
+
+Goal: Remove legacy copy and duplicated sections/screenshots that conflict with new message.
+Do: Grep for old taglines and remove/replace; ensure no “work in progress” placeholders remain except Proof logos.
+Accept: No conflicting statements across pages.
+
+18) QA Script
+
+Goal: Manual regression + smoke tests.
+Do: Create /docs/qa-checklist.md with routes, CTAs, forms, calendars, analytics checks, and viewport sweeps (360, 768, 1024, 1440).
+Accept: Checklist completed with screenshots in /docs/qa/.
+
+19) Release & Rollback
+
+Goal: Ship safely.
+Do: Push branch → preview link; owner sign-off; merge to main; tag release-<date>; keep revert-<tag> script ready.
+Accept: Live site matches preview; analytics events flowing.
+
+Extra Implementation Notes (from your screenshots)
+
+Too many CTAs in header across pages → consolidate to 1 primary (purple solid) + 1 secondary (ghost).
+
+Inconsistent feature phrasing between Growth, Brand, AI pages → normalize verbs & tense.
+
+Service cards sometimes use different spacing/radii → unify via tokens.
+
+Mobile calendar embeds were cramped in earlier shots → wrap in a responsive container with min padding and 100% width; ensure dark theme contrast.
+
+Footer variants (logo badge vs text) → pick one and standardize; include NAP for local SEO.
+
+Industry tiles on Ads page are strong — add microcopy for Houma/Louisiana context on hover or within cards.

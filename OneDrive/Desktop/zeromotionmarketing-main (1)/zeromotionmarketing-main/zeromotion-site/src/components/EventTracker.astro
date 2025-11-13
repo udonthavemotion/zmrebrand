@@ -64,9 +64,11 @@
       // Get plan type from URL or page content
       getPlanContext: function() {
         const path = window.location.pathname;
-        if (path.includes('/plans/starter')) return 'starter';
-        if (path.includes('/plans/growth')) return 'growth';
-        if (path.includes('/plans/scale')) return 'scale';
+        // Check if redirected from plan pages (via referrer)
+        const referrer = document.referrer;
+        if (referrer.includes('/plans/starter')) return 'starter_redirected';
+        if (referrer.includes('/plans/growth')) return 'growth_redirected';
+        if (referrer.includes('/plans/scale')) return 'scale_redirected';
         if (path.includes('/pricing')) return 'pricing_page';
         return null;
       }

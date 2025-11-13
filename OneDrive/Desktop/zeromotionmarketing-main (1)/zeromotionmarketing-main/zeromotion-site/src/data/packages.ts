@@ -33,7 +33,7 @@ export const pricingTiers: PricingTier[] = [
       "Basic analytics and monthly check-ins"
     ],
     ctaText: "See details",
-    ctaHref: "/plans/starter",
+    ctaHref: "/pricing",
     formId: "starter-plan-form"
   },
   {
@@ -58,7 +58,7 @@ export const pricingTiers: PricingTier[] = [
     ],
     popular: true,
     ctaText: "See details",
-    ctaHref: "/plans/growth",
+    ctaHref: "/pricing",
     formId: "growth-plan-form"
   },
   {
@@ -88,7 +88,7 @@ export const pricingTiers: PricingTier[] = [
       "White-label solutions"
     ],
     ctaText: "See details",
-    ctaHref: "/plans/scale",
+    ctaHref: "/pricing",
     formId: "scale-plan-form"
   }
 ];

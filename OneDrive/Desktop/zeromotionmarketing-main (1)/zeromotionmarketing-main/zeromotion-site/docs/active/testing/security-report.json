@@ -1,0 +1,53 @@
+{
+  "timestamp": "2025-09-04T17:46:59.725Z",
+  "vulnerabilities": [],
+  "outdatedPackages": [],
+  "securityHeaders": [
+    {
+      "header": "Strict-Transport-Security",
+      "status": "configured",
+      "value": "max-age=31536000; includeSubDomains; preload"
+    },
+    {
+      "header": "Content-Security-Policy",
+      "status": "configured",
+      "value": "default-src 'self'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://www.google-analytics.com https://link.gohighlevel.com https://app.gohighlevel.com https://fonts.googleapis.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://fonts.gstatic.com; img-src 'self' data: https: blob:; font-src 'self' https://fonts.gstatic.com; connect-src 'self' https://www.google-analytics.com https://api.gohighlevel.com https://app.gohighlevel.com; frame-src 'self' https://www.googletagmanager.com; media-src 'self' blob: data:; object-src 'none'; base-uri 'self'; form-action 'self' https://app.gohighlevel.com; upgrade-insecure-requests;"
+    },
+    {
+      "header": "X-Frame-Options",
+      "status": "configured",
+      "value": "DENY"
+    },
+    {
+      "header": "X-Content-Type-Options",
+      "status": "configured",
+      "value": "nosniff"
+    },
+    {
+      "header": "Referrer-Policy",
+      "status": "configured",
+      "value": "strict-origin-when-cross-origin"
+    },
+    {
+      "header": "Permissions-Policy",
+      "status": "configured",
+      "value": "geolocation=(), microphone=(), camera=(), payment=(), usb=(), magnetometer=(), gyroscope=(), accelerometer=(), ambient-light-sensor=(), autoplay=(self), encrypted-media=(self), fullscreen=(self), picture-in-picture=(self)"
+    }
+  ],
+  "recommendations": [
+    {
+      "type": "file_permissions",
+      "file": "vercel.json",
+      "current": "666",
+      "recommended": "644",
+      "message": "File vercel.json has permissions 666, recommend 644 or 600"
+    },
+    {
+      "type": "file_permissions",
+      "file": "package.json",
+      "current": "666",
+      "recommended": "644",
+      "message": "File package.json has permissions 666, recommend 644 or 600"
+    }
+  ]
+}
