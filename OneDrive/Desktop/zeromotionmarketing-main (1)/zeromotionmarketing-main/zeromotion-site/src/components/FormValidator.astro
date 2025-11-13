@@ -1,0 +1,522 @@
+---
+// Enhanced Form Validator Component with WCAG 2.1 AA Accessibility
+export interface ValidationRule {
+  type: 'required' | 'email' | 'phone' | 'minLength' | 'maxLength' | 'pattern' | 'custom';
+  value?: any;
+  message: string;
+  customValidator?: (value: string) => boolean;
+}
+
+export interface FormField {
+  name: string;
+  type: 'text' | 'email' | 'tel' | 'textarea' | 'select' | 'checkbox';
+  label: string;
+  placeholder?: string;
+  required?: boolean;
+  validation?: ValidationRule[];
+  ariaDescribedBy?: string;
+}
+
+const { fields, formId = 'contact-form', submitText = 'Submit' } = Astro.props as {
+  fields: FormField[];
+  formId?: string;
+  submitText?: string;
+};
+---
+
+<div class="form-validator-container">
+  <form
+    id={formId}
+    class="form-validator"
+    novalidate
+    aria-labelledby={`${formId}-title`}
+    role="form"
+  >
+    <div id={`${formId}-title`} class="sr-only">Contact Form</div>
+
+    {fields.map(field => (
+      <div class="form-field" data-field={field.name}>
+        <label
+          for={`${formId}-${field.name}`}
+          class="form-label"
+          id={`${formId}-${field.name}-label`}
+        >
+          {field.label}
+          {field.required && <span class="required-indicator" aria-label="required">*</span>}
+        </label>
+
+        {field.type === 'textarea' ? (
+          <textarea
+            id={`${formId}-${field.name}`}
+            name={field.name}
+            class="form-input form-textarea"
+            placeholder={field.placeholder}
+            required={field.required}
+            aria-required={field.required}
+            aria-describedby={`${formId}-${field.name}-error ${field.ariaDescribedBy || ''}`}
+            aria-invalid="false"
+          ></textarea>
+        ) : field.type === 'select' ? (
+          <select
+            id={`${formId}-${field.name}`}
+            name={field.name}
+            class="form-input form-select"
+            required={field.required}
+            aria-required={field.required}
+            aria-describedby={`${formId}-${field.name}-error ${field.ariaDescribedBy || ''}`}
+            aria-invalid="false"
+          >
+            <option value="">{field.placeholder || 'Select an option'}</option>
+            {/* Options would be populated dynamically */}
+          </select>
+        ) : (
+          <input
+            id={`${formId}-${field.name}`}
+            name={field.name}
+            type={field.type}
+            class="form-input"
+            placeholder={field.placeholder}
+            required={field.required}
+            aria-required={field.required}
+            aria-describedby={`${formId}-${field.name}-error ${field.ariaDescribedBy || ''}`}
+            aria-invalid="false"
+            autocomplete={field.type === 'email' ? 'email' : field.type === 'tel' ? 'tel' : 'off'}
+          />
+        )}
+
+        <div
+          id={`${formId}-${field.name}-error`}
+          class="form-error"
+          role="alert"
+          aria-live="polite"
+          aria-atomic="true"
+        ></div>
+      </div>
+    ))}
+
+    <div class="form-actions">
+      <button
+        type="submit"
+        class="form-submit-btn"
+        aria-describedby="submit-description"
+      >
+        {submitText}
+      </button>
+      <div id="submit-description" class="sr-only">
+        Submit the form to send your message
+      </div>
+    </div>
+
+    <!-- Form status announcements for screen readers -->
+    <div id={`${formId}-status`} class="sr-only" aria-live="polite" aria-atomic="true"></div>
+  </form>
+</div>
+
+<script>
+  // Enhanced Form Validator with Accessibility
+  class FormValidator {
+    private form: HTMLFormElement;
+    private fields: FormField[];
+    private formId: string;
+
+    constructor(formId: string, fields: FormField[]) {
+      this.formId = formId;
+      this.fields = fields;
+      this.form = document.getElementById(formId) as HTMLFormElement;
+
+      if (!this.form) {
+        console.error(`Form with ID ${formId} not found`);
+        return;
+      }
+
+      this.init();
+    }
+
+    private init() {
+      // Set up form submission
+      this.form.addEventListener('submit', (e) => this.handleSubmit(e));
+
+      // Set up real-time validation
+      this.setupRealTimeValidation();
+
+      // Set up keyboard navigation
+      this.setupKeyboardNavigation();
+
+      // Announce form is ready
+      this.announceStatus('Form is ready for input');
+    }
+
+    private setupRealTimeValidation() {
+      this.fields.forEach(field => {
+        const input = this.form.querySelector(`[name="${field.name}"]`) as HTMLInputElement;
+
+        if (!input) return;
+
+        // Validate on blur
+        input.addEventListener('blur', () => {
+          this.validateField(field, input);
+        });
+
+        // Clear errors on input
+        input.addEventListener('input', () => {
+          this.clearFieldError(field.name);
+        });
+
+        // Validate on change for select and checkbox
+        if (field.type === 'select' || field.type === 'checkbox') {
+          input.addEventListener('change', () => {
+            this.validateField(field, input);
+          });
+        }
+      });
+    }
+
+    private setupKeyboardNavigation() {
+      const inputs = this.form.querySelectorAll('input, textarea, select');
+
+      inputs.forEach((input, index) => {
+        input.addEventListener('keydown', (e) => {
+          // Enhanced keyboard navigation
+          if (e.key === 'Enter' && input.tagName !== 'TEXTAREA') {
+            e.preventDefault();
+            const nextIndex = (index + 1) % inputs.length;
+            (inputs[nextIndex] as HTMLElement).focus();
+          }
+        });
+      });
+    }
+
+    private async handleSubmit(e: Event) {
+      e.preventDefault();
+
+      const isValid = await this.validateForm();
+
+      if (isValid) {
+        this.announceStatus('Form submitted successfully');
+        await this.submitForm();
+      } else {
+        this.announceStatus('Form has errors. Please correct them and try again.');
+        this.focusFirstError();
+      }
+    }
+
+    private async validateForm(): Promise<boolean> {
+      let isValid = true;
+
+      for (const field of this.fields) {
+        const input = this.form.querySelector(`[name="${field.name}"]`) as HTMLInputElement;
+        if (input && !await this.validateField(field, input)) {
+          isValid = false;
+        }
+      }
+
+      return isValid;
+    }
+
+    private async validateField(field: FormField, input: HTMLInputElement): Promise<boolean> {
+      const value = input.value.trim();
+      const errorElement = document.getElementById(`${this.formId}-${field.name}-error`);
+
+      if (!errorElement) return true;
+
+      // Clear previous error
+      this.clearFieldError(field.name);
+
+      // Required field validation
+      if (field.required && !value) {
+        this.showFieldError(field.name, `${field.label} is required`);
+        return false;
+      }
+
+      // Custom validation rules
+      if (field.validation) {
+        for (const rule of field.validation) {
+          if (!this.validateRule(rule, value, input)) {
+            this.showFieldError(field.name, rule.message);
+            return false;
+          }
+        }
+      }
+
+      // Mark field as valid
+      input.setAttribute('aria-invalid', 'false');
+      input.classList.remove('form-input-error');
+      input.classList.add('form-input-valid');
+
+      return true;
+    }
+
+    private validateRule(rule: ValidationRule, value: string, input: HTMLInputElement): boolean {
+      switch (rule.type) {
+        case 'required':
+          return value.length > 0;
+
+        case 'email':
+          const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+          return emailRegex.test(value);
+
+        case 'phone':
+          const phoneRegex = /^[\+]?[\d\s\-\(\)]{10,}$/;
+          return phoneRegex.test(value);
+
+        case 'minLength':
+          return value.length >= (rule.value || 0);
+
+        case 'maxLength':
+          return value.length <= (rule.value || Infinity);
+
+        case 'pattern':
+          const regex = new RegExp(rule.value);
+          return regex.test(value);
+
+        case 'custom':
+          return rule.customValidator ? rule.customValidator(value) : true;
+
+        default:
+          return true;
+      }
+    }
+
+    private showFieldError(fieldName: string, message: string) {
+      const input = this.form.querySelector(`[name="${fieldName}"]`) as HTMLInputElement;
+      const errorElement = document.getElementById(`${this.formId}-${fieldName}-error`);
+
+      if (input) {
+        input.setAttribute('aria-invalid', 'true');
+        input.classList.add('form-input-error');
+        input.classList.remove('form-input-valid');
+      }
+
+      if (errorElement) {
+        errorElement.textContent = message;
+        errorElement.classList.add('form-error-visible');
+      }
+    }
+
+    private clearFieldError(fieldName: string) {
+      const input = this.form.querySelector(`[name="${fieldName}"]`) as HTMLInputElement;
+      const errorElement = document.getElementById(`${this.formId}-${fieldName}-error`);
+
+      if (input) {
+        input.setAttribute('aria-invalid', 'false');
+        input.classList.remove('form-input-error', 'form-input-valid');
+      }
+
+      if (errorElement) {
+        errorElement.textContent = '';
+        errorElement.classList.remove('form-error-visible');
+      }
+    }
+
+    private focusFirstError() {
+      const firstErrorField = this.form.querySelector('[aria-invalid="true"]') as HTMLElement;
+      if (firstErrorField) {
+        firstErrorField.focus();
+      }
+    }
+
+    private announceStatus(message: string) {
+      const statusElement = document.getElementById(`${this.formId}-status`);
+      if (statusElement) {
+        statusElement.textContent = message;
+      }
+    }
+
+    private async submitForm() {
+      const formData = new FormData(this.form);
+      const data = Object.fromEntries(formData.entries());
+
+      try {
+        // Import form submission logic
+        const { submitForm } = await import('/src/lib/form-submission.ts');
+        await submitForm(data);
+
+        this.announceStatus('Thank you! Your message has been sent successfully.');
+        this.resetForm();
+      } catch (error) {
+        console.error('Form submission error:', error);
+        this.announceStatus('Sorry, there was an error sending your message. Please try again.');
+      }
+    }
+
+    private resetForm() {
+      this.form.reset();
+
+      // Clear all validation states
+      this.fields.forEach(field => {
+        this.clearFieldError(field.name);
+        const input = this.form.querySelector(`[name="${field.name}"]`) as HTMLInputElement;
+        if (input) {
+          input.classList.remove('form-input-valid');
+        }
+      });
+    }
+  }
+
+  // Initialize form validator with provided fields
+  const fields = {fields};
+  const formId = '{formId}';
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', () => {
+      new FormValidator(formId, fields);
+    });
+  } else {
+    new FormValidator(formId, fields);
+  }
+</script>
+
+<style>
+  .form-validator-container {
+    max-width: 600px;
+    margin: 0 auto;
+  }
+
+  .form-validator {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .form-field {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .form-label {
+    font-weight: 600;
+    color: var(--zm-text);
+    font-size: 0.875rem;
+  }
+
+  .required-indicator {
+    color: var(--zm-text-error);
+    margin-left: 0.25rem;
+  }
+
+  .form-input {
+    padding: 0.75rem 1rem;
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.05);
+    color: var(--zm-text);
+    font-size: 1rem;
+    transition: all 0.2s ease;
+    min-height: 44px; /* Touch target size */
+  }
+
+  .form-input:focus-visible {
+    outline: 2px solid var(--zm-primary);
+    outline-offset: 2px;
+    border-color: var(--zm-primary);
+  }
+
+  .form-input:invalid:not(:placeholder-shown) {
+    border-color: var(--zm-text-error);
+  }
+
+  .form-input:valid {
+    border-color: var(--zm-text-success);
+  }
+
+  .form-input-error {
+    border-color: var(--zm-text-error) !important;
+    background: rgba(255, 107, 107, 0.1);
+  }
+
+  .form-input-valid {
+    border-color: var(--zm-text-success) !important;
+    background: rgba(81, 207, 102, 0.1);
+  }
+
+  .form-textarea {
+    min-height: 120px;
+    resize: vertical;
+  }
+
+  .form-select {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='m6 8 4 4 4-4'/%3e%3c/svg%3e");
+    background-position: right 0.5rem center;
+    background-repeat: no-repeat;
+    background-size: 1.5em 1.5em;
+    padding-right: 2.5rem;
+  }
+
+  .form-error {
+    font-size: 0.875rem;
+    color: var(--zm-text-error);
+    min-height: 1.25rem;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+  }
+
+  .form-error-visible {
+    opacity: 1;
+  }
+
+  .form-actions {
+    display: flex;
+    justify-content: center;
+    margin-top: 1rem;
+  }
+
+  .form-submit-btn {
+    padding: 0.75rem 2rem;
+    background: var(--zm-primary);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    min-height: 44px;
+  }
+
+  .form-submit-btn:hover {
+    background: var(--zm-primary-hover, #7c3aed);
+    transform: translateY(-1px);
+  }
+
+  .form-submit-btn:focus-visible {
+    outline: 2px solid white;
+    outline-offset: 2px;
+  }
+
+  .form-submit-btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none;
+  }
+
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+
+  /* High contrast mode */
+  @media (prefers-contrast: high) {
+    .form-input {
+      border: 2px solid white;
+    }
+
+    .form-input:focus-visible {
+      outline: 3px solid white;
+    }
+  }
+
+  /* Reduced motion */
+  @media (prefers-reduced-motion: reduce) {
+    .form-input,
+    .form-submit-btn {
+      transition: none;
+    }
+  }
+</style>

@@ -1,0 +1,82 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Hero from "../components/Hero.astro";
+import LeadMagnetSection from "../components/LeadMagnetSection.astro";
+import ImplementationHierarchySection from "../components/ImplementationHierarchySection.astro";
+import ChoiceSection from "../components/ChoiceSection.astro";
+import Services from "../components/Services.astro";
+import TrustSection from "../components/TrustSection.astro";
+import CRMRegistrationCTA from "../components/CRMRegistrationCTA.astro";
+import BackgroundSectionVideo from "../components/BackgroundSectionVideo.astro";
+
+// SEO Configuration for Homepage
+const title = "ZeroMotion Marketing | AI-Powered Digital Marketing & Web Design | Houma, LA";
+const description = "Transform your business with AI-powered digital marketing, professional web design, and ZRM CRM automation. Serving Houma, Thibodaux, and Terrebonne Parish, Louisiana. Get results that matter.";
+const keywords = "digital marketing Houma LA, web design Thibodaux Louisiana, ZRM CRM automation, AI marketing Terrebonne Parish, local SEO Louisiana, marketing agency Houma, website design Thibodaux";
+const canonical = "/";
+const ogImage = "/favico/android-chrome-512x512.png";
+
+// Homepage Schema - Organization + WebSite
+const homepageSchema = [
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "ZeroMotion Marketing",
+    "url": "https://zeromotion.marketing",
+    "logo": "https://zeromotion.marketing/favico/android-chrome-512x512.png",
+    "description": "AI-powered digital marketing agency specializing in web design, ZRM CRM automation, and local SEO for businesses in Louisiana.",
+    "address": {
+      "@type": "PostalAddress",
+      "addressLocality": "Houma",
+      "addressRegion": "Louisiana",
+      "addressCountry": "United States",
+      "postalCode": "70360"
+    },
+    "contactPoint": {
+      "@type": "ContactPoint",
+      "telephone": "+1-985-303-2016",
+      "contactType": "customer service",
+      "availableLanguage": "English"
+    },
+    "sameAs": [
+      "https://www.facebook.com/zeromotion",
+      "https://www.linkedin.com/company/zeromotion",
+      "https://twitter.com/zeromotion"
+    ]
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": "ZeroMotion Marketing",
+    "url": "https://zeromotion.marketing",
+    "description": "AI-powered digital marketing and web design services for Louisiana businesses",
+    "publisher": {
+      "@type": "Organization",
+      "name": "ZeroMotion Marketing"
+    },
+    "potentialAction": {
+      "@type": "SearchAction",
+      "target": "https://zeromotion.marketing/search?q={search_term_string}",
+      "query-input": "required name=search_term_string"
+    }
+  }
+];
+---
+
+<BaseLayout {title} {description} {keywords} {canonical} {ogImage} schema={homepageSchema}>
+  <main>
+    <Hero />
+    <!-- <LeadMagnetSection /> --><!-- Temporarily hidden until funnel is built out -->
+    <ImplementationHierarchySection />
+    <BackgroundSectionVideo
+      src="/photos/homepage_hero.mp4"
+      opacity={0.4}
+      brightness={1.0}
+      contrast={1.15}
+    >
+      <Services />
+      <TrustSection />
+      <CRMRegistrationCTA />
+    </BackgroundSectionVideo>
+  </main>
+</BaseLayout>

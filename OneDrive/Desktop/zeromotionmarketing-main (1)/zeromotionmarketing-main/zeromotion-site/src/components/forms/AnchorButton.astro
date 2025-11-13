@@ -1,0 +1,64 @@
+---
+/**
+ * AnchorButton - Reusable button component for plan CTAs
+ * 
+ * Usage:
+ * import AnchorButton from "../components/forms/AnchorButton.astro";
+ * 
+ * <AnchorButton href="/plans/starter?plan=Starter" plan="Starter">
+ *   Get Started
+ * </AnchorButton>
+ */
+
+export interface Props {
+  href: string;
+  plan?: string;
+  className?: string;
+  children?: any;
+  [key: string]: any;
+}
+
+const { href, plan, className = '', children, ...props } = Astro.props;
+---
+
+<a 
+  href={href}
+  class={`btn-primary inline-flex items-center gap-2 ${className}`}
+  data-plan-link={plan || 'unknown'}
+  role="button"
+  tabindex="0"
+  {...props}
+>
+  <slot>{children}</slot>
+</a>
+
+<script>
+  // Enhance all anchor buttons with analytics and keyboard navigation
+  document.addEventListener('DOMContentLoaded', () => {
+    const anchorButtons = document.querySelectorAll('[data-plan-link]') as NodeListOf<HTMLAnchorElement>;
+    
+    anchorButtons.forEach(button => {
+      const plan = button.getAttribute('data-plan-link');
+      const href = button.getAttribute('href');
+      
+      // Handle keyboard navigation
+      button.addEventListener('keydown', (e: KeyboardEvent) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          button.click();
+        }
+      });
+
+      // Track analytics
+      button.addEventListener('click', () => {
+        if ((window as any).dataLayer) {
+          (window as any).dataLayer.push({
+            event: 'plan_cta_click',
+            plan: plan || 'unknown',
+            destination: href
+          });
+        }
+      });
+    });
+  });
+</script>

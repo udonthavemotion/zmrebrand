@@ -1,0 +1,282 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import BackgroundSectionImage from "../components/BackgroundSectionImage.astro";
+// React components removed - placeholder for future replacement
+
+// SEO Configuration for About Page
+const title = "About — Zero Motion Marketing";
+const description = "From zero to motion to growth. Logan builds AI-powered systems, funnels, and real estate lead engines with a humble, in-the-trenches approach. Book a call.";
+const keywords = "about ZeroMotion Marketing, Logan founder, digital marketing agency, AI-powered marketing, web design, business automation, real estate lead systems";
+const canonical = "/about";
+const ogImage = "/favico/android-chrome-512x512.png";
+
+// About Page Schema
+const aboutSchema = {
+  "@context": "https://schema.org",
+  "@type": "AboutPage",
+  "mainEntity": {
+    "@type": "Organization",
+    "name": "Zero Motion Marketing",
+    "description": "From zero to motion to growth. Logan builds AI-powered systems, funnels, and real estate lead engines with a humble, in-the-trenches approach.",
+    "foundingDate": "2023",
+    "founders": [
+      {
+        "@type": "Person",
+        "name": "Logan"
+      }
+    ],
+    "url": "https://www.zeromotionmarketing.com"
+  }
+};
+
+// Booking widget configuration
+const widgetBase = import.meta.env.PUBLIC_WIDGET_BASE ?? 'https://link.zeromotionmarketing.com';
+const widgetUrl = `${widgetBase}/widget/booking/fr87zeXsZz80Eg05tQEV`;
+
+// Modal state (client-side managed)
+let open = false;
+---
+
+<BaseLayout {title} {description} {keywords} {canonical} {ogImage} schema={aboutSchema}>
+  <main>
+    <BackgroundSectionImage
+      src="/assets/implementation/ZeroMotion-EXAMPLE.png"
+      opacity={0.25}
+    >
+      <!-- HERO SECTION -->
+      <section class="section-padding reveal">
+        <div class="container-page">
+          <h1 class="h1 mb-6 text-center md:text-left">From Zero. To Motion. To Growth.</h1>
+          <div class="max-w-4xl mx-auto md:mx-0 space-y-4 text-white/90 text-lg">
+            <p>Hey guys, thanks for visiting my website! I’m Logan Folse — 23, dad first, builder always. Owner of Zero Motion Marketing.</p>
+            <p>I don’t have all the answers, but I do have the reps.</p>
+            <p>About a year ago I quit my job because waiting felt like losing. Every minute that passed felt like someone else getting in front of me, so I taught myself the stack.</p>
+            <p>I leaned into smart automation, trusted my gut that the world was changing, and started shipping—sites, funnels, and systems. At first they weren’t that great—and then real businesses started to see real results.</p>
+            <p>Most people—young or old—are wondering how to invest in this next artificial intelligence revolution. My word to you: invest in yourself.</p>
+            <p>Speed up the processes that slow you down and regain the 8 hours of your day spent on spreadsheets and repetitive tasks—to free up more time and allow your mind to think freely.</p>
+            <p>“Zero Motion” is the point before things move. Most folks get stuck there. My job is to push you past it—take your idea and your business (or your tired website) and turn it into something that looks and feels premium and ultimately results in more leads and a stronger brand.</p>
+            <p>Keep up with your competitors. Do not get left behind.</p>
+          </div>
+
+          <div class="mt-8 text-center md:text-left">
+            <button
+              id="about-cta-1"
+              class="btn btn-primary mb-2"
+              aria-label="Book a call"
+              data-cta="about-book-call"
+            >
+              Book a Call
+            </button>
+            <p class="text-sm text-white/70">Limited slots. If you’re ready, I’m ready.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- PULL QUOTE -->
+      <section class="py-16">
+        <div class="container-page">
+          <blockquote class="text-center text-white text-2xl md:text-3xl lg:text-4xl font-bold tracking-wide leading-tight">
+            <span class="inline-block bg-gradient-to-r from-white via-violet-300 to-white bg-clip-text text-transparent drop-shadow-lg" style="text-shadow: 0 2px 4px rgba(0,0,0,0.8), 0 4px 8px rgba(139,92,246,0.4), 0 0 20px rgba(139,92,246,0.2), 0 0 40px rgba(255,255,255,0.6), 0 0 60px rgba(255,255,255,0.3);">
+              "Your wins are my wins. I grind with you."
+            </span>
+          </blockquote>
+        </div>
+      </section>
+
+      <!-- 3 PILLARS -->
+      <section class="section-padding reveal">
+        <div class="container-page">
+          <div class="grid md:grid-cols-3 gap-8">
+            <div class="text-center">
+              <div class="w-16 h-16 bg-purple-500/20 rounded-full flex items-center justify-center mx-auto mb-4">
+                <svg class="w-8 h-8 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+                </svg>
+              </div>
+              <h3 class="h3 mb-3">Lightning Fast</h3>
+              <p class="text-white/70">
+                Performance-first builds and funnels that feel instant and convert.
+              </p>
+            </div>
+
+            <div class="text-center">
+              <div class="w-16 h-16 bg-purple-500/20 rounded-full flex items-center justify-center mx-auto mb-4">
+                <svg class="w-8 h-8 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/>
+                </svg>
+              </div>
+              <h3 class="h3 mb-3">Heartfelt Design</h3>
+              <p class="text-white/70">
+                Clean, honest creative that respects the customer and the brand.
+              </p>
+            </div>
+
+            <div class="text-center">
+              <div class="w-16 h-16 bg-purple-500/20 rounded-full flex items-center justify-center mx-auto mb-4">
+                <svg class="w-8 h-8 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                </svg>
+              </div>
+              <h3 class="h3 mb-3">Results Driven</h3>
+              <p class="text-white/70">
+                No fluff. Systems, tracking, and iterations that move numbers.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- WHY WORK WITH ME -->
+      <section class="section-padding reveal">
+        <div class="container-page max-w-3xl mx-auto text-center">
+          <h2 class="h2 mb-6">Why work with me</h2>
+          <p class="text-white/85 text-lg mb-8">
+            I don't want unlimited clients. I want the right people—ambitious, hungry, willing to lead instead of wait. If that's you, let's talk and build the motion together.
+          </p>
+          <button
+            id="about-cta-2"
+            class="btn btn-primary"
+            aria-label="Book a call"
+            data-cta="about-book-call"
+          >
+            Book a Call
+          </button>
+        </div>
+      </section>
+    </BackgroundSectionImage>
+
+    <!-- BOOKING MODAL -->
+    <div
+      class="fixed inset-0 z-50 pointer-events-none opacity-0 transition-all duration-300"
+      id="about-booking-modal"
+      role="dialog"
+      aria-modal="true"
+      tabindex="-1"
+      style="z-index:2147483647"
+    >
+      <div
+        class="absolute inset-0 bg-black/70 transition-opacity"
+        id="modal-backdrop"
+      ></div>
+      <div
+        class="absolute left-1/2 top-1/2 w-[95vw] max-w-4xl -translate-x-1/2 -translate-y-1/2 rounded-2xl bg-white/5 backdrop-blur-lg p-4 shadow-xl border border-white/10 transition-transform scale-95"
+        id="modal-content"
+      >
+        <div class="flex items-center justify-between mb-3">
+          <h3 class="text-lg font-semibold text-white">Book a Call</h3>
+          <button
+            class="text-white/70 hover:text-white"
+            aria-label="Close booking"
+            id="modal-close"
+          >
+            ✕
+          </button>
+        </div>
+        <div class="relative w-full h-[70vh] rounded-xl overflow-hidden bg-black/30">
+          <iframe
+            src={widgetUrl}
+            class="absolute inset-0 w-full h-full border-0"
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+            allowtransparency="true"
+            title="Book Consultation"
+          ></iframe>
+          <noscript>
+            <a href={widgetUrl} class="underline text-white" target="_blank" rel="noopener">Open booking in a new tab</a>
+          </noscript>
+        </div>
+      </div>
+    </div>
+  </main>
+</BaseLayout>
+
+<script>
+  // About page booking modal functionality
+  document.addEventListener('DOMContentLoaded', function() {
+    const modal = document.getElementById('about-booking-modal');
+    const modalContent = document.getElementById('modal-content');
+    const modalBackdrop = document.getElementById('modal-backdrop');
+    const modalClose = document.getElementById('modal-close');
+    const ctaButtons = document.querySelectorAll('#about-cta-1, #about-cta-2');
+    let touchStartY = 0;
+    let touchActive = false;
+
+    function openModal() {
+      if (modal && modalContent) {
+        modal.classList.remove('pointer-events-none', 'opacity-0');
+        modal.classList.add('pointer-events-auto', 'opacity-100');
+        modalContent.classList.remove('scale-95');
+        modalContent.classList.add('scale-100');
+        
+        // Prevent body scroll
+        document.body.style.overflow = 'hidden';
+        
+        // Analytics tracking
+        window.dispatchEvent(new CustomEvent('cta:about_book_call'));
+        console.info('[ZeroMotion] CTA clicked: about-book-call');
+        
+        // Focus management
+        modalClose?.focus();
+      }
+    }
+
+    function closeModal() {
+      if (modal && modalContent) {
+        modal.classList.add('pointer-events-none', 'opacity-0');
+        modal.classList.remove('pointer-events-auto', 'opacity-100');
+        modalContent.classList.add('scale-95');
+        modalContent.classList.remove('scale-100');
+        
+        // Restore body scroll
+        document.body.style.overflow = '';
+      }
+    }
+
+    // Add click handlers to CTA buttons
+    ctaButtons.forEach(button => {
+      button.addEventListener('click', openModal);
+    });
+
+    // Close modal handlers
+    modalClose?.addEventListener('click', closeModal);
+    modalBackdrop?.addEventListener('click', closeModal);
+
+    // iOS-safe close: ensure touch events close reliably
+    modalClose?.addEventListener('touchstart', function(e) {
+      e.preventDefault();
+      closeModal();
+    }, { passive: false });
+    modalBackdrop?.addEventListener('touchstart', function(e) {
+      e.preventDefault();
+      closeModal();
+    }, { passive: false });
+
+    // Swipe down to close on mobile (iOS-friendly)
+    modalContent?.addEventListener('touchstart', function(e) {
+      if (!e.touches || e.touches.length === 0) return;
+      touchActive = true;
+      touchStartY = e.touches[0].clientY;
+    }, { passive: true });
+
+    modalContent?.addEventListener('touchmove', function(e) {
+      if (!touchActive || !e.touches || e.touches.length === 0) return;
+      const deltaY = e.touches[0].clientY - touchStartY;
+      // Threshold ~60px swipe down to close
+      if (deltaY > 60) {
+        touchActive = false;
+        closeModal();
+      }
+    }, { passive: true });
+
+    modalContent?.addEventListener('touchend', function() {
+      touchActive = false;
+    }, { passive: true });
+
+    // Close on escape key
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape' && modal?.classList.contains('opacity-100')) {
+        closeModal();
+      }
+    });
+  });
+</script>

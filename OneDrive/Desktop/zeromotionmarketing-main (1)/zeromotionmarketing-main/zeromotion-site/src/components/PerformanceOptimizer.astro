@@ -1,0 +1,368 @@
+---
+// Performance Optimization Component
+// Handles critical resource loading and performance enhancements
+---
+
+<script is:inline>
+  // Advanced performance optimizations for ZeroMotion
+  (function() {
+    'use strict';
+    
+    // Performance monitoring
+    const perfMetrics = {
+      navigationStart: performance.timing.navigationStart,
+      loadStart: performance.timing.loadEventStart,
+      firstPaint: null,
+      firstContentfulPaint: null,
+      largestContentfulPaint: null,
+      cumulativeLayoutShift: 0,
+      firstInputDelay: null
+    };
+
+    // Web Vitals monitoring
+    function observeWebVitals() {
+      // Largest Contentful Paint
+      if ('PerformanceObserver' in window) {
+        new PerformanceObserver((entryList) => {
+          const entries = entryList.getEntries();
+          const lastEntry = entries[entries.length - 1];
+          perfMetrics.largestContentfulPaint = lastEntry.startTime;
+        }).observe({ entryTypes: ['largest-contentful-paint'] });
+
+        // First Input Delay
+        new PerformanceObserver((entryList) => {
+          const entries = entryList.getEntries();
+          entries.forEach((entry) => {
+            if (entry.processingStart && entry.startTime) {
+              perfMetrics.firstInputDelay = entry.processingStart - entry.startTime;
+            }
+          });
+        }).observe({ entryTypes: ['first-input'] });
+
+        // Cumulative Layout Shift
+        new PerformanceObserver((entryList) => {
+          for (const entry of entryList.getEntries()) {
+            if (!entry.hadRecentInput) {
+              perfMetrics.cumulativeLayoutShift += entry.value;
+            }
+          }
+        }).observe({ entryTypes: ['layout-shift'] });
+      }
+    }
+
+    // Critical resource preloading with intelligent prioritization
+    function preloadCriticalResources() {
+      const criticalResources = [
+        { url: '/photos/homepage_hero.mp4', as: 'video', priority: 'high' },
+        { url: '/brand/ZeroMotion-Outline.png', as: 'image', priority: 'high' },
+        { url: '/assets/textures/9461-219710531_small.mp4', as: 'video', priority: 'medium' }
+      ];
+
+      criticalResources.forEach(resource => {
+        if (shouldPreload(resource)) {
+          const link = document.createElement('link');
+          link.rel = 'preload';
+          link.href = resource.url;
+          link.as = resource.as;
+          if (resource.priority === 'high') {
+            link.fetchPriority = 'high';
+          }
+          document.head.appendChild(link);
+        }
+      });
+    }
+
+    // Intelligent preload decision making
+    function shouldPreload(resource) {
+      const connection = navigator.connection;
+      const deviceMemory = navigator.deviceMemory;
+      
+      if (!connection) return true; // Default to preload if unknown
+      
+      // Don't preload on slow connections
+      if (connection.effectiveType === '2g' || connection.effectiveType === 'slow-2g') {
+        return false;
+      }
+      
+      // Don't preload videos on low memory devices
+      if (resource.as === 'video' && deviceMemory && deviceMemory < 4) {
+        return false;
+      }
+      
+      // Don't preload on save-data mode
+      if (connection.saveData) {
+        return resource.priority === 'high';
+      }
+      
+      return true;
+    }
+
+    // Advanced image lazy loading with intersection observer
+    function setupImageLazyLoading() {
+      if ('IntersectionObserver' in window) {
+        const imageObserver = new IntersectionObserver((entries, observer) => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              const img = entry.target;
+              const src = img.dataset.src;
+              const srcset = img.dataset.srcset;
+              
+              if (src) {
+                img.src = src;
+                img.removeAttribute('data-src');
+              }
+              
+              if (srcset) {
+                img.srcset = srcset;
+                img.removeAttribute('data-srcset');
+              }
+              
+              img.classList.add('loaded');
+              observer.unobserve(img);
+            }
+          });
+        }, {
+          rootMargin: '50px 0px',
+          threshold: 0.01
+        });
+
+        // Observe all lazy images
+        document.querySelectorAll('img[data-src], img[loading="lazy"]').forEach(img => {
+          imageObserver.observe(img);
+        });
+      }
+    }
+
+    // Video optimization with adaptive streaming
+    function optimizeVideoPerformance() {
+      const videos = document.querySelectorAll('video');
+      
+      videos.forEach(video => {
+        // Preload strategy based on device capabilities
+        if (navigator.connection) {
+          const connection = navigator.connection;
+          
+          if (connection.effectiveType === '4g' && !connection.saveData) {
+            video.preload = 'metadata';
+          } else {
+            video.preload = 'none';
+          }
+        }
+        
+        // Optimize video loading with intersection observer
+        if ('IntersectionObserver' in window && video.dataset.src) {
+          const videoObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+              if (entry.isIntersecting) {
+                const vid = entry.target;
+                vid.src = vid.dataset.src;
+                vid.load();
+                videoObserver.unobserve(vid);
+              }
+            });
+          }, { rootMargin: '100px' });
+          
+          videoObserver.observe(video);
+        }
+      });
+    }
+
+    // Optimize animations and transitions
+    function optimizeAnimations() {
+      const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      const deviceMemory = navigator.deviceMemory;
+      const connection = navigator.connection;
+      
+      if (prefersReducedMotion || 
+          (deviceMemory && deviceMemory < 4) || 
+          (connection && (connection.effectiveType === '2g' || connection.effectiveType === 'slow-2g'))) {
+        
+        document.documentElement.style.setProperty('--animation-duration', '0.1s');
+        document.body.classList.add('reduced-animations');
+        
+        // Disable heavy animations
+        const style = document.createElement('style');
+        style.textContent = `
+          *, *::before, *::after {
+            animation-duration: 0.01ms !important;
+            animation-iteration-count: 1 !important;
+            transition-duration: 0.01ms !important;
+          }
+        `;
+        document.head.appendChild(style);
+      }
+    }
+
+    // Optimize scroll performance with passive listeners and throttling
+    function optimizeScrolling() {
+      let ticking = false;
+      let lastScrollTop = 0;
+      
+      function updateScrollElements() {
+        const scrollTop = window.pageYOffset;
+        const scrollDirection = scrollTop > lastScrollTop ? 'down' : 'up';
+        lastScrollTop = scrollTop;
+        
+        requestAnimationFrame(() => {
+          const elements = document.querySelectorAll('.reveal:not(.reveal-in)');
+          
+          elements.forEach(el => {
+            const rect = el.getBoundingClientRect();
+            const threshold = window.innerHeight * 0.1;
+            
+            if (rect.top < window.innerHeight - threshold) {
+              el.classList.add('reveal-in');
+            }
+          });
+          
+          ticking = false;
+        });
+      }
+
+      // Use passive listener for better performance
+      window.addEventListener('scroll', () => {
+        if (!ticking) {
+          ticking = true;
+          updateScrollElements();
+        }
+      }, { passive: true });
+      
+      // Initial check
+      updateScrollElements();
+    }
+
+    // Resource cleanup for better memory management
+    function setupResourceCleanup() {
+      // Clean up unused images when they're out of viewport
+      if ('IntersectionObserver' in window) {
+        const cleanupObserver = new IntersectionObserver((entries) => {
+          entries.forEach(entry => {
+            if (!entry.isIntersecting) {
+              const img = entry.target;
+              // Only cleanup non-critical images
+              if (!img.dataset.critical) {
+                setTimeout(() => {
+                  if (!entry.isIntersecting) {
+                    // Optionally unload image to save memory
+                    // img.src = 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7';
+                  }
+                }, 5000);
+              }
+            }
+          });
+        }, { rootMargin: '200px' });
+
+        document.querySelectorAll('img').forEach(img => {
+          cleanupObserver.observe(img);
+        });
+      }
+    }
+
+    // Service Worker with advanced caching strategies
+    function registerServiceWorker() {
+      if ('serviceWorker' in navigator && 'caches' in window) {
+        window.addEventListener('load', () => {
+          // Skip service worker in development
+          if (location.hostname === 'localhost' || location.hostname === '127.0.0.1') {
+            // Clean up any existing registrations and caches in dev
+            navigator.serviceWorker.getRegistrations().then(registrations => {
+              registrations.forEach(registration => registration.unregister());
+            });
+            caches.keys().then(names => {
+              names.forEach(name => caches.delete(name));
+            });
+            return;
+          }
+
+          // Register service worker in production
+          navigator.serviceWorker.register('/sw.js', {
+            scope: '/',
+            updateViaCache: 'imports'
+          }).then(registration => {
+            // SW registered: registration
+            
+            // Check for updates
+            registration.addEventListener('updatefound', () => {
+              const newWorker = registration.installing;
+              newWorker.addEventListener('statechange', () => {
+                if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
+                  // New version available
+                  console.log('New version available');
+                }
+              });
+            });
+          }).catch(error => {
+            console.log('SW registration failed:', error);
+          });
+        });
+      }
+    }
+
+    // Initialize all optimizations
+    function init() {
+      observeWebVitals();
+      preloadCriticalResources();
+      setupImageLazyLoading();
+      optimizeVideoPerformance();
+      optimizeAnimations();
+      optimizeScrolling();
+      setupResourceCleanup();
+      registerServiceWorker();
+      
+      // Log performance metrics after load
+      window.addEventListener('load', () => {
+        setTimeout(() => {
+          console.log('Performance Metrics:', perfMetrics);
+        }, 1000);
+      });
+    }
+
+    // Start optimization when DOM is ready
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', init);
+    } else {
+      init();
+    }
+
+  })();
+</script>
+
+<style is:global>
+  /* Performance-optimized animations */
+  .reduced-animations * {
+    animation-duration: 0.1s !important;
+    transition-duration: 0.1s !important;
+  }
+
+  /* Optimize will-change for better performance */
+  .hero-crm-btn,
+  .choice-box,
+  .btn-primary {
+    will-change: transform;
+  }
+
+  /* Remove will-change after animations complete */
+  .hero-crm-btn:not(:hover),
+  .choice-box:not(:hover),
+  .btn-primary:not(:hover) {
+    will-change: auto;
+  }
+
+  /* Optimize font loading */
+  @font-face {
+    font-family: 'SF Pro Display';
+    font-display: swap;
+    src: local('SF Pro Display');
+  }
+
+  /* Critical CSS for above-the-fold content */
+  .hero-section {
+    contain: layout style paint;
+  }
+
+  /* Optimize video rendering */
+  video {
+    transform: translateZ(0);
+    backface-visibility: hidden;
+  }
+</style>

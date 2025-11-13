@@ -1,0 +1,99 @@
+---
+const faqs = [
+  {
+    question: "Can I upgrade later?",
+    answer: "Yes. Start simple and move up when you're ready—no rebuild needed."
+  },
+  {
+    question: "Is hosting included?",
+    answer: "Yes—fast CDN hosting with SSL is included on every plan."
+  },
+  {
+    question: "Contracts?",
+    answer: "Month-to-month. Stay because it works, not because you're locked in."
+  },
+  {
+    question: "What's the turnaround time?",
+    answer: "Starter: 5–10 days. Growth: 1–3 weeks. Scale: starts as soon as ad assets are ready."
+  },
+  {
+    question: "Can you use my existing website?",
+    answer: "Absolutely. We can plug our pages, forms, and chat into what you already have."
+  },
+  {
+    question: "What if it doesn't work for me?",
+    answer: "If we miss the agreed KPI on Growth or Scale by Day 60, we work free until we hit it."
+  }
+];
+---
+
+<section class="section-padding" id="faq">
+  <div class="container-page">
+    <div class="text-center mb-12 reveal">
+      <h2 class="h2 mb-4">Frequently Asked Questions</h2>
+      <p class="text-white/70 max-w-2xl mx-auto mb-6">
+        Everything you need to know about our pricing and services. Can't find what you're looking for?
+      </p>
+      <a 
+        href="#contact" 
+        class="btn btn-secondary"
+      >
+        Get in Touch
+      </a>
+    </div>
+
+    <div class="max-w-4xl mx-auto faq-container">
+      <div class="space-y-4 reveal">
+        {faqs.map((faq, index) => (
+          <details class="faq-item group" role="group" aria-labelledby={`faq-${index}-question`}>
+            <summary 
+              class="faq-trigger"
+              id={`faq-${index}-question`}
+              aria-expanded="false"
+              aria-controls={`faq-${index}-content`}
+            >
+              <h3 class="font-semibold text-white group-hover:text-primary transition-colors">
+                {faq.question}
+              </h3>
+              <svg 
+                class="faq-icon text-white/60 group-hover:text-primary" 
+                fill="none" 
+                stroke="currentColor" 
+                viewBox="0 0 24 24"
+                aria-hidden="true"
+              >
+                <path 
+                  stroke-linecap="round" 
+                  stroke-linejoin="round" 
+                  stroke-width="2" 
+                  d="M19 9l-7 7-7-7"
+                />
+              </svg>
+            </summary>
+            <div 
+              class="faq-content"
+              id={`faq-${index}-content`}
+              role="region"
+              aria-labelledby={`faq-${index}-question`}
+            >
+              <p class="text-white/80 leading-relaxed">
+                {faq.answer}
+              </p>
+            </div>
+          </details>
+        ))}
+      </div>
+    </div>
+
+    <div class="text-center mt-12 reveal">
+      <p class="text-white/70 mb-6">Still have questions?</p>
+      <a 
+        href="#contact" 
+        class="btn btn-primary"
+        onclick="window.dataLayer&&dataLayer.push({event:'cta_click',label:'FAQ Contact'})"
+      >
+        Get in Touch
+      </a>
+    </div>
+  </div>
+</section>

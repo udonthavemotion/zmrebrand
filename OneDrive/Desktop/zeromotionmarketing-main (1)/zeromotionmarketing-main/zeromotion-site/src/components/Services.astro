@@ -1,0 +1,138 @@
+---
+interface Service {
+  title: string;
+  blurb: string;
+  img: string;
+  href?: string;
+  video?: string;
+}
+const services: Service[] = [
+  {
+    title: "Missed Call Text-Back",
+    blurb:
+      "Never lose a lead again. Instant SMS to every missed caller—24/7 automated response that captures leads while you're busy, after hours, or away from your phone. Zero manual effort, maximum conversion.",
+    img: "/photos/brand-identity.jpg",
+    video: "/assets/3024109-hd_1920_1080_25fps.mp4",
+    href: "/services/missed-call-text-back",
+
+  },
+  {
+    title: "ZeroMotion Automations",
+    blurb:
+      "Automate your entire business with ZeroMotion CRM. Smart booking, review automation, pipeline management, lead capture, and appointment reminders—all working 24/7 without you. Built for growth, optimized for conversion.",
+    img: "/photos/lee-campbell-DtDlVpy-vvQ-unsplash.jpg",
+    video: "/assets/coding-video.mp4",
+    href: "/services/zeromotion-automations",
+  },
+  {
+    title: "Custom AI Voice + Chat Agents",
+    blurb:
+      "24/7 AI agents that sound human, not robotic. Handle phone calls, answer questions, book appointments, and qualify leads automatically. Your brand voice, always available, never takes a day off.",
+    img: "/photos/video-motion.jpg",
+    video: "/assets/textures/36471-410610193_small.mp4",
+    href: "/services/ai-voice-chat-agents",
+
+  },
+];
+---
+
+<section
+  id="services"
+  class="section-padding reveal"
+  aria-labelledby="services-title"
+  role="region"
+>
+  <div class="container-page">
+    <h2 id="services-title" class="h2 mb-12 text-center">Services</h2>
+    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
+      {
+        services.map((s) =>
+          s.href ? (
+            <a
+              href={s.href}
+              class="relative overflow-hidden rounded-2xl border border-white/20 bg-black min-h-[320px] md:min-h-[380px] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#6E00FF] hover:bg-gray-900 hover:border-primary/40 hover:scale-[1.02] transition-all duration-300"
+              aria-label={`Learn more about ${s.title} service`}
+            >
+              {s.video ? (
+                <video
+                  class="absolute inset-0 h-full w-full object-cover opacity-60"
+                  autoplay
+                  muted
+                  loop
+                  playsinline
+                  preload="metadata"
+                  aria-hidden="true"
+                  role="img"
+                  aria-label={`Background video for ${s.title} service`}
+                >
+                  <source src={s.video} type="video/mp4" />
+                </video>
+              ) : (
+                <img
+                  src={s.img}
+                  alt={`Background image for ${s.title} service`}
+                  width="800"
+                  height="600"
+                  loading="lazy"
+                  class="absolute inset-0 h-full w-full object-cover opacity-60"
+                />
+              )}
+              <div class="absolute inset-0 bg-gradient-to-b from-black/20 via-black/30 to-black/70" />
+
+              <div class="relative p-8 flex flex-col gap-4 justify-end min-h-[320px] md:min-h-[380px]">
+                <h3 class="h3 text-center">{s.title}</h3>
+                <p class="text-white/90 text-sm leading-relaxed text-center font-medium">{s.blurb}</p>
+                <div class="mt-3 inline-flex items-center gap-2 text-primary/90 justify-center group-hover:text-primary transition-colors">
+                  <span class="text-sm font-semibold">Explore</span>
+                  <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none">
+                    <path
+                      d="M8 5l8 7-8 7"
+                      stroke="currentColor"
+                      stroke-width="1.6"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    />
+                  </svg>
+                </div>
+              </div>
+            </a>
+          ) : (
+            <article class="relative overflow-hidden rounded-2xl border border-white/20 bg-black min-h-[320px] md:min-h-[380px] hover:bg-gray-900 hover:border-primary/40 hover:scale-[1.02] transition-all duration-300" aria-labelledby={`service-${services.indexOf(s)}-title`}>
+              {s.video ? (
+                <video
+                  class="absolute inset-0 h-full w-full object-cover opacity-60"
+                  autoplay
+                  muted
+                  loop
+                  playsinline
+                  preload="metadata"
+                  aria-hidden="true"
+                  role="img"
+                  aria-label={`Background video for ${s.title} service`}
+                >
+                  <source src={s.video} type="video/mp4" />
+                </video>
+              ) : (
+                <img
+                  src={s.img}
+                  alt={`Background image for ${s.title} service`}
+                  width="800"
+                  height="600"
+                  loading="lazy"
+                  class="absolute inset-0 h-full w-full object-cover opacity-60"
+                />
+              )}
+              <div class="absolute inset-0 bg-gradient-to-b from-black/20 via-black/30 to-black/70" />
+
+              <div class="relative p-8 flex flex-col gap-4 justify-end min-h-[320px] md:min-h-[380px]">
+                <h3 class="h3 text-center" id={`service-${services.indexOf(s)}-title`}>{s.title}</h3>
+                <p class="text-white/90 text-sm leading-relaxed text-center font-medium">{s.blurb}</p>
+              </div>
+            </article>
+          ),
+        )
+      }
+    </div>
+  </div>
+</section>
+

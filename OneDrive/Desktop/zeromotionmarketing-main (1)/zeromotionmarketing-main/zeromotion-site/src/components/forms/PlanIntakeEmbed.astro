@@ -1,0 +1,377 @@
+---
+export interface Props {
+  plan?: string;
+  formId?: string;
+  collectUtm?: boolean;
+}
+
+const { plan, formId, collectUtm = true } = Astro.props;
+
+// Get plan from URL parameter if not provided as prop
+const urlPlan = Astro.url.searchParams.get('plan');
+const rawPlan = plan || urlPlan;
+
+// Normalize plan to "Starter|Growth|Scale" format
+const normalizePlan = (planValue?: string | null): string | undefined => {
+  if (!planValue) return undefined;
+  const normalized = planValue.toLowerCase().trim();
+  
+  if (normalized.includes('starter') || normalized === 'start') return 'Starter';
+  if (normalized.includes('growth') || normalized === 'grow') return 'Growth';
+  if (normalized.includes('scale') || normalized === 'enterprise' || normalized === 'pro') return 'Scale';
+  
+  return undefined;
+};
+
+const selectedPlan = normalizePlan(rawPlan);
+
+// Default form IDs based on plan (these should be replaced with actual ZRM form IDs)
+const defaultFormIds = {
+  Starter: 'starter-plan-form',
+  Growth: 'growth-plan-form', 
+  Scale: 'scale-plan-form'
+};
+
+const finalFormId = formId || (selectedPlan ? defaultFormIds[selectedPlan as keyof typeof defaultFormIds] : 'general-contact-form');
+---
+
+<div class="gradient-frame">
+  <div class="gradient-inner p-6">
+    <div class="text-center mb-6">
+      <h3 class="h3 mb-3">
+        {selectedPlan ? `Get Started with ${selectedPlan}` : 'Get Your Free Quote'}
+      </h3>
+      <p class="text-white/70">
+        {selectedPlan 
+          ? `Tell us about your business and we'll create a custom ${selectedPlan} plan proposal.`
+          : 'Tell us about your business and we\'ll recommend the perfect plan for you.'
+        }
+      </p>
+    </div>
+
+    <div 
+      class="zrm-form-wrapper"
+      data-gf-form={finalFormId}
+      data-event="submit_intake"
+      data-plan={selectedPlan}
+      role="form"
+      aria-label={selectedPlan ? `${selectedPlan} Plan Intake Form` : 'Business Quote Request Form'}
+    >
+      <!-- Form will be injected here by ZRM script -->
+    </div>
+  </div>
+</div>
+
+<!-- Lazy load the ZRM form script using IntersectionObserver -->
+<script is:inline define:vars={{ finalFormId, selectedPlan }}>
+  // Lazy load ZRM form script when form container is visible
+  const observeFormLoad = () => {
+    const formContainer = document.querySelector(`[data-gf-form="${finalFormId}"]`);
+    if (!formContainer) return;
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          // Load ZRM script if not already loaded
+          if (!document.querySelector('script[src*="form_embed.js"]')) {
+            const script = document.createElement('script');
+            script.src = 'https://link.gohighlevel.com/form_embed.js'; // ZRM technical endpoint
+            script.async = true;
+            script.onload = () => {
+              // Initialize form after script loads
+              setTimeout(() => initializeForm(), 100);
+            };
+            document.head.appendChild(script);
+          } else {
+            // Script already loaded, just initialize
+            initializeForm();
+          }
+          
+          observer.unobserve(formContainer);
+        }
+      });
+    }, { 
+      rootMargin: '50px' // Load slightly before coming into view
+    });
+
+    observer.observe(formContainer);
+  };
+
+  // Initialize form functionality
+  const initializeForm = () => {
+    const formContainer = document.querySelector(`[data-gf-form="${finalFormId}"]`);
+    if (!formContainer) return;
+
+    // Wait for ZRM form to be injected
+    const waitForForm = (attempts = 0) => {
+      const form = formContainer.querySelector('form');
+      if (form || attempts > 20) {
+        if (form) {
+          setupFormEnhancements(form, formContainer);
+        }
+        return;
+      }
+      setTimeout(() => waitForForm(attempts + 1), 200);
+    };
+
+    waitForForm();
+  };
+
+  // Enhanced form setup with accessibility and plan injection
+  const setupFormEnhancements = (form, container) => {
+    // Inject hidden plan input if selectedPlan exists
+    if (selectedPlan) {
+      // Remove any existing plan inputs to avoid duplicates
+      const existingPlanInputs = form.querySelectorAll('input[name="plan"]');
+      existingPlanInputs.forEach(input => input.remove());
+
+      // Create and inject new hidden plan input
+      const planInput = document.createElement('input');
+      planInput.type = 'hidden';
+      planInput.name = 'plan';
+      planInput.value = selectedPlan;
+      planInput.setAttribute('data-injected', 'true');
+      form.appendChild(planInput);
+    }
+
+    // Enhance accessibility
+    enhanceAccessibility(form);
+
+    // Setup analytics tracking
+    setupAnalytics(form, container);
+
+    // Setup UTM collection if enabled
+    if (collectUtm) {
+      setupUtmCollection(form);
+    }
+  };
+
+  // Accessibility enhancements
+  const enhanceAccessibility = (form) => {
+    // Ensure form has proper labeling
+    if (!form.getAttribute('aria-label') && !form.getAttribute('aria-labelledby')) {
+      form.setAttribute('aria-label', selectedPlan ? `${selectedPlan} Plan Intake Form` : 'Business Quote Request Form');
+    }
+
+    // Enhance form fields with proper labels and ARIA attributes
+    const inputs = form.querySelectorAll('input, select, textarea');
+    inputs.forEach((input, index) => {
+      // Ensure each input has an ID for label association
+      if (!input.id) {
+        input.id = `zrm-input-${finalFormId}-${index}`;
+      }
+
+      // Add required ARIA attributes for screen readers
+      if (input.hasAttribute('required')) {
+        input.setAttribute('aria-required', 'true');
+      }
+
+      // Improve keyboard navigation
+      if (input.type !== 'hidden') {
+        input.setAttribute('tabindex', '0');
+      }
+    });
+
+    // Enhance submit button accessibility
+    const submitBtn = form.querySelector('[type="submit"], button[type="submit"], .submit-btn');
+    if (submitBtn) {
+      submitBtn.setAttribute('aria-describedby', 'form-description');
+      if (!submitBtn.getAttribute('aria-label')) {
+        submitBtn.setAttribute('aria-label', selectedPlan ? `Submit ${selectedPlan} plan request` : 'Submit quote request');
+      }
+    }
+  };
+
+  // Analytics tracking setup
+  const setupAnalytics = (form, container) => {
+    // Track form view
+    if (window.dataLayer) {
+      window.dataLayer.push({
+        event: 'form_view',
+        form_type: 'plan_intake',
+        selected_plan: selectedPlan || 'none',
+        form_id: finalFormId
+      });
+    }
+
+    // Track form submission
+    form.addEventListener('submit', (e) => {
+      // Analytics tracking
+      if (window.dataLayer) {
+        window.dataLayer.push({
+          event: 'submit_intake',
+          plan: selectedPlan || 'none',
+          selected_plan: selectedPlan || 'none',
+          form_id: finalFormId,
+          form_type: 'plan_intake'
+        });
+      } else {
+        // Fallback CustomEvent for non-GTM scenarios
+        window.dispatchEvent(new CustomEvent('submitIntake', {
+          detail: {
+            plan: selectedPlan || 'none',
+            form_id: finalFormId,
+            form_type: 'plan_intake',
+            timestamp: Date.now()
+          }
+        }));
+      }
+
+      // Custom event for other tracking systems
+      const customEvent = new CustomEvent('planIntakeSubmit', {
+        detail: {
+          plan: selectedPlan,
+          formId: finalFormId,
+          timestamp: Date.now()
+        },
+        bubbles: true
+      });
+      container.dispatchEvent(customEvent);
+    });
+
+    // Track successful form completion (when redirected or success message appears)
+    const trackBookingComplete = () => {
+      if (window.dataLayer) {
+        window.dataLayer.push({
+          event: 'book_consult',
+          plan: selectedPlan || 'none',
+          form_id: finalFormId,
+          form_type: 'plan_intake'
+        });
+      } else {
+        // Fallback CustomEvent for non-GTM scenarios
+        window.dispatchEvent(new CustomEvent('bookConsult', {
+          detail: {
+            plan: selectedPlan || 'none',
+            form_id: finalFormId,
+            form_type: 'plan_intake',
+            timestamp: Date.now()
+          }
+        }));
+      }
+    };
+
+    // Monitor for success indicators (ZRM typically shows success message or redirects)
+    const observer = new MutationObserver((mutations) => {
+      mutations.forEach((mutation) => {
+        mutation.addedNodes.forEach((node) => {
+          if (node.nodeType === 1) { // Element node
+            const successIndicators = [
+              '.zrm-success-message',
+              '.success-message',
+              '[class*="success"]',
+              '[class*="thank"]'
+            ];
+            
+            if (successIndicators.some(selector => node.matches && node.matches(selector)) ||
+                (node.textContent && (
+                  node.textContent.includes('thank') ||
+                  node.textContent.includes('success') ||
+                  node.textContent.includes('submitted')
+                ))) {
+              trackBookingComplete();
+              observer.disconnect();
+            }
+          }
+        });
+      });
+    });
+
+    // Start observing the form container for success messages
+    observer.observe(container, {
+      childList: true,
+      subtree: true,
+      characterData: true
+    });
+  };
+
+  // UTM parameter collection
+  const setupUtmCollection = (form) => {
+    const urlParams = new URLSearchParams(window.location.search);
+    
+    const setFieldValue = (name, value) => {
+      const field = form.querySelector(`[name="${name}"]`);
+      if (field && field.type !== 'hidden') {
+        field.value = value;
+      } else if (value) {
+        // Create hidden field if it doesn't exist
+        const hiddenInput = document.createElement('input');
+        hiddenInput.type = 'hidden';
+        hiddenInput.name = name;
+        hiddenInput.value = value;
+        hiddenInput.setAttribute('data-utm-injected', 'true');
+        form.appendChild(hiddenInput);
+      }
+    };
+
+    // Set UTM parameters
+    setFieldValue('utm_source', urlParams.get('utm_source') || '(direct)');
+    setFieldValue('utm_medium', urlParams.get('utm_medium') || '');
+    setFieldValue('utm_campaign', urlParams.get('utm_campaign') || '');
+    setFieldValue('utm_content', urlParams.get('utm_content') || '');
+    setFieldValue('utm_term', urlParams.get('utm_term') || '');
+    
+    // Set page URL for tracking
+    setFieldValue('page_url', window.location.href);
+    setFieldValue('referrer', document.referrer || '');
+
+    // Set selected plan for form processing
+    if (selectedPlan) {
+      setFieldValue('selected_plan', selectedPlan);
+      setFieldValue('plan_type', selectedPlan);
+      
+      // Try to find and set any dropdown/select fields for plan selection
+      const planSelects = form.querySelectorAll('select[name*="plan"], select[name*="package"], select[name*="tier"]');
+      planSelects.forEach(select => {
+        const option = Array.from(select.options).find(opt => 
+          opt.value.toLowerCase().includes(selectedPlan.toLowerCase()) ||
+          opt.text.toLowerCase().includes(selectedPlan.toLowerCase())
+        );
+        if (option) {
+          select.value = option.value;
+          select.dispatchEvent(new Event('change', { bubbles: true }));
+        }
+      });
+    }
+  };
+
+  // Start the lazy loading process
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', observeFormLoad);
+  } else {
+    observeFormLoad();
+  }
+</script>
+
+
+<!-- CSS for enhanced form styling -->
+<style>
+  .zrm-form-wrapper {
+    position: relative;
+    min-height: 400px; /* Prevent layout shift */
+  }
+
+  .zrm-form-wrapper form {
+    /* Enhance accessibility and visual appearance */
+    background: transparent;
+  }
+
+  .zrm-form-wrapper input:focus,
+  .zrm-form-wrapper select:focus,
+  .zrm-form-wrapper textarea:focus {
+    outline: 2px solid #6E00FF;
+    outline-offset: 2px;
+  }
+
+  .zrm-form-wrapper [aria-required="true"] {
+    /* Visual indicator for required fields */
+    border-left: 3px solid #6E00FF;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .zrm-form-wrapper * {
+      transition: none !important;
+      animation: none !important;
+    }
+  }
+</style>

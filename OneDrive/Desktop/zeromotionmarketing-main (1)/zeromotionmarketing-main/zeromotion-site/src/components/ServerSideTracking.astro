@@ -1,0 +1,317 @@
+---
+// Server-Side Tracking Configuration
+// Enhanced tracking for iOS14+ compatibility and privacy-first approach
+export interface Props {
+  enableServerSide?: boolean;
+}
+
+const { enableServerSide = false } = Astro.props as Props;
+
+const gtmId = import.meta.env.PUBLIC_GTM_ID;
+const gtmServerUrl = import.meta.env.PUBLIC_GTM_SERVER_URL;
+---
+
+{enableServerSide && gtmServerUrl && (
+  <script is:inline define:vars={{ gtmId, gtmServerUrl }}>
+    // Enhanced Server-Side Tracking Setup
+    (function() {
+      'use strict';
+      
+      // Server-side GTM configuration
+      window.gtag = window.gtag || function(){dataLayer.push(arguments);};
+      window.dataLayer = window.dataLayer || [];
+      
+      // Enhanced consent mode for iOS14+ compatibility
+      gtag('consent', 'default', {
+        'analytics_storage': 'denied',
+        'ad_storage': 'denied',
+        'ad_user_data': 'denied',
+        'ad_personalization': 'denied',
+        'functionality_storage': 'granted',
+        'security_storage': 'granted'
+      });
+      
+      // Server-side measurement protocol
+      const serverSideMeasurement = {
+        endpoint: gtmServerUrl + '/mp/collect',
+        
+        // Send events to server-side container
+        sendEvent: function(eventName, eventParams = {}) {
+          const measurementId = gtmId.replace('GTM-', 'G-');
+          const clientId = this.getClientId();
+          
+          const payload = {
+            measurement_id: measurementId,
+            client_id: clientId,
+            events: [{
+              name: eventName,
+              params: {
+                ...eventParams,
+                page_location: window.location.href,
+                page_title: document.title,
+                timestamp_micros: Date.now() * 1000
+              }
+            }]
+          };
+          
+          // Send via fetch with fallback
+          if (navigator.sendBeacon) {
+            navigator.sendBeacon(
+              this.endpoint,
+              JSON.stringify(payload)
+            );
+          } else {
+            fetch(this.endpoint, {
+              method: 'POST',
+              body: JSON.stringify(payload),
+              headers: {
+                'Content-Type': 'application/json'
+              },
+              keepalive: true
+            }).catch(console.error);
+          }
+        },
+        
+        // Generate or retrieve client ID
+        getClientId: function() {
+          let clientId = localStorage.getItem('zm_client_id');
+          if (!clientId) {
+            clientId = 'zm_' + Date.now() + '.' + Math.random().toString(36).substr(2, 9);
+            localStorage.setItem('zm_client_id', clientId);
+          }
+          return clientId;
+        },
+        
+        // Enhanced conversion tracking
+        trackConversion: function(conversionName, value = 0, currency = 'USD') {
+          this.sendEvent('conversion', {
+            conversion_name: conversionName,
+            value: value,
+            currency: currency,
+            conversion_id: gtmId
+          });
+          
+          // Also send to standard dataLayer for client-side processing
+          if (window.dataLayer) {
+            window.dataLayer.push({
+              event: 'server_side_conversion',
+              conversion_name: conversionName,
+              value: value,
+              currency: currency
+            });
+          }
+        },
+        
+        // Enhanced e-commerce tracking
+        trackPurchase: function(transactionId, items, value, currency = 'USD') {
+          this.sendEvent('purchase', {
+            transaction_id: transactionId,
+            value: value,
+            currency: currency,
+            items: items
+          });
+        }
+      };
+      
+      // Enhanced user engagement tracking
+      const engagementTracking = {
+        sessionStart: Date.now(),
+        heartbeatInterval: null,
+        
+        startSession: function() {
+          serverSideMeasurement.sendEvent('session_start', {
+            session_id: this.getSessionId(),
+            user_agent: navigator.userAgent,
+            screen_resolution: screen.width + 'x' + screen.height
+          });
+          
+          // Send heartbeat every 30 seconds for active sessions
+          this.heartbeatInterval = setInterval(() => {
+            if (this.isUserActive()) {
+              serverSideMeasurement.sendEvent('user_engagement', {
+                session_id: this.getSessionId(),
+                engagement_time_msec: Date.now() - this.sessionStart
+              });
+            }
+          }, 30000);
+        },
+        
+        getSessionId: function() {
+          let sessionId = sessionStorage.getItem('zm_session_id');
+          if (!sessionId) {
+            sessionId = 'zm_session_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+            sessionStorage.setItem('zm_session_id', sessionId);
+          }
+          return sessionId;
+        },
+        
+        isUserActive: function() {
+          // Check if user has interacted recently
+          return Date.now() - this.lastActivity < 60000; // 1 minute
+        },
+        
+        lastActivity: Date.now()
+      };
+      
+      // Update last activity on user interactions
+      ['click', 'scroll', 'keypress', 'mousemove'].forEach(event => {
+        document.addEventListener(event, () => {
+          engagementTracking.lastActivity = Date.now();
+        }, { passive: true });
+      });
+      
+      // Enhanced attribution tracking
+      const attributionTracking = {
+        // Store attribution data
+        storeAttribution: function() {
+          const urlParams = new URLSearchParams(window.location.search);
+          const attribution = {
+            utm_source: urlParams.get('utm_source') || this.getTrafficSource(),
+            utm_medium: urlParams.get('utm_medium') || 'organic',
+            utm_campaign: urlParams.get('utm_campaign'),
+            utm_term: urlParams.get('utm_term'),
+            utm_content: urlParams.get('utm_content'),
+            gclid: urlParams.get('gclid'),
+            fbclid: urlParams.get('fbclid'),
+            referrer: document.referrer,
+            landing_page: window.location.href,
+            timestamp: Date.now()
+          };
+          
+          // Store for session
+          sessionStorage.setItem('zm_attribution', JSON.stringify(attribution));
+          
+          // Store first-touch attribution
+          if (!localStorage.getItem('zm_first_attribution')) {
+            localStorage.setItem('zm_first_attribution', JSON.stringify(attribution));
+          }
+          
+          return attribution;
+        },
+        
+        getTrafficSource: function() {
+          const referrer = document.referrer;
+          if (!referrer) return 'direct';
+          
+          const domain = new URL(referrer).hostname.toLowerCase();
+          
+          if (domain.includes('google')) return 'google';
+          if (domain.includes('facebook') || domain.includes('fb.me')) return 'facebook';
+          if (domain.includes('linkedin')) return 'linkedin';
+          if (domain.includes('twitter') || domain.includes('t.co')) return 'twitter';
+          if (domain.includes('instagram')) return 'instagram';
+          if (domain.includes('youtube')) return 'youtube';
+          
+          return 'referral';
+        },
+        
+        getAttribution: function() {
+          return JSON.parse(sessionStorage.getItem('zm_attribution') || '{}');
+        }
+      };
+      
+      // Initialize server-side tracking
+      function initServerSideTracking() {
+        // Store attribution data
+        attributionTracking.storeAttribution();
+        
+        // Start engagement tracking
+        engagementTracking.startSession();
+        
+        // Enhanced page view with server-side data
+        const attribution = attributionTracking.getAttribution();
+        serverSideMeasurement.sendEvent('page_view', {
+          ...attribution,
+          page_location: window.location.href,
+          page_title: document.title,
+          user_agent: navigator.userAgent
+        });
+        
+        // Server-side tracking initialized
+      }
+      
+      // Make functions globally available
+      window.ZMServerTracking = {
+        sendEvent: serverSideMeasurement.sendEvent.bind(serverSideMeasurement),
+        trackConversion: serverSideMeasurement.trackConversion.bind(serverSideMeasurement),
+        trackPurchase: serverSideMeasurement.trackPurchase.bind(serverSideMeasurement),
+        getAttribution: attributionTracking.getAttribution.bind(attributionTracking)
+      };
+      
+      // Initialize when ready
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initServerSideTracking);
+      } else {
+        initServerSideTracking();
+      }
+      
+      // Cleanup on page unload
+      window.addEventListener('beforeunload', function() {
+        if (engagementTracking.heartbeatInterval) {
+          clearInterval(engagementTracking.heartbeatInterval);
+        }
+        
+        // Send final engagement event
+        serverSideMeasurement.sendEvent('session_end', {
+          session_id: engagementTracking.getSessionId(),
+          session_duration: Date.now() - engagementTracking.sessionStart
+        });
+      });
+      
+    })();
+  </script>
+)}
+
+<!-- Enhanced Conversion Linker for Cross-Domain Tracking -->
+{enableServerSide && (
+  <script is:inline>
+    // Enhanced conversion linker for better attribution
+    (function() {
+      'use strict';
+      
+      // Cross-domain tracking setup
+      const crossDomainTracking = {
+        domains: ['zeromotion.marketing', 'www.zeromotion.marketing'],
+        
+        // Add linker parameters to external links
+        decorateLinks: function() {
+          document.addEventListener('click', function(e) {
+            const link = e.target.closest('a');
+            if (!link || !link.href) return;
+            
+            try {
+              const linkUrl = new URL(link.href);
+              
+              // Check if it's a domain we want to track
+              if (crossDomainTracking.domains.some(domain => linkUrl.hostname.includes(domain))) {
+                const linkerParam = crossDomainTracking.generateLinkerParam();
+                
+                if (linkUrl.search) {
+                  linkUrl.search += '&' + linkerParam;
+                } else {
+                  linkUrl.search = '?' + linkerParam;
+                }
+                
+                link.href = linkUrl.toString();
+              }
+            } catch (error) {
+              console.error('Cross-domain tracking error:', error);
+            }
+          });
+        },
+        
+        generateLinkerParam: function() {
+          const clientId = localStorage.getItem('zm_client_id') || 'unknown';
+          const timestamp = Date.now();
+          
+          return `_gl=${clientId}.${timestamp}`;
+        }
+      };
+      
+      // Initialize cross-domain tracking
+      crossDomainTracking.decorateLinks();
+      
+    })();
+  </script>
+)}
+

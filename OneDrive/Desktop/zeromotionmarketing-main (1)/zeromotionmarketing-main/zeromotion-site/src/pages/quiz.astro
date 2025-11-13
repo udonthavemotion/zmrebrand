@@ -1,0 +1,258 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+
+// Get ZRM CRM configuration from environment variables
+const quizBase = import.meta.env.PUBLIC_GHL_FORM_BASE || 'https://dashboard.zeromotionmarketing.com';
+const quizId = 'tEi5JttDlfoknAbaX1TH';
+const quizUrl = `${quizBase}/widget/quiz/${quizId}`;
+const quizScript = '/js/form_embed.js';
+const quizScriptUrl = `${quizBase}${quizScript}`;
+
+// High-quality video background
+const HERO_VIDEO = "/photos/homepage_hero.mp4";
+
+// SEO Configuration for Quiz Page
+const title = "Marketing Assessment Quiz | Find Your Perfect Solution | ZeroMotion";
+const description = "Take our 2-minute quiz to discover which digital marketing solutions will drive the most growth for your business. Get personalized recommendations from ZeroMotion Marketing.";
+const keywords = "marketing quiz, business assessment, digital marketing needs, web design consultation, ZeroMotion quiz, marketing strategy assessment, business growth quiz";
+const canonical = "/quiz";
+const ogImage = "/favico/android-chrome-512x512.png";
+
+// Quiz Page Schema
+const quizSchema = [
+  {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "name": "Marketing Assessment Quiz",
+    "description": "Interactive quiz to assess your business's digital marketing needs and get personalized recommendations",
+    "url": "https://zeromotion.marketing/quiz",
+    "mainEntity": {
+      "@type": "Organization",
+      "name": "ZeroMotion Marketing",
+      "url": "https://zeromotion.marketing"
+    }
+  }
+];
+---
+
+<BaseLayout {title} {description} {keywords} {canonical} {ogImage} schema={quizSchema}>
+  <!-- Video preloading for optimal quality -->
+  <link slot="head" rel="preload" href={HERO_VIDEO} as="video" type="video/mp4" crossorigin="anonymous">
+
+  <main>
+    <!-- Combined Hero + Quiz Section -->
+    <section
+      id="quiz-hero"
+      class="relative isolate overflow-hidden bg-black min-h-screen"
+      aria-labelledby="quiz-title"
+    >
+      <video
+        class="pointer-events-none absolute inset-0 -z-10 h-full w-full object-cover ultra-quality-video stable-quiz-video"
+        style="filter: brightness(0.7) contrast(1.2) saturate(1.3); will-change: transform; opacity: 0.9;"
+        autoplay
+        muted
+        loop
+        playsinline
+        preload="auto"
+        width="1920"
+        height="1080"
+        aria-hidden="true"
+        onloadstart="this.style.visibility='visible'"
+        oncanplay="this.classList.add('loaded')"
+      >
+        <source src={HERO_VIDEO} type="video/mp4" />
+      </video>
+
+      <!-- Gradient overlays for depth and text readability -->
+      <div class="pointer-events-none absolute inset-0 -z-10 bg-gradient-to-b from-black/85 via-black/30 to-black/70"></div>
+      <div class="pointer-events-none absolute inset-0 -z-10 bg-gradient-to-tr from-primary/20 via-transparent to-transparent"></div>
+
+      <div class="relative container-page px-4 md:px-6 py-12 md:py-20">
+        <div class="max-w-4xl mx-auto space-y-12">
+          <!-- Hero Header -->
+          <div class="text-center space-y-6 reveal">
+            <!-- Pre-header -->
+            <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 border border-primary/30 backdrop-blur-sm text-primary text-sm font-medium mb-4">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+              </svg>
+              <span>2-Minute Assessment</span>
+            </div>
+
+            <h1 id="quiz-title" class="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold leading-tight">
+              <span class="inline-block bg-gradient-to-br from-white via-white to-white/80 bg-clip-text text-transparent">
+                Find Your Perfect
+              </span>
+              <br>
+              <span class="inline-block bg-gradient-to-r from-primary via-violet-400 to-primary bg-clip-text text-transparent mt-2" style="text-shadow: 0 0 40px rgba(139,92,246,0.5);">
+                Marketing Solution
+              </span>
+            </h1>
+
+            <p class="text-lg sm:text-xl md:text-2xl text-white/70 max-w-3xl mx-auto leading-relaxed">
+              Answer a few quick questions and get personalized recommendations tailored to your business goals and growth stage.
+            </p>
+
+            <!-- Trust indicators -->
+            <div class="flex flex-wrap justify-center gap-6 pt-4 text-sm text-white/60">
+              <div class="flex items-center gap-2">
+                <svg class="w-5 h-5 text-primary" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"/>
+                </svg>
+                <span>~2 minutes</span>
+              </div>
+              <div class="flex items-center gap-2">
+                <svg class="w-5 h-5 text-primary" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M6.267 3.455a3.066 3.066 0 001.745-.723 3.066 3.066 0 013.976 0 3.066 3.066 0 001.745.723 3.066 3.066 0 012.812 2.812c.051.643.304 1.254.723 1.745a3.066 3.066 0 010 3.976 3.066 3.066 0 00-.723 1.745 3.066 3.066 0 01-2.812 2.812 3.066 3.066 0 00-1.745.723 3.066 3.066 0 01-3.976 0 3.066 3.066 0 00-1.745-.723 3.066 3.066 0 01-2.812-2.812 3.066 3.066 0 00-.723-1.745 3.066 3.066 0 010-3.976 3.066 3.066 0 00.723-1.745 3.066 3.066 0 012.812-2.812zm7.44 5.252a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                </svg>
+                <span>100% free insights</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Quiz Container - Directly Below Hero -->
+          <div class="w-full reveal">
+            <div class="relative rounded-2xl border border-primary/30 bg-black backdrop-blur-xl overflow-hidden shadow-2xl">
+              <!-- Decorative elements -->
+              <div class="absolute top-0 right-0 w-64 h-64 bg-primary/20 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2"></div>
+              <div class="absolute bottom-0 left-0 w-64 h-64 bg-violet-500/20 rounded-full blur-3xl translate-y-1/2 -translate-x-1/2"></div>
+              
+              <!-- Quiz iframe -->
+              <div class="relative z-10 p-4 md:p-6">
+                <iframe
+                  src={quizUrl}
+                  class="w-full quiz-iframe"
+                  style="border: none; border-radius: 12px; min-height: 700px; height: auto; background: transparent;"
+                  id={quizId}
+                  scrolling="no"
+                  title="Marketing Assessment Quiz"
+                  loading="eager"
+                ></iframe>
+              </div>
+            </div>
+
+            <!-- Privacy note -->
+            <div class="mt-6 text-center">
+              <p class="text-sm text-white/40 flex items-center justify-center gap-2">
+                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clip-rule="evenodd"/>
+                </svg>
+                Your information is secure and never shared
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+</BaseLayout>
+
+<!-- ZRM CRM Quiz Embed Script -->
+<script define:vars={{ quizScriptUrl }} type="text/javascript">
+  // Dynamically load ZRM quiz embed script
+  const script = document.createElement('script');
+  script.src = quizScriptUrl;
+  script.type = 'text/javascript';
+  document.body.appendChild(script);
+</script>
+
+<style>
+  /* Enhanced video stability */
+  .stable-quiz-video {
+    visibility: hidden;
+    background: transparent;
+    transform: translateZ(0);
+    -webkit-transform: translateZ(0);
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    perspective: 1000px;
+    -webkit-perspective: 1000px;
+    image-rendering: optimizeQuality;
+    transition: opacity 0.4s ease-in-out;
+  }
+  
+  .stable-quiz-video.loaded {
+    visibility: visible;
+    opacity: 1 !important;
+  }
+  
+  .stable-quiz-video:not(.loaded) {
+    opacity: 0 !important;
+  }
+
+  /* Quiz iframe optimization */
+  .quiz-iframe {
+    display: block;
+    overflow: visible;
+    transition: opacity 0.3s ease-in-out;
+  }
+
+  /* Responsive height adjustments */
+  @media (max-width: 640px) {
+    .quiz-iframe {
+      min-height: 850px !important;
+      height: auto !important;
+    }
+  }
+
+  @media (min-width: 641px) and (max-width: 1024px) {
+    .quiz-iframe {
+      min-height: 800px !important;
+      height: auto !important;
+    }
+  }
+
+  @media (min-width: 1025px) {
+    .quiz-iframe {
+      min-height: 700px !important;
+      height: auto !important;
+    }
+  }
+
+  /* Smooth quiz loading animation */
+  .quiz-iframe {
+    opacity: 0;
+    animation: fadeInQuiz 0.6s ease-out 0.3s forwards;
+  }
+
+  @keyframes fadeInQuiz {
+    from {
+      opacity: 0;
+      transform: translateY(15px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  /* Ensure smooth scrolling on iOS */
+  @supports (-webkit-overflow-scrolling: touch) {
+    .quiz-iframe {
+      -webkit-overflow-scrolling: touch;
+    }
+  }
+
+  /* Reveal animations */
+  .reveal {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+  }
+
+  .reveal-in {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* Respect reduced motion */
+  @media (prefers-reduced-motion: reduce) {
+    .reveal,
+    .quiz-iframe,
+    .stable-quiz-video,
+    * {
+      animation: none !important;
+      transition: none !important;
+    }
+  }
+</style>

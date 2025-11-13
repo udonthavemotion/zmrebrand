@@ -1,0 +1,93 @@
+---
+import TextureVideoSection from './TextureVideoSection.astro';
+import DarkContentSection from './DarkContentSection.astro';
+import { getAlternatingTexture, GRADIENT_OVERLAYS } from '../../lib/textures.ts';
+
+export interface Props {
+  pattern?: 'texture-dark' | 'dark-texture' | 'texture-texture-dark';
+  startIndex?: number;
+  textureOpacity?: number;
+  gradientStyle?: keyof typeof GRADIENT_OVERLAYS;
+}
+
+const { 
+  pattern = 'texture-dark',
+  startIndex = 0,
+  textureOpacity = 0.6,
+  gradientStyle = 'standard'
+} = Astro.props as Props;
+
+// Get the sections from slots
+const sections = await Astro.slots.render('default');
+const sectionArray = sections.split('<!-- SECTION_BREAK -->').filter(s => s.trim());
+
+let currentTextureIndex = startIndex;
+---
+
+{pattern === 'texture-dark' && sectionArray.map((sectionContent, index) => {
+  if (index % 2 === 0) {
+    // Texture video section
+    const textureVideo = getAlternatingTexture(currentTextureIndex++);
+    return (
+      <TextureVideoSection 
+        textureVideo={textureVideo}
+        opacity={textureOpacity}
+        gradientOverlay={GRADIENT_OVERLAYS[gradientStyle]}
+        set:html={sectionContent}
+      />
+    );
+  } else {
+    // Dark content section
+    return (
+      <DarkContentSection set:html={sectionContent} />
+    );
+  }
+})}
+
+{pattern === 'dark-texture' && sectionArray.map((sectionContent, index) => {
+  if (index % 2 === 0) {
+    // Dark content section first
+    return (
+      <DarkContentSection set:html={sectionContent} />
+    );
+  } else {
+    // Then texture video section
+    const textureVideo = getAlternatingTexture(currentTextureIndex++);
+    return (
+      <TextureVideoSection 
+        textureVideo={textureVideo}
+        opacity={textureOpacity}
+        gradientOverlay={GRADIENT_OVERLAYS[gradientStyle]}
+        set:html={sectionContent}
+      />
+    );
+  }
+})}
+
+{pattern === 'texture-texture-dark' && sectionArray.map((sectionContent, index) => {
+  const cyclePosition = index % 3;
+  if (cyclePosition === 0 || cyclePosition === 1) {
+    // Two texture sections
+    const textureVideo = getAlternatingTexture(currentTextureIndex++);
+    return (
+      <TextureVideoSection 
+        textureVideo={textureVideo}
+        opacity={textureOpacity}
+        gradientOverlay={GRADIENT_OVERLAYS[gradientStyle]}
+        set:html={sectionContent}
+      />
+    );
+  } else {
+    // Then dark section
+    return (
+      <DarkContentSection set:html={sectionContent} />
+    );
+  }
+})}
+
+<style>
+  /* Ensure smooth transitions between sections */
+  :global(.section + .section) {
+    margin-top: 0;
+  }
+</style>

@@ -1,0 +1,491 @@
+---
+import type { TextureVideo } from '../../lib/textures.ts';
+
+interface Props {
+  textureVideo: TextureVideo;
+  className?: string;
+  sectionPadding?: boolean;
+  immersive?: boolean;
+  multipleTextures?: boolean;
+  transitionDuration?: number;
+}
+
+const {
+  textureVideo,
+  className = '',
+  sectionPadding = true,
+  immersive = false,
+  multipleTextures = false,
+  transitionDuration = 3000
+} = Astro.props;
+const sectionClass = sectionPadding ? 'section' : '';
+---
+
+<section class={`texture-video-section ${sectionClass} ${className} ${immersive ? 'immersive-mode' : ''} ${multipleTextures ? 'multi-texture' : ''}`}>
+  <!-- Primary texture video -->
+  <video
+    src={textureVideo.path}
+    autoplay
+    muted
+    loop
+    playsinline
+    preload="metadata"
+    class="texture-video stable-texture-video primary-video"
+    style={`opacity: ${textureVideo.opacity || 0.6}; filter: brightness(${textureVideo.brightness || 1.1}) contrast(${textureVideo.contrast || 1.05}) saturate(1.1); will-change: transform;`}
+    onloadstart="this.style.visibility='visible'"
+    oncanplay="this.classList.add('loaded')"
+    onerror="this.style.display='none'"
+    aria-hidden="true"
+    role="presentation"
+  ></video>
+
+  <!-- Secondary texture video for immersive mode -->
+  {immersive && (
+    <video
+      src={textureVideo.path.replace(/(\d+)\.mp4$/, (match, num) => {
+        const nextNum = (parseInt(num) + 1) % 6; // Cycle through available textures
+        return `${nextNum}.mp4`;
+      })}
+      autoplay
+      muted
+      loop
+      playsinline
+      preload="metadata"
+      class="texture-video stable-texture-video secondary-video"
+      style={`opacity: ${(textureVideo.opacity || 0.6) * 0.3}; filter: brightness(${(textureVideo.brightness || 1.1) * 0.8}) contrast(${(textureVideo.contrast || 1.05) * 0.9}) saturate(1.2) blur(1px); will-change: transform;`}
+      onloadstart="this.style.visibility='visible'"
+      oncanplay="this.classList.add('loaded')"
+      onerror="this.style.display='none'"
+      aria-hidden="true"
+      role="presentation"
+    ></video>
+  )}
+
+  <!-- Enhanced immersive overlays -->
+  <div class="immersive-overlays">
+    <div class="gradient-overlay-top"></div>
+    <div class="gradient-overlay-bottom"></div>
+    <div class="noise-overlay"></div>
+    <div class="vignette-overlay"></div>
+  </div>
+
+  <!-- Enhanced fallback background -->
+  <div class="texture-fallback" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(135deg, rgba(110, 0, 246, 0.15), rgba(0, 0, 0, 0.1), rgba(139, 92, 246, 0.1)); z-index: -1;"></div>
+
+  <!-- Modern loading indicator -->
+  <div class="texture-loading modern-loader" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 0; opacity: 0; transition: opacity 0.3s ease;">
+    <div class="loading-spinner-modern">
+      <div class="spinner-ring"></div>
+      <div class="spinner-ring"></div>
+      <div class="spinner-ring"></div>
+    </div>
+  </div>
+  <div class="texture-content">
+    <div class="container-page">
+      <slot />
+    </div>
+  </div>
+</section>
+
+<script>
+  // Enhanced immersive video background system
+  document.addEventListener('DOMContentLoaded', function() {
+    const textureSections = document.querySelectorAll('.texture-video-section');
+
+    textureSections.forEach(section => {
+      const primaryVideo = section.querySelector('.primary-video');
+      const secondaryVideo = section.querySelector('.secondary-video');
+      const loadingIndicator = section.querySelector('.texture-loading');
+      const isImmersive = section.classList.contains('immersive-mode');
+
+      // Show loading state initially
+      section.classList.add('loading');
+
+      // Handle primary video
+      if (primaryVideo) {
+        primaryVideo.addEventListener('loadstart', function() {
+          section.classList.add('loading');
+        });
+
+        primaryVideo.addEventListener('canplay', function() {
+          section.classList.remove('loading');
+          section.classList.add('loaded');
+        });
+
+        primaryVideo.addEventListener('error', function() {
+          section.classList.remove('loading');
+          section.classList.add('loaded');
+          console.warn('Primary texture video failed to load:', this.src);
+        });
+      }
+
+      // Handle secondary video for immersive mode
+      if (secondaryVideo && isImmersive) {
+        secondaryVideo.addEventListener('canplay', function() {
+          // Add subtle animation delay for layered effect
+          setTimeout(() => {
+            this.style.opacity = (parseFloat(this.style.opacity) || 0.3).toString();
+          }, 1000);
+        });
+      }
+
+      // Intersection Observer for lazy loading
+      if ('IntersectionObserver' in window) {
+        const observer = new IntersectionObserver((entries) => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              if (primaryVideo) primaryVideo.preload = 'auto';
+              if (secondaryVideo) secondaryVideo.preload = 'auto';
+              observer.unobserve(entry.target);
+            }
+          });
+        }, { threshold: 0.1 });
+
+        observer.observe(section);
+      }
+
+      // Add parallax effect for immersive sections
+      if (isImmersive) {
+        let ticking = false;
+
+        const handleScroll = () => {
+          if (!ticking) {
+            requestAnimationFrame(() => {
+              const scrolled = window.pageYOffset;
+              const rate = scrolled * -0.5;
+
+              if (primaryVideo) {
+                primaryVideo.style.transform = `translate3d(0, ${rate * 0.1}px, 0)`;
+              }
+              if (secondaryVideo) {
+                secondaryVideo.style.transform = `translate3d(0, ${rate * 0.05}px, 0)`;
+              }
+
+              ticking = false;
+            });
+            ticking = true;
+          }
+        };
+
+        window.addEventListener('scroll', handleScroll, { passive: true });
+      }
+    });
+
+    // Auto-cycle texture videos for multi-texture sections
+    const multiTextureSections = document.querySelectorAll('.multi-texture');
+    multiTextureSections.forEach(section => {
+      const videos = section.querySelectorAll('.texture-video');
+      let currentIndex = 0;
+
+      setInterval(() => {
+        videos.forEach((video, index) => {
+          video.style.opacity = index === currentIndex ? '0.6' : '0.2';
+        });
+        currentIndex = (currentIndex + 1) % videos.length;
+      }, 8000); // Change every 8 seconds
+    });
+  });
+</script>
+
+<style>
+.texture-video-section {
+  position: relative;
+  overflow: hidden;
+  background: var(--zm-bg);
+}
+
+.texture-video {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* Enhanced texture video stability and loading */
+.stable-texture-video {
+  visibility: hidden; /* Hide until loaded to prevent flicker */
+  background: transparent;
+  transform: translateZ(0); /* Force hardware acceleration */
+  -webkit-transform: translateZ(0);
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  perspective: 1000px;
+  -webkit-perspective: 1000px;
+  image-rendering: optimizeQuality;
+  transition: opacity 0.3s ease-in-out;
+  object-position: center center;
+  image-rendering: -webkit-optimize-contrast;
+  image-rendering: optimize-contrast;
+}
+
+.stable-texture-video.loaded {
+  visibility: visible;
+}
+
+/* Prevent video flickering during load */
+.stable-texture-video:not(.loaded) {
+  opacity: 0 !important;
+}
+
+.stable-texture-video.loaded {
+  opacity: var(--texture-opacity, 0.6) !important;
+}
+
+/* Mobile optimizations for texture videos */
+@media (max-width: 768px) {
+  .stable-texture-video {
+    transform: translate3d(0, 0, 0); /* Better mobile performance */
+    -webkit-transform: translate3d(0, 0, 0);
+  }
+}
+
+.texture-content {
+  position: relative;
+  z-index: 1;
+  padding: var(--zm-gap-xl) 0;
+}
+
+/* Ensure content is readable over video */
+.texture-content h1,
+.texture-content h2,
+.texture-content h3,
+.texture-content h4,
+.texture-content h5,
+.texture-content h6 {
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.texture-content p,
+.texture-content li {
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+/* Remove section padding when used without sectionPadding */
+.texture-video-section:not(.section) .texture-content {
+ padding: 0;
+}
+
+/* Loading spinner animation */
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Enhanced loading states */
+.texture-video-section.loading .texture-loading {
+  opacity: 1;
+}
+
+.texture-video-section.loaded .texture-loading {
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* Progressive enhancement for video loading */
+.texture-video {
+  transition: opacity 0.5s ease-in-out, visibility 0.1s ease-in;
+}
+
+/* Improved mobile performance */
+@media (max-width: 768px) {
+  .texture-video {
+    /* Reduce motion on mobile for better performance */
+    will-change: auto;
+    transform: none;
+    -webkit-transform: none;
+  }
+
+  .texture-loading {
+    display: none; /* Hide loading spinner on mobile to reduce visual clutter */
+  }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  .texture-video {
+    opacity: 0.3 !important;
+  }
+
+  .texture-fallback {
+    background: rgba(0, 0, 0, 0.2) !important;
+  }
+}
+
+/* Immersive mode enhancements */
+.immersive-mode {
+  position: relative;
+  min-height: 60vh;
+}
+
+.immersive-mode .texture-video-section {
+  background: transparent;
+}
+
+.immersive-overlays {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.gradient-overlay-top {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 40%;
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0.4) 0%, transparent 100%);
+  z-index: 1;
+}
+
+.gradient-overlay-bottom {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 60%;
+  background: linear-gradient(0deg, rgba(0, 0, 0, 0.6) 0%, transparent 100%);
+  z-index: 1;
+}
+
+.noise-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+  opacity: 0.03;
+  z-index: 1;
+}
+
+.vignette-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(circle at center, transparent 40%, rgba(0, 0, 0, 0.3) 100%);
+  z-index: 1;
+}
+
+/* Secondary video styling for layered effect */
+.secondary-video {
+  mix-blend-mode: screen;
+  filter: blur(0.5px) brightness(0.8) contrast(1.2);
+  transform: scale(1.05);
+  z-index: -1;
+}
+
+/* Modern loading spinner */
+.loading-spinner-modern {
+  position: relative;
+  width: 60px;
+  height: 60px;
+}
+
+.spinner-ring {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border: 3px solid transparent;
+  border-top: 3px solid #8b5cf6;
+  border-radius: 50%;
+  animation: spin 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+}
+
+.spinner-ring:nth-child(2) {
+  animation-delay: -0.4s;
+  border-top-color: rgba(139, 92, 246, 0.6);
+}
+
+.spinner-ring:nth-child(3) {
+  animation-delay: -0.8s;
+  border-top-color: rgba(139, 92, 246, 0.3);
+}
+
+/* Enhanced video transitions */
+.texture-video {
+  transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.primary-video {
+  z-index: 0;
+}
+
+.secondary-video {
+  z-index: -1;
+  transition: opacity 2s ease-in-out;
+}
+
+/* Multi-texture cycling effects */
+.multi-texture .texture-video {
+  transition: opacity 3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+/* Performance optimizations for immersive mode */
+.immersive-mode .texture-video {
+  will-change: transform, opacity;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+/* Enhanced mobile experience */
+@media (max-width: 768px) {
+  .immersive-mode {
+    min-height: 40vh;
+  }
+
+  .gradient-overlay-top {
+    height: 30%;
+  }
+
+  .gradient-overlay-bottom {
+    height: 50%;
+  }
+
+  .secondary-video {
+    display: none; /* Disable layered videos on mobile for performance */
+  }
+
+  .noise-overlay {
+    opacity: 0.02;
+  }
+}
+
+/* High contrast mode adjustments */
+@media (prefers-contrast: high) {
+  .immersive-overlays {
+    opacity: 0.8;
+  }
+
+  .gradient-overlay-top,
+  .gradient-overlay-bottom {
+    background: rgba(0, 0, 0, 0.7);
+  }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  .texture-video,
+  .texture-loading,
+  .stable-texture-video,
+  .secondary-video,
+  .spinner-ring {
+    animation: none !important;
+    transition: none !important;
+    transform: none !important;
+  }
+
+  .immersive-overlays {
+    display: none;
+  }
+}
+</style>

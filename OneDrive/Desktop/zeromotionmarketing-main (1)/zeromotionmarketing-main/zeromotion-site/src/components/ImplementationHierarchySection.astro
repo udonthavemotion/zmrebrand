@@ -1,0 +1,663 @@
+---
+// Implementation Hierarchy Section Component
+// Cache-busting timestamp to ensure fresh images load
+const cacheVersion = Date.now();
+---
+
+<section 
+  id="weeks-timeline" 
+  class="implementation-hierarchy section-padding bg-black/20 relative isolate" 
+  aria-labelledby="hierarchy-title"
+  data-module="weeks-timeline"
+>
+  <!-- Background Video Layer -->
+  <div class="weeks-video-bg absolute inset-0 -z-10 overflow-hidden">
+    <video
+      class="weeks-video absolute inset-0 w-full h-full object-cover"
+      autoplay
+      muted
+      loop
+      playsinline
+      preload="none"
+      poster="/assets/implementation/55555.png"
+      aria-hidden="true"
+      data-video-element
+    >
+      <source src="/photos/homepage_hero.mp4" type="video/mp4" />
+    </video>
+    <div class="absolute inset-0 bg-gradient-radial from-black/60 via-black/40 to-black/70"></div>
+  </div>
+
+  <div class="container-page relative">
+    <!-- Section Header -->
+    <div class="text-center mb-12">
+      <h2 id="hierarchy-title" class="h2 mb-3">Your Business Transformation Journey</h2>
+      <p class="text-white/70 max-w-3xl mx-auto">
+        See how we take your business from startup to market leader through our systematic implementation process.
+      </p>
+    </div>
+
+    <!-- Progress Spine -->
+    <div class="weeks-spine absolute left-8 md:left-16 top-32 bottom-16 w-0.5 bg-white/10 overflow-hidden">
+      <div class="weeks-spine-fill absolute inset-0 bg-gradient-to-b from-purple-400 via-primary to-purple-600 opacity-0 transition-opacity duration-300" style="transform: scaleY(var(--progress, 0)); transform-origin: top;"></div>
+      <div class="weeks-spine-glow absolute inset-0 bg-gradient-to-b from-purple-400/50 via-primary/50 to-purple-600/50 blur-md opacity-0 transition-opacity duration-300" style="transform: scaleY(var(--progress, 0)); transform-origin: top;"></div>
+    </div>
+
+    <!-- Implementation Stages -->
+    <div class="implementation-stages space-y-12 md:space-y-16">
+      <!-- Stage 1: Foundation Setup -->
+      <div
+        class="implementation-stage flex flex-col md:flex-row items-center gap-8 md:gap-12"
+        data-stage="1"
+        data-week="1-2"
+      >
+        <div class="stage-content md:w-1/2 text-center md:text-left">
+          <div class="stage-number text-primary/60 text-sm font-medium mb-3">Week 1-2</div>
+          <h3 class="h3 mb-4">Foundation</h3>
+          <p class="text-white/80 text-lg leading-relaxed">
+            We set up your complete CRM and pipeline system, creating the foundation for automated growth.
+          </p>
+        </div>
+        <div class="stage-visual md:w-1/2">
+          <div class="interface-screenshot max-w-[400px] mx-auto">
+            <div class="screenshot-inner">
+              <img
+                src={`/assets/implementation/zeromotion_foundation_transparent.png?v=${cacheVersion}`}
+                alt="ZRM CRM Dashboard Setup"
+                class="w-full h-auto rounded-xl shadow-2xl"
+                loading="lazy"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Stage 2: Automation Implementation -->
+      <div
+        class="implementation-stage flex flex-col md:flex-row-reverse items-center gap-8 md:gap-12"
+        data-stage="2"
+        data-week="3-4"
+      >
+        <div class="stage-content md:w-1/2 text-center md:text-right">
+          <div class="stage-number text-primary/60 text-sm font-medium mb-3">Week 3-4</div>
+          <h3 class="h3 mb-4">Automation</h3>
+          <p class="text-white/80 text-lg leading-relaxed">
+            Smart workflows start nurturing your leads automatically, freeing you to focus on growing your business.
+          </p>
+        </div>
+        <div class="stage-visual md:w-1/2">
+          <div class="interface-screenshot max-w-[400px] mx-auto">
+            <div class="screenshot-inner">
+              <img
+                src={`/assets/implementation/zeromotion_automation_transparent.png?v=${cacheVersion}`}
+                alt="ZRM CRM Automation Workflows"
+                class="w-full h-auto rounded-xl shadow-2xl"
+                loading="lazy"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Stage 3: Communication Hub -->
+      <div
+        class="implementation-stage flex flex-col md:flex-row items-center gap-8 md:gap-12"
+        data-stage="3"
+        data-week="5-6"
+      >
+        <div class="stage-content md:w-1/2 text-center md:text-left">
+          <div class="stage-number text-primary/60 text-sm font-medium mb-3">Week 5-6</div>
+          <h3 class="h3 mb-4">Communication</h3>
+          <p class="text-white/80 text-lg leading-relaxed">
+            Unified messaging keeps you connected to every prospect across all channels and touchpoints.
+          </p>
+        </div>
+        <div class="stage-visual md:w-1/2">
+          <div class="interface-screenshot max-w-[400px] mx-auto">
+            <div class="screenshot-inner">
+              <img
+                src={`/assets/implementation/zeromotion_communication_transparent.png?v=${cacheVersion}`}
+                alt="ZRM CRM Communication Hub"
+                class="w-full h-auto rounded-xl shadow-2xl"
+                loading="lazy"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Stage 4: Website & Funnels -->
+      <div
+        class="implementation-stage flex flex-col md:flex-row-reverse items-center gap-8 md:gap-12"
+        data-stage="4"
+        data-week="7-8"
+      >
+        <div class="stage-content md:w-1/2 text-center md:text-right">
+          <div class="stage-number text-primary/60 text-sm font-medium mb-3">Week 7-8</div>
+          <h3 class="h3 mb-4">Digital Presence</h3>
+          <p class="text-white/80 text-lg leading-relaxed">
+            High-converting websites and funnels go live, turning visitors into customers automatically.
+          </p>
+        </div>
+        <div class="stage-visual md:w-1/2">
+          <div class="interface-screenshot max-w-[400px] mx-auto">
+            <div class="screenshot-inner">
+              <img
+                src={`/assets/implementation/zeromotion_digital_presence_transparent.png?v=${cacheVersion}`}
+                alt="ZRM CRM Website Builder"
+                class="w-full h-auto rounded-xl shadow-2xl"
+                loading="lazy"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Stage 5: Full Operation -->
+      <div
+        class="implementation-stage flex flex-col items-center gap-8 md:gap-12 text-center"
+        data-stage="5"
+        data-week="9"
+      >
+        <div class="stage-content max-w-3xl">
+          <div class="stage-number text-primary/60 text-sm font-medium mb-3">Week 9+</div>
+          <h3 class="h3 mb-4">Scale & Optimize</h3>
+          <p class="text-white/80 text-lg leading-relaxed">
+            Complete platform mastery with mobile access anywhere. Your business now runs on autopilot while you focus on strategic growth.
+          </p>
+        </div>
+        <div class="stage-visual">
+          <div class="interface-screenshot flex gap-6 max-w-[500px] mx-auto">
+            <div class="screenshot-inner">
+              <img
+                src={`/assets/implementation/zeromotion_devices_transparent.png?v=${cacheVersion}`}
+                alt="ZRM CRM Dashboard on MacBook and Mobile App on iPhone"
+                class="w-full h-auto rounded-xl shadow-2xl"
+                loading="lazy"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+/* Weeks Timeline Cinematic Styles - Scoped to #weeks-timeline */
+#weeks-timeline {
+  --progress: 0;
+  --week-delay: 0ms;
+}
+
+/* Background Video Styling */
+#weeks-timeline .weeks-video-bg {
+  opacity: 0;
+  transition: opacity 0.8s ease-in-out;
+}
+
+#weeks-timeline[data-video-active] .weeks-video-bg {
+  opacity: 1;
+}
+
+#weeks-timeline .weeks-video {
+  opacity: 0.15;
+  filter: brightness(0.6) contrast(1.2) saturate(1.1);
+  will-change: transform, filter;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}
+
+@media (max-width: 768px) {
+  #weeks-timeline .weeks-video {
+    opacity: 0.12;
+  }
+}
+
+/* Progress Spine Styling */
+#weeks-timeline .weeks-spine {
+  opacity: 0;
+  transition: opacity 0.6s ease-in-out 0.3s;
+}
+
+#weeks-timeline[data-video-active] .weeks-spine {
+  opacity: 1;
+}
+
+#weeks-timeline .weeks-spine-fill,
+#weeks-timeline .weeks-spine-glow {
+  opacity: 0;
+  transition: opacity 0.4s ease-in-out;
+}
+
+#weeks-timeline[data-video-active] .weeks-spine-fill {
+  opacity: 1;
+}
+
+#weeks-timeline[data-video-active] .weeks-spine-glow {
+  opacity: 0.6;
+}
+
+/* Implementation Stage Reveal Animations */
+#weeks-timeline .implementation-stage {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: all 0.6s cubic-bezier(0.2, 0.65, 0.2, 1);
+  transition-delay: var(--week-delay);
+  position: relative;
+}
+
+#weeks-timeline .implementation-stage.animate-in {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Active Week Highlight */
+#weeks-timeline .implementation-stage.active::before {
+  content: '';
+  position: absolute;
+  top: -16px;
+  left: -16px;
+  right: -16px;
+  bottom: -16px;
+  background: radial-gradient(circle, rgba(139, 92, 246, 0.15) 0%, transparent 70%);
+  border-radius: 16px;
+  z-index: -1;
+  opacity: 0;
+  animation: active-week-glow 2s ease-in-out infinite;
+  box-shadow: 0 0 20px rgba(139, 92, 246, 0.3);
+}
+
+@keyframes active-week-glow {
+  0%, 100% { opacity: 0.3; }
+  50% { opacity: 0.6; }
+}
+
+/* Interface Screenshot Enhancements */
+#weeks-timeline .interface-screenshot {
+  transition: transform 0.3s ease;
+  position: relative;
+}
+
+#weeks-timeline .screenshot-inner {
+  transform: translateY(0);
+  transition: transform 0.2s ease;
+  will-change: transform;
+}
+
+#weeks-timeline .interface-screenshot img {
+  image-rendering: -webkit-optimize-contrast;
+  image-rendering: crisp-edges;
+  backface-visibility: hidden;
+  transform: translateZ(0);
+}
+
+/* Micro-Parallax on Scroll */
+#weeks-timeline .implementation-stage.animate-in .screenshot-inner {
+  transform: translateY(calc(var(--parallax-offset, 0) * 1px));
+}
+
+/* Chrome Sheen Hover Effect (Desktop Only) */
+@media (hover: hover) and (pointer: fine) {
+  #weeks-timeline .implementation-stage.active .interface-screenshot::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      rgba(255, 255, 255, 0.1) 50%,
+      transparent
+    );
+    transition: left 0.8s ease;
+    border-radius: inherit;
+    pointer-events: none;
+  }
+  
+  #weeks-timeline .implementation-stage.active .interface-screenshot:hover::after {
+    left: 100%;
+  }
+}
+
+/* Mobile Responsive Adjustments */
+@media (max-width: 768px) {
+  #weeks-timeline .weeks-spine {
+    left: 1rem;
+  }
+  
+  #weeks-timeline .implementation-stage {
+    transform: translateY(20px);
+  }
+  
+  #weeks-timeline .implementation-stage.animate-in {
+    transform: translateY(0);
+  }
+  
+  #weeks-timeline .interface-screenshot {
+    max-width: 100%;
+  }
+  
+  #weeks-timeline .interface-screenshot img {
+    border-radius: 8px;
+  }
+}
+
+/* Reduced Motion Support */
+@media (prefers-reduced-motion: reduce) {
+  #weeks-timeline .weeks-video {
+    display: none;
+  }
+  
+  #weeks-timeline .implementation-stage {
+    transition: none;
+    opacity: 1;
+    transform: none;
+  }
+  
+  #weeks-timeline .interface-screenshot {
+    transition: none;
+  }
+  
+  #weeks-timeline .screenshot-inner {
+    transform: none !important;
+  }
+  
+  #weeks-timeline .implementation-stage.active::before {
+    animation: none;
+  }
+}
+
+/* Text Readability Enhancements with White Glow */
+#weeks-timeline .h2,
+#weeks-timeline .h3 {
+  text-shadow: 
+    0 0 8px rgba(255, 255, 255, 0.8),
+    0 0 16px rgba(255, 255, 255, 0.4),
+    0 2px 4px rgba(0, 0, 0, 0.8),
+    0 4px 8px rgba(0, 0, 0, 0.6),
+    0 1px 3px rgba(0, 0, 0, 1);
+  color: rgba(255, 255, 255, 1);
+  font-weight: 600;
+}
+
+#weeks-timeline p,
+#weeks-timeline .stage-number {
+  text-shadow: 
+    0 0 6px rgba(255, 255, 255, 0.6),
+    0 0 12px rgba(255, 255, 255, 0.3),
+    0 1px 3px rgba(0, 0, 0, 0.9),
+    0 2px 6px rgba(0, 0, 0, 0.7);
+  color: rgba(255, 255, 255, 0.95);
+}
+
+/* Clean transparency - no backgrounds */
+#weeks-timeline .stage-content {
+  /* Clean, no background containers */
+}
+
+#weeks-timeline .text-center.mb-12 {
+  /* Clean, no background containers */
+}
+
+/* Clean stage numbers with enhanced glow */
+#weeks-timeline .stage-number {
+  color: rgba(139, 92, 246, 1);
+  font-weight: 600;
+  text-shadow: 
+    0 0 8px rgba(139, 92, 246, 0.8),
+    0 0 16px rgba(139, 92, 246, 0.4),
+    0 0 4px rgba(255, 255, 255, 0.6),
+    0 1px 3px rgba(0, 0, 0, 0.9),
+    0 2px 6px rgba(0, 0, 0, 0.7);
+}
+
+/* Clean PNG visibility - no containers */
+#weeks-timeline .interface-screenshot {
+  /* Clean, no background containers */
+}
+
+#weeks-timeline .interface-screenshot img {
+  /* Enhanced shadow for PNG visibility without containers */
+  box-shadow: 
+    0 8px 32px rgba(0, 0, 0, 0.6),
+    0 4px 16px rgba(0, 0, 0, 0.5),
+    0 2px 8px rgba(0, 0, 0, 0.8);
+}
+
+/* Mobile text readability improvements - clean transparency */
+@media (max-width: 768px) {
+  #weeks-timeline .stage-content {
+    /* Clean, no background containers */
+  }
+  
+  #weeks-timeline .text-center.mb-12 {
+    /* Clean, no background containers */
+  }
+  
+  #weeks-timeline .h2,
+  #weeks-timeline .h3 {
+    text-shadow: 
+      0 0 10px rgba(255, 255, 255, 0.9),
+      0 0 20px rgba(255, 255, 255, 0.5),
+      0 2px 6px rgba(0, 0, 0, 0.95),
+      0 4px 12px rgba(0, 0, 0, 0.9),
+      0 1px 3px rgba(0, 0, 0, 1);
+  }
+  
+  #weeks-timeline p {
+    text-shadow: 
+      0 0 8px rgba(255, 255, 255, 0.7),
+      0 0 16px rgba(255, 255, 255, 0.4),
+      0 1px 4px rgba(0, 0, 0, 0.95),
+      0 2px 8px rgba(0, 0, 0, 0.8),
+      0 4px 16px rgba(0, 0, 0, 0.6);
+  }
+}
+
+/* High contrast mode support - enhanced glow only */
+@media (prefers-contrast: high) {
+  #weeks-timeline .stage-content {
+    /* Clean, no background containers */
+  }
+  
+  #weeks-timeline .text-center.mb-12 {
+    /* Clean, no background containers */
+  }
+  
+  #weeks-timeline .h2,
+  #weeks-timeline .h3,
+  #weeks-timeline p {
+    color: rgba(255, 255, 255, 1);
+    text-shadow: 
+      0 0 12px rgba(255, 255, 255, 1),
+      0 0 24px rgba(255, 255, 255, 0.6),
+      0 2px 4px rgba(0, 0, 0, 1),
+      0 4px 8px rgba(0, 0, 0, 1);
+  }
+}
+
+/* Gradient Radial Utility */
+.bg-gradient-radial {
+  background: radial-gradient(var(--tw-gradient-stops));
+}
+</style>
+
+<script>
+  // @ts-ignore - Weeks Timeline Cinematic Scroll Experience
+  function initWeeksTimeline() {
+    const section = document.getElementById('weeks-timeline');
+    const video = section?.querySelector('[data-video-element]') as HTMLVideoElement;
+    const stages = section?.querySelectorAll('.implementation-stage');
+    const spine = section?.querySelector('.weeks-spine');
+    
+    if (!section || !video || !stages?.length) return;
+    
+    // Check for reduced motion preference
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    
+    let isVideoActive = false;
+    let animationFrame: number;
+    
+    // Section intersection observer for video lifecycle
+    const sectionObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        const isIntersecting = entry.isIntersecting && entry.intersectionRatio >= 0.1;
+        
+        if (isIntersecting && !isVideoActive) {
+          // Activate video and section
+          isVideoActive = true;
+          section.setAttribute('data-video-active', '');
+          
+          if (!prefersReducedMotion && video.paused) {
+            video.play().catch(() => {});
+          }
+          
+          // Start scroll tracking
+          initScrollTracking();
+        } else if (!isIntersecting && isVideoActive) {
+          // Deactivate video and section
+          isVideoActive = false;
+          section.removeAttribute('data-video-active');
+          
+          if (!video.paused) {
+            video.pause();
+          }
+          
+          // Stop scroll tracking
+          if (animationFrame) {
+            cancelAnimationFrame(animationFrame);
+          }
+        }
+      });
+    }, { threshold: 0.1, rootMargin: '10px' });
+    
+    sectionObserver.observe(section);
+    
+    // Stage reveal observer
+    const stageObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const stage = entry.target as HTMLElement;
+          const stageIndex = parseInt(stage.dataset.stage || '0') - 1;
+          const delay = Math.min(stageIndex * 40, 360); // Max 360ms stagger
+          
+          // Set CSS custom property for delay
+          stage.style.setProperty('--week-delay', `${delay}ms`);
+          
+          setTimeout(() => {
+            stage.classList.add('animate-in');
+          }, delay);
+        }
+      });
+    }, { threshold: 0.3, rootMargin: '-50px' });
+    
+    // Observe all stages
+    stages?.forEach(stage => stageObserver.observe(stage));
+    
+    function initScrollTracking() {
+      let ticking = false;
+      
+      function updateScrollEffects() {
+        if (!isVideoActive || !section) return;
+        
+        const rect = section.getBoundingClientRect();
+        const sectionHeight = rect.height;
+        const sectionTop = rect.top;
+        const viewportHeight = window.innerHeight;
+        
+        // Calculate section progress (0-1)
+        const sectionProgress = Math.max(0, Math.min(1, 
+          (viewportHeight - sectionTop) / (viewportHeight + sectionHeight)
+        ));
+        
+        // Update spine progress
+        (section as HTMLElement).style.setProperty('--progress', sectionProgress.toString());
+        
+        // Find active stage (closest to 45% viewport height)
+        let activeStage: Element | null = null;
+        let closestDistance = Infinity;
+        const targetY = viewportHeight * 0.45;
+        
+        stages?.forEach(stage => {
+          const stageRect = stage.getBoundingClientRect();
+          const stageCenterY = stageRect.top + stageRect.height / 2;
+          const distance = Math.abs(stageCenterY - targetY);
+          
+          if (distance < closestDistance && stageRect.top < viewportHeight && stageRect.bottom > 0) {
+            closestDistance = distance;
+            activeStage = stage;
+          }
+        });
+        
+        // Update active stage
+        stages?.forEach(stage => {
+          const isActive = stage === activeStage;
+          stage.classList.toggle('active', isActive);
+          
+          if (isActive) {
+            stage.setAttribute('aria-current', 'step');
+          } else {
+            stage.removeAttribute('aria-current');
+          }
+          
+          // Micro-parallax effect (if not reduced motion)
+          if (!prefersReducedMotion && stage.classList.contains('animate-in')) {
+            const stageRect = stage.getBoundingClientRect();
+            const stageProgress = (viewportHeight - stageRect.top) / viewportHeight;
+            const parallaxOffset = Math.max(-6, Math.min(6, (stageProgress - 0.5) * 12));
+            
+            (stage as HTMLElement).style.setProperty('--parallax-offset', parallaxOffset.toString());
+          }
+        });
+        
+        ticking = false;
+      }
+      
+      function onScroll() {
+        if (!ticking) {
+          animationFrame = requestAnimationFrame(updateScrollEffects);
+          ticking = true;
+        }
+      }
+      
+      // Passive scroll listener for performance
+      window.addEventListener('scroll', onScroll, { passive: true });
+      
+      // Initial update
+      updateScrollEffects();
+    }
+    
+    // Handle video errors gracefully
+    video.addEventListener('error', () => {
+      console.warn('Weeks timeline video failed to load');
+      section.removeAttribute('data-video-active');
+    });
+    
+    // Pause video when page becomes hidden
+    document.addEventListener('visibilitychange', () => {
+      if (document.hidden && !video.paused) {
+        video.pause();
+      } else if (!document.hidden && isVideoActive && video.paused && !prefersReducedMotion) {
+        video.play().catch(() => {});
+      }
+    });
+  }
+  
+  // Initialize when DOM is ready
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initWeeksTimeline);
+  } else {
+    initWeeksTimeline();
+  }
+  
+  // Cleanup on page unload
+  window.addEventListener('beforeunload', () => {
+    const video = document.querySelector('#weeks-timeline [data-video-element]') as HTMLVideoElement;
+    if (video && !video.paused) {
+      video.pause();
+    }
+  });
+</script>

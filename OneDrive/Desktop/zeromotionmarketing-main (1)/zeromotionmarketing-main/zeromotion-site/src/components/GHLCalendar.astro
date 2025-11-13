@@ -1,0 +1,20 @@
+---
+const CAL_BASE = import.meta.env.PUBLIC_GHL_CAL_BASE;
+const CAL_ID = import.meta.env.PUBLIC_GHL_CALENDAR_ID;
+const CAL_SCRIPT = import.meta.env.PUBLIC_GHL_CALENDAR_SCRIPT || "/js/booking_embed.js";
+---
+{CAL_ID ? (
+  <>
+    <div class="zrm-calendar-wrap">
+      <iframe
+        src={`${CAL_BASE}/widget/booking/${CAL_ID}`}
+        style="width:100%;min-height:820px;border:none;border-radius:6px;background:transparent"
+        loading="lazy"
+        title="Book Free Consultation"
+        scrolling="auto" />
+    </div>
+    <script src={`${CAL_BASE}${CAL_SCRIPT}`} async></script>
+  </>
+) : (
+  <p style="opacity:.7">Calendar not configured. Set PUBLIC_GHL_CALENDAR_ID in Vercel.</p>
+)}

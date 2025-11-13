@@ -1,0 +1,524 @@
+---
+export interface Props {
+  title?: string;
+  description?: string;
+  ogImage?: string;
+  canonical?: string;
+  keywords?: string;
+  schema?: any;
+  noindex?: boolean;
+}
+const {
+  title = "ZeroMotion — Web Development & Marketing for Houma & Thibodaux",
+  description = "ZeroMotion delivers professional web development and digital marketing solutions for Louisiana businesses. Local roots. Global standards. Real results.",
+  ogImage = "/favico/android-chrome-512x512.png",
+  canonical,
+  keywords = "digital marketing Houma LA, web design Thibodaux, ZRM CRM automation, AI marketing Louisiana, local SEO Terrebonne Parish",
+  schema,
+  noindex = false
+} = Astro.props as Props;
+
+// Build canonical URL
+const siteUrl = Astro.site || new URL(Astro.url.origin);
+const canonicalURL = canonical ? new URL(canonical, siteUrl) : new URL(Astro.url.pathname, siteUrl);
+import Navbar from "../components/Navbar.astro";
+import Footer from "../components/Footer.astro";
+import PerformanceOptimizer from "../components/PerformanceOptimizer.astro";
+import StrategistModal from "../components/StrategistModal.astro";
+import LeadModal from "../components/LeadModal.astro";
+import MobileStickyCTA from "../components/MobileStickyCTA.astro";
+import Analytics from "../components/Analytics.astro";
+import CookieConsent from "../components/CookieConsent.astro";
+import EventTracker from "../components/EventTracker.astro";
+import ServerSideTracking from "../components/ServerSideTracking.astro";
+import AnalyticsDebugger from "../components/AnalyticsDebugger.astro";
+import PWATest from "../components/PWATest.astro";
+import "../styles/global.css";
+---
+<html lang="en" class="bg-ink text-white">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="description" content={description} />
+    <meta name="keywords" content={keywords} />
+    <meta name="theme-color" content="#0A0A0A" />
+    
+    <!-- SEO Meta Tags -->
+    <title>{title}</title>
+    <link rel="canonical" href={canonicalURL} />
+    {noindex && <meta name="robots" content="noindex, nofollow" />}
+    <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
+    <meta name="googlebot" content="index, follow" />
+    
+    <!-- Local SEO -->
+    <meta name="geo.region" content="US-LA" />
+    <meta name="geo.placename" content="Houma, Louisiana" />
+    <meta name="geo.position" content="29.5957;-90.7195" />
+    <meta name="ICBM" content="29.5957, -90.7195" />
+    
+    <!-- Enhanced Performance & Resource Hints - Mobile Optimized -->
+    <!-- Critical preconnects for fastest loading -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="preconnect" href="https://www.googletagmanager.com" crossorigin />
+    <link rel="preconnect" href="https://www.google-analytics.com" crossorigin />
+    <!-- ZRM CRM endpoints for fast form/calendar loading -->
+    <link rel="preconnect" href="https://app.gohighlevel.com" crossorigin />
+    <link rel="preconnect" href="https://api.gohighlevel.com" crossorigin />
+    <!-- GoHighLevel Chat Widget endpoints for fast widget loading -->
+    <link rel="preconnect" href="https://beta.leadconnectorhq.com" crossorigin />
+    <link rel="dns-prefetch" href="https://beta.leadconnectorhq.com" />
+
+    <!-- DNS prefetch for secondary domains -->
+    <link rel="dns-prefetch" href="https://vercel.com" />
+    <link rel="dns-prefetch" href="https://www.facebook.com" />
+    <link rel="dns-prefetch" href="https://www.linkedin.com" />
+    <link rel="dns-prefetch" href="https://www.twitter.com" />
+
+    <!-- Critical Font Preloading with SRI - Mobile Optimized -->
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'" crossorigin="anonymous" />
+    <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" crossorigin="anonymous" /></noscript>
+
+    <!-- Critical Asset Preloading - Mobile Optimized -->
+    <!-- Preload critical images -->
+    <link rel="preload" href="/favico/android-chrome-512x512.png" as="image" type="image/png" />
+    
+    <!-- Preload hero logo assets conditionally based on device -->
+    <!-- Desktop: Preload video logo -->
+    <link rel="preload" href="/brand/ZeroMotion-Transparent-OBS-v2.webm" as="video" type="video/webm" media="(min-width: 769px)" />
+    
+    <!-- Mobile: Preload optimized static logo -->
+    <link rel="preload" href="/optimized/brand/ZeroMotion-Mobile-Logo.webp" as="image" type="image/webp" media="(max-width: 768px)" />
+    <link rel="preload" href="/brand/ZeroMotion-Mobile-Logo.png" as="image" type="image/png" media="(max-width: 768px)" />
+
+    <!-- Preload critical fonts -->
+    <link rel="preload" href="https://fonts.gstatic.com/s/inter/v13/UcCO3FwrK3iLTeHuS_fvQtMwCp50KnMw2boKoduKmMEVuLyfAZ9hiA.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="https://fonts.gstatic.com/s/inter/v13/UcCO3FwrK3iLTeHuS_fvQtMwCp50KnMw2boKoduKmMEVuI6fAZ9hiA.woff2" as="font" type="font/woff2" crossorigin />
+
+    <!-- Preload critical CSS and JS modules -->
+
+    <!-- Preload service worker for instant registration -->
+    <link rel="preload" href="/sw.js" as="script" crossorigin />
+
+    <!-- Preload cache manifest -->
+    <link rel="preload" href="/cache-manifest.json" as="fetch" crossorigin />
+
+    <!-- Prefetch likely navigation targets -->
+    <link rel="prefetch" href="/pricing" />
+    <link rel="prefetch" href="/quiz" />
+    <link rel="prefetch" href="/services/web-design" />
+    <link rel="prefetch" href="/services/brand-identity" />
+    <link rel="prefetch" href="/about" />
+    <link rel="prefetch" href="/contact" />
+
+    <!-- Mobile-specific meta tags -->
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-title" content="ZeroMotion" />
+
+    <!-- Resource hints for mobile performance -->
+    <link rel="prefetch" href="/pricing" />
+    <link rel="prefetch" href="/quiz" />
+    <link rel="prefetch" href="/services/web-design" />
+    <link rel="prefetch" href="/about" />
+
+    <!-- Mobile viewport optimizations -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <!-- Prefer accessible zoom; avoid legacy maximum-scale constraints -->
+    <meta name="theme-color" content="#0A0A0A" media="(prefers-color-scheme: dark)" />
+    <meta name="theme-color" content="#FFFFFF" media="(prefers-color-scheme: light)" />
+    
+    <!-- Favicons -->
+    <link rel="icon" type="image/gif" href="/favico/ZeroMotion-GIF.gif" />
+    <link rel="icon" href="/favico/favicon.ico" sizes="any" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favico/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/favico/favicon-16x16.png" />
+    <link rel="apple-touch-icon" href="/favico/apple-touch-icon.png" />
+    <link rel="manifest" href="/favico/site.webmanifest" />
+    
+    <!-- Open Graph -->
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonicalURL} />
+    <meta property="og:image" content={new URL(ogImage, siteUrl)} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:site_name" content="ZeroMotion Marketing" />
+    <meta property="og:locale" content="en_US" />
+    
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content="@zeromotion" />
+    <meta name="twitter:creator" content="@zeromotion" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={new URL(ogImage, siteUrl)} />
+    <meta name="twitter:image:alt" content="ZeroMotion Marketing - Web Development Based Out of Louisiana" />
+    
+    <!-- Additional Meta -->
+    <meta name="author" content="ZeroMotion Marketing" />
+    <meta name="copyright" content="ZeroMotion Marketing" />
+    <meta name="language" content="en" />
+    <meta name="revisit-after" content="7 days" />
+    
+    <!-- Critical CSS Inlined -->
+    <style>
+      /* Critical above-the-fold styles */
+      :root {
+        --zm-bg: #0d0d1a;
+        --zm-surface: #1a1a2e;
+        --zm-text: #ffffff;
+        --zm-text-muted: #a0a0b0;
+        --zm-primary: #8b5cf6;
+        --zm-border: rgba(255, 255, 255, 0.1);
+        --zm-gap-xl: 48px;
+      }
+      
+      html {
+        scroll-behavior: smooth;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+      }
+      
+      body {
+        background-color: var(--zm-bg);
+        color: var(--zm-text);
+        font-family: Inter, -apple-system, system-ui, sans-serif;
+        margin: 0;
+        line-height: 1.6;
+      }
+      
+      /* Critical layout styles */
+      .container-page {
+        max-width: 1280px;
+        margin: 0 auto;
+        padding: 0 20px;
+      }
+      
+      .hero-section {
+        min-height: 70vh;
+        position: relative;
+        display: grid;
+        place-items: center;
+        text-align: center;
+        overflow: hidden;
+      }
+      
+      /* Critical button styles */
+      .btn-primary {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: 18px 36px;
+        font-weight: 600;
+        border-radius: 24px;
+        background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%);
+        color: #ffffff;
+        text-decoration: none;
+        border: 2px solid rgba(255, 255, 255, 0.2);
+        transition: all 0.3s ease;
+      }
+      
+      /* Respect reduced motion */
+      @media (prefers-reduced-motion: reduce) {
+        * { 
+          animation: none !important; 
+          transition: none !important; 
+        }
+        html { scroll-behavior: auto; }
+      }
+      
+      /* Loading optimization */
+      img[loading="lazy"] {
+        opacity: 0;
+        transition: opacity 0.3s;
+      }
+      
+      img[loading="lazy"].loaded {
+        opacity: 1;
+      }
+      
+      /* Prevent layout shift */
+      img, video {
+        height: auto;
+        max-width: 100%;
+      }
+      
+      /* Font display optimization */
+      @font-face {
+        font-family: 'Inter';
+        font-display: swap;
+      }
+    </style>
+    <!-- JSON-LD Structured Data -->
+    {schema && (
+      <script type="application/ld+json" set:html={JSON.stringify(schema)} />
+    )}
+    
+    <!-- Default LocalBusiness Schema -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "LocalBusiness",
+        "name": "ZeroMotion Marketing",
+        "image": "https://zeromotion.marketing/favico/android-chrome-512x512.png",
+        "description": "Professional web development and digital marketing agency specializing in custom websites, ZRM CRM automation, and local SEO for Louisiana businesses in Houma, Thibodaux, and Terrebonne Parish.",
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Houma",
+          "addressRegion": "LA",
+          "addressCountry": "US",
+          "postalCode": "70360"
+        },
+        "geo": {
+          "@type": "GeoCoordinates",
+          "latitude": 29.5957,
+          "longitude": -90.7195
+        },
+        "url": "https://zeromotion.marketing",
+        "telephone": "+1-985-303-2016",
+        "priceCurrency": "USD",
+        "openingHours": "Mo-Fr 09:00-17:00",
+        "sameAs": [
+          "https://www.facebook.com/zeromotion",
+          "https://www.linkedin.com/company/zeromotion",
+          "https://twitter.com/zeromotion"
+        ],
+        "serviceArea": [
+          {
+            "@type": "City",
+            "name": "Houma",
+            "addressRegion": "LA"
+          },
+          {
+            "@type": "City", 
+            "name": "Thibodaux",
+            "addressRegion": "LA"
+          },
+          {
+            "@type": "AdministrativeArea",
+            "name": "Terrebonne Parish",
+            "addressRegion": "LA"
+          }
+        ],
+        "hasOfferCatalog": {
+          "@type": "OfferCatalog",
+          "name": "Digital Marketing Services",
+          "itemListElement": [
+            {
+              "@type": "Offer",
+              "itemOffered": {
+                "@type": "Service",
+                "name": "Web Design",
+                "description": "Professional website design and development"
+              }
+            },
+            {
+              "@type": "Offer", 
+              "itemOffered": {
+                "@type": "Service",
+                "name": "Digital Marketing",
+                "description": "Comprehensive digital marketing and automation"
+              }
+            },
+            {
+              "@type": "Offer",
+              "itemOffered": {
+                "@type": "Service", 
+                "name": "ZRM CRM Automation",
+                "description": "CRM and marketing automation setup"
+              }
+            }
+          ]
+        }
+      }
+    </script>
+    
+    <!-- Additional head content slot -->
+    <slot name="head" />
+    
+    <!-- Comprehensive Analytics Setup -->
+    <Analytics enableServerSide={!!import.meta.env.PUBLIC_GTM_SERVER_URL} />
+
+    <!-- Sentry Error Tracking - Lazy loaded after 5 seconds for better performance -->
+    {import.meta.env.SENTRY_DSN && (
+      <script>
+        // Lazy load Sentry after page is interactive to reduce initial bundle size
+        setTimeout(() => {
+          import('/sentry.client.config.js').catch(err => console.error('Sentry load failed:', err));
+        }, 5000);
+        
+        // Also load on error for immediate error tracking
+        window.addEventListener('error', () => {
+          import('/sentry.client.config.js').catch(() => {});
+        }, { once: true });
+      </script>
+    )}
+
+    <!-- Graceful Degradation System - Handled by individual components -->
+
+    <!-- Cache Bypass System - Handled by individual components -->
+
+  </head>
+  <body class="min-h-screen antialiased selection:bg-primary/30 selection:text-white">
+    <!-- iOS height fallback & scroll position fix -->
+    <script>
+      (function () {
+        // Set CSS custom property for viewport height
+        function setVh(){document.documentElement.style.setProperty('--vh',(window.innerHeight*0.01)+'px');}
+        setVh(); 
+        window.addEventListener('resize', setVh);
+        
+        // Prevent initial overscroll on page load
+        if ('scrollRestoration' in history) {
+          history.scrollRestoration = 'manual';
+        }
+        
+        // Ensure page starts at top without excess space
+        window.scrollTo(0, 0);
+        document.documentElement.scrollTop = 0;
+        document.body.scrollTop = 0;
+        
+        // Reset scroll position after content loads
+        window.addEventListener('load', function() {
+          window.scrollTo(0, 0);
+          document.documentElement.scrollTop = 0;
+          document.body.scrollTop = 0;
+        });
+      })();
+    </script>
+
+    <div id="scroll-root">
+      {import.meta.env.PUBLIC_GTM_ID && (
+        <noscript><iframe src={"https://www.googletagmanager.com/ns.html?id="+import.meta.env.PUBLIC_GTM_ID} height="0" width="0" style="display:none;visibility:hidden" title="Google Tag Manager"></iframe></noscript>
+      )}
+
+      <!-- Skip to content links for keyboard navigation -->
+      <a href="#main-content" class="skip-to-content">
+        Skip to main content
+      </a>
+      <a href="#navigation" class="skip-to-content">
+        Skip to navigation
+      </a>
+
+      <!-- Graceful Degradation UI Elements -->
+      <div id="user-warnings" class="user-warnings-container" aria-live="polite"></div>
+      <div id="error-notifications" class="error-notifications-container" aria-live="assertive"></div>
+      <div id="network-status" class="network-status-indicator" aria-live="polite"></div>
+
+      <Navbar />
+      <main id="main-content" role="main">
+        <slot />
+      </main>
+      <Footer />
+      <StrategistModal />
+      <LeadModal />
+      <MobileStickyCTA />
+      <!-- Cookie Consent & Event Tracking -->
+      <CookieConsent />
+      <EventTracker />
+      <ServerSideTracking enableServerSide={!!import.meta.env.PUBLIC_GTM_SERVER_URL} />
+      <AnalyticsDebugger />
+      <script>
+        const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        if(!prefersReduced && 'IntersectionObserver' in window){
+          const io = new IntersectionObserver((entries)=>{
+            for(const e of entries){ if(e.isIntersecting){ e.target.classList.add('reveal-in'); io.unobserve(e.target); } }
+          }, { threshold: 0.12 });
+          document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+        }
+      </script>
+      <!-- Dev-only button overflow detection -->
+      {import.meta.env.NODE_ENV !== 'production' && (
+        <script type="module" is:inline>
+          import('/src/scripts/button-overflow-dev-check.ts');
+          import('/src/scripts/form-validation-test.ts');
+        </script>
+      )}
+
+      <!-- Production cache refresh system -->
+      <script type="module" is:inline>
+        import('/src/scripts/cache-refresh.ts');
+      </script>
+      <PerformanceOptimizer />
+
+      <!-- PWA Testing Component (Development Only) -->
+      {import.meta.env.NODE_ENV !== 'production' && <PWATest />}
+    </div>
+
+    <!-- GoHighLevel External Tracking Script - Production Only -->
+    {import.meta.env.PROD && import.meta.env.PUBLIC_GHL_TRACKING_SCRIPT_URL && import.meta.env.PUBLIC_GHL_TRACKING_ID && (
+      <script
+        src={import.meta.env.PUBLIC_GHL_TRACKING_SCRIPT_URL}
+        data-tracking-id={import.meta.env.PUBLIC_GHL_TRACKING_ID}
+      ></script>
+    )}
+
+    <!-- Development QA Logs for GHL Tracking -->
+    {import.meta.env.NODE_ENV !== 'production' && import.meta.env.PUBLIC_GHL_TRACKING_SCRIPT_URL && import.meta.env.PUBLIC_GHL_TRACKING_ID && (
+      <script>
+        // Development-only GHL tracking verification
+        window.addEventListener('load', () => {
+          setTimeout(() => {
+            if (window.gtag || (window as any).dataLayer) {
+              console.log('✅ GHL Tracking: Script loaded successfully');
+              console.log('📊 GHL Tracking: Available tracking methods:', {
+                gtag: typeof window.gtag,
+                dataLayer: typeof (window as any).dataLayer,
+                trackingId: import.meta.env.PUBLIC_GHL_TRACKING_ID
+              });
+            } else {
+              console.warn('⚠️ GHL Tracking: Script may not have loaded or initialized properly');
+            }
+          }, 2000);
+        });
+
+        // Log pageview events in development
+        if ((window as any).dataLayer) {
+          const originalPush = (window as any).dataLayer.push;
+          (window as any).dataLayer.push = function(...args: any[]) {
+            console.log('📈 GHL Tracking: Pageview event fired:', args);
+            return originalPush.apply(this, args);
+          };
+        }
+      </script>
+    )}
+
+    <!-- GoHighLevel AI Voice & Conversation Agent Widget -->
+    <!-- Loaded asynchronously to prevent blocking page render -->
+    <script
+      src="https://beta.leadconnectorhq.com/loader.js"
+      data-resources-url="https://beta.leadconnectorhq.com/chat-widget/loader.js"
+      data-widget-id="6914f46df9ec17b384853d28"
+      async
+    ></script>
+
+    <!-- Development verification for Chat Widget -->
+    {import.meta.env.NODE_ENV !== 'production' && (
+      <script>
+        // Development-only chat widget verification
+        window.addEventListener('load', () => {
+          setTimeout(() => {
+            const widgetScript = document.querySelector('script[data-widget-id="6914f46df9ec17b384853d28"]');
+            if (widgetScript) {
+              console.log('✅ GHL Chat Widget: Script tag found in DOM');
+              // Check if widget container exists (widget may inject its own container)
+              const widgetContainer = document.querySelector('[data-ghl-widget]') || 
+                                     document.querySelector('[id*="ghl"]') ||
+                                     document.querySelector('[class*="chat-widget"]') ||
+                                     document.querySelector('[class*="leadconnector"]');
+              if (widgetContainer) {
+                console.log('✅ GHL Chat Widget: Widget container detected');
+              } else {
+                console.log('ℹ️ GHL Chat Widget: Widget may load dynamically on user interaction');
+              }
+            } else {
+              console.warn('⚠️ GHL Chat Widget: Script tag not found');
+            }
+          }, 3000);
+        });
+      </script>
+    )}
+  </body>
+</html> 

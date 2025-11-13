@@ -1,0 +1,66 @@
+---
+// Get ZRM CRM configuration from environment variables
+// This form uses a different form ID than the main contact form
+const widgetBase = import.meta.env.PUBLIC_WIDGET_BASE || import.meta.env.PUBLIC_GHL_CAL_BASE || 'https://link.zeromotionmarketing.com';
+const homeFormId = 'vSs75oKjAPcQGOAT8xOK'; // Homepage-specific form
+const homeFormUrl = `${widgetBase}/widget/form/${homeFormId}`;
+const formScript = '/js/form_embed.js';
+const formScriptUrl = `${widgetBase}${formScript}`;
+---
+
+<section
+  id="contact"
+  class="section-padding reveal"
+  aria-labelledby="contact-title"
+>
+  <div class="container-page max-w-xl">
+    <h2 id="contact-title" class="h2 mb-2 text-center">
+      Your brand in motion starts here.
+    </h2>
+    <p class="subtle text-center mb-4">We’ll reach out within one business day.</p>
+    <div class="gradient-frame">
+      <div class="gradient-inner p-2">
+        <div class="glass rounded-xl p-3">
+          <iframe
+            src={homeFormUrl}
+            style="width:100%;border:none;border-radius:12px;overflow:hidden;background:transparent;min-height:500px;touch-action:auto;-webkit-overflow-scrolling:touch;"
+            id="inline-vSs75oKjAPcQGOAT8xOK"
+            data-layout="{'id':'INLINE'}"
+            data-trigger-type="alwaysShow"
+            data-trigger-value=""
+            data-activation-type="alwaysActivated"
+            data-activation-value=""
+            data-deactivation-type="neverDeactivate"
+            data-deactivation-value=""
+            data-form-name="HomepageForm"
+            data-layout-iframe-id="inline-vSs75oKjAPcQGOAT8xOK"
+            data-form-id="vSs75oKjAPcQGOAT8xOK"
+            title="HomepageForm"
+            loading="lazy"
+            allowtransparency="true"
+          ></iframe>
+        </div>
+      </div>
+    </div>
+    <p class="subtle mt-3 text-center">
+      Prefer email or phone? <a
+        href="mailto:zeromotionmarketing@gmail.com"
+        class="underline decoration-white/20 hover:decoration-white"
+        >zeromotionmarketing@gmail.com</a
+      > • <a
+        href="tel:+19853032016"
+        class="underline decoration-white/20 hover:decoration-white"
+        >(985) 303-2016</a
+      ><br /      >Proudly serving Houma, Thibodaux, Bourg, Morgan City, New Orleans,
+      and Baton Rouge.
+    </p>
+  </div>
+</section>
+
+<script define:vars={{ formScriptUrl }} type="text/javascript">
+  // Dynamically load ZRM form embed script
+  const script = document.createElement('script');
+  script.src = formScriptUrl;
+  script.type = 'text/javascript';
+  document.body.appendChild(script);
+</script>

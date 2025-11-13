@@ -1,0 +1,454 @@
+---
+// Enhanced Event Tracking Component
+// Automatically tracks form submissions, button clicks, video plays, external links, downloads, scroll depth
+---
+
+<script is:inline>
+  // Enhanced Event Tracking System for ZeroMotion
+  (function() {
+    'use strict';
+    
+    // Tracking state
+    let scrollDepthTracked = {
+      25: false,
+      50: false,
+      75: false,
+      90: false
+    };
+    
+    let videoTrackingState = new Map();
+    let formTrackingState = new Map();
+    
+    // Utility functions
+    const utils = {
+      // Get element text content safely
+      getElementText: function(element) {
+        return (element.textContent || element.innerText || element.value || element.alt || '').trim().substring(0, 100);
+      },
+      
+      // Check if URL is external
+      isExternalUrl: function(url) {
+        try {
+          const link = new URL(url, window.location.href);
+          return link.hostname !== window.location.hostname;
+        } catch (e) {
+          return false;
+        }
+      },
+      
+      // Get file extension
+      getFileExtension: function(url) {
+        return url.split('.').pop().toLowerCase();
+      },
+      
+      // Check if file is downloadable
+      isDownloadableFile: function(url) {
+        const downloadableExtensions = ['pdf', 'doc', 'docx', 'xls', 'xlsx', 'ppt', 'pptx', 'zip', 'rar', 'txt', 'csv'];
+        const extension = this.getFileExtension(url);
+        return downloadableExtensions.includes(extension);
+      },
+      
+      // Throttle function for performance
+      throttle: function(func, wait) {
+        let timeout;
+        return function executedFunction(...args) {
+          const later = () => {
+            clearTimeout(timeout);
+            func(...args);
+          };
+          clearTimeout(timeout);
+          timeout = setTimeout(later, wait);
+        };
+      },
+      
+      // Get plan type from URL or page content
+      getPlanContext: function() {
+        const path = window.location.pathname;
+        if (path.includes('/plans/starter')) return 'starter';
+        if (path.includes('/plans/growth')) return 'growth';
+        if (path.includes('/plans/scale')) return 'scale';
+        if (path.includes('/pricing')) return 'pricing_page';
+        return null;
+      }
+    };
+    
+    // Form submission tracking
+    function trackFormSubmissions() {
+      // Track all form submissions
+      document.addEventListener('submit', function(e) {
+        const form = e.target;
+        if (form.tagName !== 'FORM') return;
+        
+        const formId = form.id || form.className || 'unnamed_form';
+        const formAction = form.action || window.location.href;
+        const planContext = utils.getPlanContext();
+        
+        // Check if it's a ZRM form (technical endpoints)
+        const isZRMForm = form.querySelector('[data-gf-form]') || 
+                         form.action.includes('gohighlevel.com') ||
+                         form.action.includes('app.gohighlevel.com');
+        
+        // Get form data (non-sensitive fields only)
+        const formData = new FormData(form);
+        const formFields = {};
+        for (let [key, value] of formData.entries()) {
+          // Only track non-sensitive field names and types
+          if (!key.toLowerCase().includes('password') && 
+              !key.toLowerCase().includes('ssn') && 
+              !key.toLowerCase().includes('credit')) {
+            formFields[key] = typeof value === 'string' ? value.substring(0, 50) : 'file';
+          }
+        }
+        
+        if (window.ZMAnalytics) {
+          window.ZMAnalytics.trackFormSubmit(formId, planContext);
+          
+          // Additional detailed tracking
+          window.ZMAnalytics.track('form_submit_detailed', {
+            form_id: formId,
+            form_action: formAction,
+            form_type: isZRMForm ? 'ghl_form' : 'standard_form',
+            plan_context: planContext,
+            field_count: Object.keys(formFields).length,
+            conversion: true
+          });
+        }
+        
+        // Form submitted: formId, planContext
+      });
+      
+      // Track form focus events (engagement)
+      document.addEventListener('focus', function(e) {
+        if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA' || e.target.tagName === 'SELECT') {
+          const form = e.target.closest('form');
+          if (form) {
+            const formId = form.id || form.className || 'unnamed_form';
+            
+            if (!formTrackingState.has(formId)) {
+              formTrackingState.set(formId, true);
+              
+              if (window.ZMAnalytics) {
+                window.ZMAnalytics.track('form_engagement', {
+                  form_id: formId,
+                  field_type: e.target.type || e.target.tagName.toLowerCase(),
+                  engagement: true
+                });
+              }
+            }
+          }
+        }
+      }, true);
+    }
+    
+    // Button and link click tracking
+    function trackClickEvents() {
+      document.addEventListener('click', function(e) {
+        const target = e.target.closest('a, button, [role="button"], [data-track]');
+        if (!target) return;
+        
+        const text = utils.getElementText(target);
+        const href = target.href || target.getAttribute('data-href') || '';
+        const classes = target.className || '';
+        const planContext = utils.getPlanContext();
+        
+        // Determine button/link type
+        let buttonType = 'generic';
+        if (classes.includes('btn-primary')) buttonType = 'primary';
+        else if (classes.includes('btn-secondary')) buttonType = 'secondary';
+        else if (classes.includes('btn-cta')) buttonType = 'cta';
+        else if (target.tagName === 'A') buttonType = 'link';
+        
+        // Check for specific tracking attributes
+        const trackingEvent = target.getAttribute('data-event') || target.getAttribute('data-track');
+        
+        // Track consultation booking buttons
+        if (text.toLowerCase().includes('consultation') || 
+            text.toLowerCase().includes('book') || 
+            text.toLowerCase().includes('schedule') ||
+            classes.includes('consultation') ||
+            trackingEvent === 'consultation_booking') {
+          
+          if (window.ZMAnalytics) {
+            window.ZMAnalytics.trackConsultationBooking(planContext);
+          }
+        }
+        
+        // Track external links
+        if (href && utils.isExternalUrl(href)) {
+          if (window.ZMAnalytics) {
+            window.ZMAnalytics.trackExternalLink(href, text);
+          }
+        }
+        
+        // Track downloads
+        if (href && utils.isDownloadableFile(href)) {
+          const fileName = href.split('/').pop();
+          const fileType = utils.getFileExtension(href);
+          
+          if (window.ZMAnalytics) {
+            window.ZMAnalytics.trackDownload(fileName, fileType);
+          }
+        }
+        
+        // Track pricing-related clicks
+        if (text.toLowerCase().includes('pricing') || 
+            href.includes('/pricing') ||
+            classes.includes('pricing')) {
+          
+          if (window.ZMAnalytics) {
+            window.ZMAnalytics.trackPricingView(planContext || 'general');
+          }
+        }
+        
+        // General button/link tracking
+        if (window.ZMAnalytics) {
+          window.ZMAnalytics.trackButtonClick(text, buttonType, href);
+        }
+        
+        // Click tracked: text, buttonType, href
+      });
+    }
+    
+    // Video interaction tracking
+    function trackVideoEvents() {
+      // Track all video elements
+      const videos = document.querySelectorAll('video');
+      
+      videos.forEach(function(video, index) {
+        const videoId = video.id || video.src || `video_${index}`;
+        const videoSrc = video.src || video.querySelector('source')?.src || '';
+        
+        // Initialize tracking state
+        videoTrackingState.set(videoId, {
+          played: false,
+          quartile25: false,
+          quartile50: false,
+          quartile75: false,
+          completed: false
+        });
+        
+        // Play event
+        video.addEventListener('play', function() {
+          const state = videoTrackingState.get(videoId);
+          if (!state.played) {
+            state.played = true;
+            
+            if (window.ZMAnalytics) {
+              window.ZMAnalytics.trackVideoPlay(videoSrc, video.duration);
+            }
+            
+            // Video play tracked: videoSrc
+          }
+        });
+        
+        // Time update for quartile tracking
+        video.addEventListener('timeupdate', utils.throttle(function() {
+          if (!video.duration) return;
+          
+          const progress = (video.currentTime / video.duration) * 100;
+          const state = videoTrackingState.get(videoId);
+          
+          if (progress >= 25 && !state.quartile25) {
+            state.quartile25 = true;
+            if (window.ZMAnalytics) {
+              window.ZMAnalytics.track('video_progress', {
+                video_src: videoSrc,
+                progress: 25,
+                engagement: true
+              });
+            }
+          }
+          
+          if (progress >= 50 && !state.quartile50) {
+            state.quartile50 = true;
+            if (window.ZMAnalytics) {
+              window.ZMAnalytics.track('video_progress', {
+                video_src: videoSrc,
+                progress: 50,
+                engagement: true
+              });
+            }
+          }
+          
+          if (progress >= 75 && !state.quartile75) {
+            state.quartile75 = true;
+            if (window.ZMAnalytics) {
+              window.ZMAnalytics.track('video_progress', {
+                video_src: videoSrc,
+                progress: 75,
+                engagement: true
+              });
+            }
+          }
+        }, 1000));
+        
+        // Ended event
+        video.addEventListener('ended', function() {
+          const state = videoTrackingState.get(videoId);
+          if (!state.completed) {
+            state.completed = true;
+            
+            if (window.ZMAnalytics) {
+              window.ZMAnalytics.track('video_complete', {
+                video_src: videoSrc,
+                duration: video.duration,
+                engagement: true
+              });
+            }
+          }
+        });
+      });
+    }
+    
+    // Scroll depth tracking
+    function trackScrollDepth() {
+      const trackScroll = utils.throttle(function() {
+        const scrollTop = window.pageYOffset;
+        const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+        const scrollPercent = Math.round((scrollTop / docHeight) * 100);
+        
+        // Track scroll milestones
+        Object.keys(scrollDepthTracked).forEach(function(milestone) {
+          const percent = parseInt(milestone);
+          if (scrollPercent >= percent && !scrollDepthTracked[percent]) {
+            scrollDepthTracked[percent] = true;
+            
+            if (window.ZMAnalytics) {
+              window.ZMAnalytics.trackScrollDepth(percent);
+            }
+            
+            // Scroll depth tracked: percent + '%'
+          }
+        });
+      }, 500);
+      
+      window.addEventListener('scroll', trackScroll, { passive: true });
+    }
+    
+    // Page engagement tracking
+    function trackPageEngagement() {
+      let startTime = Date.now();
+      let isActive = true;
+      let totalTime = 0;
+      
+      // Track when user becomes inactive
+      document.addEventListener('visibilitychange', function() {
+        if (document.hidden) {
+          if (isActive) {
+            totalTime += Date.now() - startTime;
+            isActive = false;
+          }
+        } else {
+          startTime = Date.now();
+          isActive = true;
+        }
+      });
+      
+      // Track page unload
+      window.addEventListener('beforeunload', function() {
+        if (isActive) {
+          totalTime += Date.now() - startTime;
+        }
+        
+        const engagementTime = Math.round(totalTime / 1000); // Convert to seconds
+        
+        if (engagementTime > 10 && window.ZMAnalytics) { // Only track meaningful engagement
+          window.ZMAnalytics.track('page_engagement', {
+            engagement_time: engagementTime,
+            page_path: window.location.pathname,
+            engagement: true
+          });
+        }
+      });
+    }
+    
+    // UTM parameter tracking
+    function trackUTMParameters() {
+      const urlParams = new URLSearchParams(window.location.search);
+      const utmParams = {};
+      
+      ['utm_source', 'utm_medium', 'utm_campaign', 'utm_term', 'utm_content'].forEach(function(param) {
+        if (urlParams.has(param)) {
+          utmParams[param] = urlParams.get(param);
+        }
+      });
+      
+      // Also track other common parameters
+      ['gclid', 'fbclid', 'msclkid', 'ref', 'referrer'].forEach(function(param) {
+        if (urlParams.has(param)) {
+          utmParams[param] = urlParams.get(param);
+        }
+      });
+      
+      if (Object.keys(utmParams).length > 0) {
+        // Store UTM parameters in sessionStorage for cross-page tracking
+        sessionStorage.setItem('zm_utm_params', JSON.stringify(utmParams));
+        
+        if (window.ZMAnalytics) {
+          window.ZMAnalytics.track('utm_tracking', {
+            ...utmParams,
+            page_path: window.location.pathname
+          });
+        }
+        
+        // UTM parameters tracked: utmParams
+      }
+    }
+    
+    // Error tracking
+    function trackErrors() {
+      window.addEventListener('error', function(e) {
+        if (window.ZMAnalytics) {
+          window.ZMAnalytics.track('javascript_error', {
+            error_message: e.message,
+            error_filename: e.filename,
+            error_line: e.lineno,
+            error_column: e.colno,
+            page_path: window.location.pathname
+          });
+        }
+      });
+      
+      window.addEventListener('unhandledrejection', function(e) {
+        if (window.ZMAnalytics) {
+          window.ZMAnalytics.track('promise_rejection', {
+            error_message: e.reason?.message || 'Unknown promise rejection',
+            page_path: window.location.pathname
+          });
+        }
+      });
+    }
+    
+    // Initialize all tracking
+    function initEventTracking() {
+      trackFormSubmissions();
+      trackClickEvents();
+      trackVideoEvents();
+      trackScrollDepth();
+      trackPageEngagement();
+      trackUTMParameters();
+      trackErrors();
+      
+      // ZeroMotion Event Tracking initialized
+    }
+    
+    // Start tracking when DOM is ready
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initEventTracking);
+    } else {
+      initEventTracking();
+    }
+    
+    // Re-initialize tracking for dynamically loaded content
+    window.ZMEventTracker = {
+      reinitialize: initEventTracking,
+      trackCustomEvent: function(eventName, eventData) {
+        if (window.ZMAnalytics) {
+          window.ZMAnalytics.track(eventName, eventData);
+        }
+      }
+    };
+    
+  })();
+</script>
+

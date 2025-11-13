@@ -1,0 +1,22 @@
+User-agent: *
+Allow: /
+
+# Sitemaps
+Sitemap: https://zeromotion.marketing/sitemap.xml
+
+# Disallow admin and private areas
+Disallow: /admin/
+Disallow: /api/
+Disallow: /_astro/
+Disallow: /sw.js
+
+# Allow important directories
+Allow: /services/
+Allow: /plans/
+Allow: /pricing
+Allow: /about
+Allow: /contact
+Allow: /ad-campaigns
+
+# Crawl delay for respectful crawling
+Crawl-delay: 1

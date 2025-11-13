@@ -1,0 +1,28 @@
+version: 2
+updates:
+  # Enable version updates for npm
+  - package-ecosystem: "npm"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "09:00"
+      timezone: "America/New_York"
+    open-pull-requests-limit: 10
+    reviewers:
+      - "godspeedcurry"
+    assignees:
+      - "godspeedcurry"
+    commit-message:
+      prefix: "security"
+      include: "scope"
+    # Security updates only
+    allow:
+      - dependency-type: "direct"
+        update-type: "security"
+      - dependency-type: "indirect"
+        update-type: "security"
+    # Auto-merge security patches
+    labels:
+      - "security"
+      - "dependencies"

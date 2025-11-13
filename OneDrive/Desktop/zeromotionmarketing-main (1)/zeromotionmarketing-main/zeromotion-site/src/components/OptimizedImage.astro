@@ -1,0 +1,127 @@
+---
+import { Image } from 'astro:assets';
+
+export interface Props {
+  src: string;
+  alt: string;
+  width?: number;
+  height?: number;
+  loading?: 'lazy' | 'eager';
+  class?: string;
+  quality?: number;
+  formats?: string[];
+  sizes?: string;
+  priority?: boolean;
+  aspectRatio?: string;
+}
+
+const {
+  src,
+  alt,
+  width = 800,
+  height = 600,
+  loading = 'lazy',
+  class: className = '',
+  quality = 85,
+  formats = ['webp', 'jpeg'],
+  sizes = '(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw',
+  priority = false,
+  aspectRatio,
+  ...rest
+} = Astro.props;
+
+// Determine if this is a local or external image
+const isLocal = !src.startsWith('http') && !src.startsWith('//');
+const actualLoading = priority ? 'eager' : loading;
+
+// Build responsive sizes for different breakpoints
+const responsiveSizes = sizes || `
+  (max-width: 640px) 100vw,
+  (max-width: 768px) 50vw,
+  (max-width: 1024px) 33vw,
+  25vw
+`.replace(/\s+/g, ' ').trim();
+---
+
+{isLocal ? (
+  <Image
+    src={src}
+    alt={alt}
+    width={width}
+    height={height}
+    loading={actualLoading}
+    class={`optimized-image ${className}`}
+    quality={quality}
+    format="webp"
+    sizes={responsiveSizes}
+    style={aspectRatio ? `aspect-ratio: ${aspectRatio}` : undefined}
+    {...rest}
+  />
+) : (
+  <img
+    src={src}
+    alt={alt}
+    width={width}
+    height={height}
+    loading={actualLoading}
+    class={`optimized-image ${className}`}
+    sizes={responsiveSizes}
+    style={aspectRatio ? `aspect-ratio: ${aspectRatio}` : undefined}
+    {...rest}
+  />
+)}
+
+<style>
+  .optimized-image {
+    /* Prevent layout shift */
+    display: block;
+    max-width: 100%;
+    height: auto;
+    
+    /* Optimize rendering */
+    image-rendering: auto;
+    image-rendering: crisp-edges;
+    image-rendering: -webkit-optimize-contrast;
+    
+    /* Smooth loading transition */
+    transition: opacity 0.3s ease;
+    
+    /* Ensure proper aspect ratio */
+    object-fit: cover;
+    object-position: center;
+  }
+  
+  .optimized-image[loading="lazy"] {
+    /* Placeholder while loading */
+    background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+    background-size: 200% 100%;
+    animation: loading 1.5s infinite;
+  }
+  
+  @keyframes loading {
+    0% { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
+  }
+  
+  /* Dark theme placeholder */
+  :global(.dark) .optimized-image[loading="lazy"] {
+    background: linear-gradient(90deg, #2a2a2a 25%, #3a3a3a 50%, #2a2a2a 75%);
+    background-size: 200% 100%;
+  }
+  
+  /* Reduce motion for accessibility */
+  @media (prefers-reduced-motion: reduce) {
+    .optimized-image {
+      transition: none;
+    }
+    
+    .optimized-image[loading="lazy"] {
+      animation: none;
+      background: #f0f0f0;
+    }
+    
+    :global(.dark) .optimized-image[loading="lazy"] {
+      background: #2a2a2a;
+    }
+  }
+</style>

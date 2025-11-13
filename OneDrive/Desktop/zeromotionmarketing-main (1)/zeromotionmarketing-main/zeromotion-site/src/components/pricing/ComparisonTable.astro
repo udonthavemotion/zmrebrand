@@ -1,0 +1,855 @@
+---
+import { pricingTiers } from '../../data/packages.ts';
+
+// Enhanced feature set with icons and descriptions
+const features = [
+  { 
+    name: "Delivery Time", 
+    icon: "🚀",
+    description: "From concept to launch",
+    starter: "5–10 days", 
+    growth: "1–3 weeks", 
+    scale: "Ongoing program" 
+  },
+  { 
+    name: "Pages & Funnels", 
+    icon: "📄",
+    description: "Website pages and conversion funnels",
+    starter: "Up to 3 pages", 
+    growth: "1–2 funnels", 
+    scale: "Multi-format, split-tested" 
+  },
+  { 
+    name: "Marketing Automations", 
+    icon: "⚡",
+    description: "Follow-ups, reminders, and routing",
+    starter: "Basics (forms + notifications)", 
+    growth: "Full follow-ups + routing", 
+    scale: "Advanced flows + chatbots" 
+  },
+  { 
+    name: "Google Business & Content", 
+    icon: "📍",
+    description: "Local SEO and content management",
+    starter: "Connect only", 
+    growth: "Optimize + weekly posts", 
+    scale: "Full content calendar" 
+  },
+  { 
+    name: "Advertising Management", 
+    icon: "📊",
+    description: "Google and Meta ads",
+    starter: "—", 
+    growth: "Optional add-on", 
+    scale: "Included" 
+  },
+  { 
+    name: "Analytics & Reporting", 
+    icon: "📈",
+    description: "Performance tracking and insights",
+    starter: "Basic", 
+    growth: "Monthly", 
+    scale: "Bi-weekly deep dive" 
+  }
+];
+
+// Feature availability mapping for visual indicators
+const getFeatureStatus = (tierName: string, featureValue: string) => {
+  if (featureValue === "—" || featureValue === "Basic") return "limited";
+  if (featureValue.includes("Optional") || featureValue.includes("Connect only")) return "addon";
+  return "included";
+};
+---
+
+<div class="modern-comparison-container reveal">
+  <!-- Header Section -->
+  <div class="comparison-header">
+    <div class="text-center mb-12">
+      <h3 class="comparison-title">What each plan includes (in plain English)</h3>
+      <p class="comparison-subtitle">
+        Compare all features—without the tech talk
+      </p>
+    </div>
+  </div>
+
+  <!-- Mobile: Compact Accordion Layout (fits 100% width, no horizontal scroll) -->
+  <div class="mobile-accordion md:hidden" role="region" aria-label="Mobile plan comparison">
+    <div class="mobile-legend">
+      <span class="legend-item"><span class="legend-dot included"></span>Included</span>
+      <span class="legend-item"><span class="legend-dot addon"></span>Add-on/Partial</span>
+      <span class="legend-item"><span class="legend-dot limited"></span>Limited/Basic</span>
+    </div>
+
+    {features.map((feature) => (
+      <details class="feature-accordion">
+        <summary class="feature-accordion-summary">
+          <span class="summary-left">
+            <span class="summary-icon" role="img" aria-label={feature.name}>{feature.icon}</span>
+            <span class="summary-texts">
+              <span class="summary-title">{feature.name}</span>
+              <span class="summary-sub">{feature.description}</span>
+            </span>
+          </span>
+          <span class="summary-caret" aria-hidden="true">⌄</span>
+        </summary>
+
+        <div class="feature-accordion-content">
+          {pricingTiers.map((tier) => {
+            const value = tier.id === 'starter' ? feature.starter : 
+                         tier.id === 'growth' ? feature.growth : feature.scale;
+            const status = getFeatureStatus(tier.name, value);
+            return (
+              <div class={`plan-row ${status} ${tier.popular ? 'popular' : ''}`}> 
+                <div class="plan-row-left">
+                  <span class={`plan-pill ${tier.id}`}>
+                    {tier.name}
+                  </span>
+                </div>
+                <div class="plan-row-right">
+                  <span class={`dot ${status}`} aria-hidden="true"></span>
+                  <span class="plan-value">{value}</span>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      </details>
+    ))}
+
+    <div class="mobile-cta-grid">
+      {pricingTiers.map((tier) => (
+        <a 
+          href={tier.ctaHref}
+          class={`mobile-cta-chip ${tier.popular ? 'primary' : 'secondary'}`}
+          onclick={`window.dataLayer&&dataLayer.push({event:'plan_select',label:'${tier.name}'})`}
+        >
+          <span class="chip-name">{tier.name}</span>
+          <span class="chip-sep">•</span>
+          <span class="chip-action">{tier.ctaText}</span>
+          <span class="chip-arrow" aria-hidden="true">→</span>
+        </a>
+      ))}
+    </div>
+  </div>
+
+  <!-- Desktop: Modern Grid Layout -->
+  <div class="desktop-comparison hidden md:block">
+    <div class="comparison-grid">
+      <!-- Plans Header -->
+      <div class="plans-header">
+        <div class="feature-column-header">
+          <h4 class="features-title">Features</h4>
+          <p class="features-subtitle">What's included</p>
+        </div>
+        
+        {pricingTiers.map((tier) => (
+          <div class={`plan-column-header ${tier.popular ? 'popular' : ''}`}>
+            {tier.popular && (
+              <div class="popular-badge-desktop">
+                <span class="badge-text">Most Popular</span>
+                <div class="badge-glow"></div>
+              </div>
+            )}
+            <div class="plan-info">
+              <h4 class="plan-name-desktop">{tier.name}</h4>
+              <p class="plan-price-desktop">{tier.priceRange}</p>
+              <p class="plan-tagline">{tier.tagline}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      <!-- Features Grid -->
+      <div class="features-grid">
+        {features.map((feature, featureIndex) => (
+          <div class={`feature-row-desktop ${featureIndex % 2 === 0 ? 'even' : 'odd'}`}>
+            <div class="feature-label">
+              <span class="feature-icon-desktop" role="img" aria-label={feature.name}>{feature.icon}</span>
+              <div class="feature-text">
+                <span class="feature-name-desktop">{feature.name}</span>
+                <span class="feature-description-desktop">{feature.description}</span>
+              </div>
+            </div>
+            
+            {pricingTiers.map((tier) => {
+              const value = tier.id === 'starter' ? feature.starter : 
+                           tier.id === 'growth' ? feature.growth : feature.scale;
+              const status = getFeatureStatus(tier.name, value);
+              
+              return (
+                <div class={`feature-cell ${status} ${tier.popular ? 'popular-column' : ''}`}>
+                  <div class="cell-content">
+                    <div class="status-indicator-container">
+                      {status === 'limited' && <span class="status-dot limited" title="Limited functionality"></span>}
+                      {status === 'addon' && <span class="status-dot addon" title="Available as add-on"></span>}
+                      {status === 'included' && <span class="status-dot included" title="Fully included"></span>}
+                    </div>
+                    <span class="cell-value">{value}</span>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        ))}
+      </div>
+
+      <!-- CTA Row -->
+      <div class="cta-row">
+        <div class="cta-spacer"></div>
+        {pricingTiers.map((tier) => (
+          <div class={`cta-cell ${tier.popular ? 'popular-column' : ''}`}>
+            <a 
+              href={tier.ctaHref} 
+              class={`desktop-cta-btn ${tier.popular ? 'primary' : 'secondary'}`}
+              onclick={`window.dataLayer&&dataLayer.push({event:'plan_select',label:'${tier.name}'})`}
+            >
+              <span class="cta-text">{tier.ctaText}</span>
+              <span class="cta-arrow">→</span>
+            </a>
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  // Add intersection observer for animations
+  if ('IntersectionObserver' in window) {
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('animate-in');
+        }
+      });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.feature-row-desktop, .feature-accordion').forEach(el => {
+      observer.observe(el);
+    });
+  }
+</script>
+
+<style>
+  /* Modern Comparison Table Styles */
+  .modern-comparison-container {
+    background: linear-gradient(135deg, rgba(139, 92, 246, 0.05) 0%, rgba(0, 0, 0, 0.3) 100%);
+    border-radius: var(--zm-radius-xl);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(20px);
+    overflow: hidden;
+    position: relative;
+  }
+
+  .modern-comparison-container::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(139, 92, 246, 0.5), transparent);
+  }
+
+  /* Header Styles */
+  .comparison-header {
+    padding: 2rem 2rem 1rem;
+    background: linear-gradient(180deg, rgba(139, 92, 246, 0.08) 0%, transparent 100%);
+  }
+
+  .comparison-title {
+    font-size: var(--zm-h3);
+    font-weight: 700;
+    color: var(--zm-text);
+    margin-bottom: 0.75rem;
+    background: linear-gradient(135deg, #ffffff 0%, #e0e0e0 100%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .comparison-subtitle {
+    color: var(--zm-text-muted-enhanced);
+    font-size: 1.1rem;
+    max-width: 600px;
+    margin: 0 auto;
+    line-height: 1.6;
+  }
+
+  /* Mobile Styles - Accordion */
+  .mobile-accordion {
+    padding: 0 1rem 1.25rem;
+  }
+
+  .mobile-legend {
+    display: flex;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+    margin: 0 0 0.75rem 0;
+    color: var(--zm-text-muted);
+    font-size: 0.8rem;
+  }
+
+  .legend-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.25rem 0.5rem;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 9999px;
+  }
+
+  .legend-dot,
+  .dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    box-shadow: 0 0 8px rgba(255,255,255,0.15);
+  }
+
+  .legend-dot.included, .dot.included { background: var(--zm-text-success); box-shadow: 0 0 8px rgba(81, 207, 102, 0.35); }
+  .legend-dot.addon, .dot.addon { background: var(--zm-text-warning); box-shadow: 0 0 8px rgba(255, 212, 59, 0.35); }
+  .legend-dot.limited, .dot.limited { background: #ff6b6b; box-shadow: 0 0 8px rgba(255, 107, 107, 0.35); }
+
+  .feature-accordion {
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    background: linear-gradient(135deg, rgba(255,255,255,0.06) 0%, rgba(255,255,255,0.02) 100%);
+    border-radius: var(--zm-radius-xl);
+    margin-bottom: 0.75rem;
+    overflow: hidden;
+    opacity: 0;
+    transform: translateY(18px);
+  }
+
+  .feature-accordion.animate-in {
+    opacity: 1;
+    transform: translateY(0);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+  }
+
+  .feature-accordion[open] .feature-accordion-summary {
+    background: linear-gradient(135deg, rgba(139, 92, 246, 0.12) 0%, rgba(139, 92, 246, 0.04) 100%);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  }
+
+  .feature-accordion-summary {
+    list-style: none;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+    padding: 1rem 1rem;
+    cursor: pointer;
+  }
+
+  .feature-accordion-summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .summary-left {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    min-width: 0;
+  }
+
+  .summary-icon { font-size: 1.1rem; flex-shrink: 0; }
+  .summary-texts { display: flex; flex-direction: column; min-width: 0; }
+  .summary-title { font-weight: 600; color: var(--zm-text); font-size: 0.95rem; }
+  .summary-sub { color: var(--zm-text-muted); font-size: 0.8rem; line-height: 1.2; }
+
+  .summary-caret {
+    font-size: 1rem;
+    color: var(--zm-text-muted);
+    transform: rotate(0deg);
+    transition: transform 0.2s ease;
+  }
+  .feature-accordion[open] .summary-caret { transform: rotate(180deg); }
+
+  .feature-accordion-content {
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+
+  .plan-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.75rem 1rem;
+    gap: 0.75rem;
+  }
+
+  .plan-row + .plan-row { border-top: 1px solid rgba(255, 255, 255, 0.06); }
+
+  .plan-row.left, .plan-row.right { display: flex; align-items: center; }
+
+  .plan-row-left { display: flex; align-items: center; gap: 0.5rem; }
+  .plan-row-right { display: inline-flex; align-items: center; gap: 0.5rem; }
+
+  .plan-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 0.8rem;
+    font-weight: 600;
+    padding: 0.25rem 0.55rem;
+    border-radius: 9999px;
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    color: var(--zm-text);
+    background: rgba(255,255,255,0.06);
+    white-space: nowrap;
+  }
+
+  .plan-pill.growth { border-color: rgba(139, 92, 246, 0.6); background: rgba(139, 92, 246, 0.12); }
+  .plan-pill.starter { border-color: rgba(255,255,255,0.14); }
+  .plan-pill.scale { border-color: rgba(168, 85, 247, 0.5); background: rgba(168, 85, 247, 0.12); }
+
+  .plan-value { font-size: 0.9rem; font-weight: 600; color: var(--zm-text); }
+
+  .mobile-cta-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0.5rem;
+    margin-top: 0.75rem;
+  }
+
+  .mobile-cta-chip {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.4rem;
+    padding: 0.75rem 1rem;
+    border-radius: var(--zm-radius-lg);
+    text-decoration: none;
+    font-weight: 600;
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    background: rgba(255,255,255,0.06);
+    color: var(--zm-text);
+  }
+
+  .mobile-cta-chip.primary { background: linear-gradient(135deg, var(--zm-primary) 0%, #a855f7 100%); border-color: transparent; color: white; }
+  .mobile-cta-chip .chip-arrow { transition: transform 0.2s ease; }
+  .mobile-cta-chip:hover .chip-arrow { transform: translateX(3px); }
+
+  /* Desktop Styles */
+  .desktop-comparison {
+    padding: 0 2rem 2rem;
+  }
+
+  .comparison-grid {
+    display: grid;
+    gap: 0;
+    border-radius: var(--zm-radius-lg);
+    overflow: visible; /* Changed from hidden to visible to show badge */
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.03) 0%, rgba(255, 255, 255, 0.01) 100%);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+  }
+
+  .plans-header {
+    display: grid;
+    grid-template-columns: 2fr repeat(3, 1fr);
+    gap: 0;
+    background: linear-gradient(135deg, rgba(139, 92, 246, 0.08) 0%, rgba(0, 0, 0, 0.2) 100%);
+    border-bottom: 2px solid rgba(255, 255, 255, 0.1);
+    margin-top: 24px; /* Space for badge to show above */
+  }
+
+  .feature-column-header {
+    padding: 2rem 1.5rem;
+    border-right: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .features-title {
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: var(--zm-text);
+    margin-bottom: 0.5rem;
+  }
+
+  .features-subtitle {
+    font-size: 0.9rem;
+    color: var(--zm-text-muted);
+  }
+
+  .plan-column-header {
+    padding: 2rem 1.5rem;
+    text-align: center;
+    position: relative;
+    border-right: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .plan-column-header:last-child {
+    border-right: none;
+  }
+
+  .plan-column-header.popular {
+    background: linear-gradient(135deg, rgba(139, 92, 246, 0.15) 0%, rgba(139, 92, 246, 0.05) 100%);
+    border-left: 2px solid var(--zm-primary);
+    border-right: 2px solid var(--zm-primary);
+    padding-top: 3rem; /* Extra space for badge */
+  }
+
+  .popular-badge-desktop {
+    position: absolute;
+    top: -18px; /* Increased from -12px for better clearance */
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 10;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: auto;
+    max-width: 90%;
+  }
+
+  .badge-text {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, var(--zm-primary) 0%, #a855f7 100%);
+    color: white;
+    padding: 0.4rem 1rem;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-align: center;
+    position: relative;
+    z-index: 2;
+    box-shadow: 0 4px 15px rgba(139, 92, 246, 0.3);
+    white-space: nowrap;
+  }
+
+  .badge-glow {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 120%;
+    height: 120%;
+    background: radial-gradient(circle, rgba(139, 92, 246, 0.4) 0%, transparent 70%);
+    border-radius: 50%;
+    z-index: 1;
+  }
+
+  .plan-name-desktop {
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: var(--zm-text);
+    margin-bottom: 0.5rem;
+  }
+
+  .plan-price-desktop {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--zm-primary);
+    margin-bottom: 0.5rem;
+  }
+
+  .plan-tagline {
+    font-size: 0.85rem;
+    color: var(--zm-text-muted-enhanced);
+    line-height: 1.4;
+  }
+
+  .features-grid {
+    display: grid;
+    gap: 0;
+  }
+
+  .feature-row-desktop {
+    display: grid;
+    grid-template-columns: 2fr repeat(3, 1fr);
+    gap: 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    transition: background-color 0.3s ease;
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  .feature-row-desktop.animate-in {
+    opacity: 1;
+    transform: translateY(0);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+
+  .feature-row-desktop.even {
+    background: rgba(255, 255, 255, 0.02);
+  }
+
+  .feature-row-desktop:hover {
+    background: rgba(139, 92, 246, 0.05);
+  }
+
+  .feature-label {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1.5rem;
+    border-right: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .feature-icon-desktop {
+    font-size: 1.3rem;
+    flex-shrink: 0;
+  }
+
+  .feature-text {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .feature-name-desktop {
+    font-weight: 600;
+    color: var(--zm-text);
+    font-size: 1rem;
+    margin-bottom: 0.25rem;
+  }
+
+  .feature-description-desktop {
+    font-size: 0.85rem;
+    color: var(--zm-text-muted);
+    line-height: 1.4;
+  }
+
+  .feature-cell {
+    padding: 1.5rem;
+    border-right: 1px solid rgba(255, 255, 255, 0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+  }
+
+  .feature-cell:last-child {
+    border-right: none;
+  }
+
+  .feature-cell.popular-column {
+    background: linear-gradient(135deg, rgba(139, 92, 246, 0.08) 0%, rgba(139, 92, 246, 0.02) 100%);
+    border-left: 1px solid rgba(139, 92, 246, 0.2);
+    border-right: 1px solid rgba(139, 92, 246, 0.2);
+  }
+
+  .cell-content {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .status-indicator-container {
+    display: flex;
+    align-items: center;
+  }
+
+  .status-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  .status-dot.included {
+    background: var(--zm-text-success);
+    box-shadow: 0 0 8px rgba(81, 207, 102, 0.4);
+  }
+
+  .status-dot.addon {
+    background: var(--zm-text-warning);
+    box-shadow: 0 0 8px rgba(255, 212, 59, 0.4);
+  }
+
+  .status-dot.limited {
+    background: #ff6b6b;
+    box-shadow: 0 0 8px rgba(255, 107, 107, 0.4);
+  }
+
+  .cell-value {
+    font-weight: 600;
+    font-size: 0.95rem;
+    color: var(--zm-text);
+  }
+
+  .feature-cell.included .cell-value {
+    color: var(--zm-text-success);
+  }
+
+  .feature-cell.addon .cell-value {
+    color: var(--zm-text-warning);
+  }
+
+  .feature-cell.limited .cell-value {
+    color: #ff6b6b;
+  }
+
+  .cta-row {
+    display: grid;
+    grid-template-columns: 2fr repeat(3, 1fr);
+    gap: 0;
+    background: linear-gradient(135deg, rgba(0, 0, 0, 0.2) 0%, rgba(139, 92, 246, 0.05) 100%);
+    border-top: 2px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .cta-spacer {
+    border-right: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .cta-cell {
+    padding: 2rem 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-right: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .cta-cell:last-child {
+    border-right: none;
+  }
+
+  .cta-cell.popular-column {
+    background: linear-gradient(135deg, rgba(139, 92, 246, 0.1) 0%, rgba(139, 92, 246, 0.03) 100%);
+    border-left: 1px solid rgba(139, 92, 246, 0.2);
+    border-right: 1px solid rgba(139, 92, 246, 0.2);
+  }
+
+  .desktop-cta-btn {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.875rem 1.5rem;
+    border-radius: var(--zm-radius-lg);
+    font-weight: 600;
+    font-size: 0.95rem;
+    text-decoration: none;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    min-width: 140px;
+    justify-content: center;
+  }
+
+  .desktop-cta-btn.primary {
+    background: linear-gradient(135deg, var(--zm-primary) 0%, #a855f7 100%);
+    color: white;
+    box-shadow: 0 4px 15px rgba(139, 92, 246, 0.25);
+  }
+
+  .desktop-cta-btn.primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(139, 92, 246, 0.35);
+  }
+
+  .desktop-cta-btn.secondary {
+    background: rgba(255, 255, 255, 0.08);
+    color: var(--zm-text);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+  }
+
+  .desktop-cta-btn.secondary:hover {
+    background: rgba(255, 255, 255, 0.12);
+    border-color: var(--zm-primary);
+    box-shadow: 0 4px 15px rgba(139, 92, 246, 0.15);
+  }
+
+  .desktop-cta-btn:hover .cta-arrow {
+    transform: translateX(4px);
+  }
+
+  /* Animations */
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  /* Responsive Adjustments */
+  @media (max-width: 1024px) {
+    .plans-header {
+      grid-template-columns: 1.8fr repeat(3, 1fr);
+    }
+    
+    .cta-row {
+      grid-template-columns: 1.8fr repeat(3, 1fr);
+    }
+    
+    .feature-row-desktop {
+      grid-template-columns: 1.8fr repeat(3, 1fr);
+    }
+
+    .popular-badge-desktop {
+      top: -16px;
+    }
+
+    .badge-text {
+      font-size: 0.7rem;
+      padding: 0.35rem 0.85rem;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .comparison-header {
+      padding: 1.5rem 1rem 0.5rem;
+    }
+    
+    .comparison-title {
+      font-size: 1.8rem;
+    }
+    
+    .comparison-subtitle {
+      font-size: 1rem;
+    }
+
+    /* Mobile badge adjustments */
+    .mobile-plan-selector {
+      margin-top: 1rem; /* Space for badges to show above tabs */
+    }
+
+    .popular-badge {
+      font-size: 0.6rem;
+      padding: 3px 8px;
+      top: -12px;
+    }
+
+    .plan-tab {
+      padding-top: 1rem;
+    }
+  }
+
+  /* High contrast mode support */
+  @media (prefers-contrast: high) {
+    .modern-comparison-container {
+      border: 2px solid rgba(255, 255, 255, 0.3);
+    }
+    
+    .feature-row-desktop:hover {
+      background: rgba(139, 92, 246, 0.1);
+    }
+    
+    .plan-tab.active {
+      border: 2px solid var(--zm-primary);
+    }
+  }
+
+  /* Reduced motion support */
+  @media (prefers-reduced-motion: reduce) {
+    .plan-tab,
+    .mobile-cta-btn,
+    .desktop-cta-btn,
+    .feature-row-desktop {
+      transition: none;
+    }
+    
+    .feature-row-desktop {
+      opacity: 1;
+      transform: none;
+    }
+    
+    .mobile-plan-details {
+      animation: none;
+    }
+  }
+</style>

@@ -1,0 +1,303 @@
+---
+// Analytics Debugger Component
+// Only loads in development/preview environments for testing analytics implementation
+const isDev = import.meta.env.DEV || Astro.url.hostname.includes('vercel') || Astro.url.hostname.includes('localhost');
+---
+
+{isDev && (
+  <div id="analytics-debugger" style="position: fixed; bottom: 20px; right: 20px; z-index: 9999; display: none;">
+    <button id="debug-toggle" style="background: #8b5cf6; color: white; border: none; padding: 10px; border-radius: 8px; cursor: pointer; font-size: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.3);">
+      📊 Analytics Debug
+    </button>
+    
+    <div id="debug-panel" style="display: none; position: absolute; bottom: 50px; right: 0; width: 400px; max-height: 500px; background: #1a1a2e; border: 1px solid #8b5cf6; border-radius: 8px; padding: 16px; font-family: monospace; font-size: 11px; color: white; overflow-y: auto; box-shadow: 0 8px 32px rgba(0,0,0,0.5);">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+        <h3 style="margin: 0; color: #8b5cf6; font-size: 14px;">Analytics Status</h3>
+        <button id="clear-debug" style="background: #dc2626; color: white; border: none; padding: 4px 8px; border-radius: 4px; cursor: pointer; font-size: 10px;">Clear</button>
+      </div>
+      
+      <div id="debug-status" style="margin-bottom: 12px; padding: 8px; background: rgba(139, 92, 246, 0.1); border-radius: 4px;">
+        <div id="gtm-status">GTM: <span style="color: #ef4444;">Not Detected</span></div>
+        <div id="ga4-status">GA4: <span style="color: #ef4444;">Not Detected</span></div>
+        <div id="fb-status">Facebook Pixel: <span style="color: #ef4444;">Not Detected</span></div>
+        <div id="linkedin-status">LinkedIn: <span style="color: #ef4444;">Not Detected</span></div>
+        <div id="hotjar-status">Hotjar: <span style="color: #ef4444;">Not Detected</span></div>
+        <div id="clarity-status">Clarity: <span style="color: #ef4444;">Not Detected</span></div>
+      </div>
+      
+      <div style="margin-bottom: 12px;">
+        <button id="test-events" style="background: #059669; color: white; border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer; font-size: 10px; margin-right: 8px;">Test Events</button>
+        <button id="test-conversion" style="background: #7c3aed; color: white; border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer; font-size: 10px;">Test Conversion</button>
+      </div>
+      
+      <div id="debug-log" style="max-height: 300px; overflow-y: auto; background: rgba(0,0,0,0.3); padding: 8px; border-radius: 4px; border: 1px solid rgba(139, 92, 246, 0.2);">
+        <div style="color: #10b981; font-size: 10px; margin-bottom: 4px;">Analytics Debugger Loaded</div>
+      </div>
+    </div>
+  </div>
+
+  <script is:inline>
+    // Analytics Debugger for Development
+    (function() {
+      'use strict';
+      
+      const debuggerState = {
+        isOpen: false,
+        logCount: 0,
+        
+        init: function() {
+          this.setupEventListeners();
+          this.checkAnalyticsStatus();
+          this.interceptAnalyticsCalls();
+          
+          // Show debugger after a short delay
+          setTimeout(() => {
+            document.getElementById('analytics-debugger').style.display = 'block';
+          }, 2000);
+        },
+        
+        setupEventListeners: function() {
+          const toggleBtn = document.getElementById('debug-toggle');
+          const clearBtn = document.getElementById('clear-debug');
+          const testEventsBtn = document.getElementById('test-events');
+          const testConversionBtn = document.getElementById('test-conversion');
+          
+          toggleBtn?.addEventListener('click', () => this.togglePanel());
+          clearBtn?.addEventListener('click', () => this.clearLog());
+          testEventsBtn?.addEventListener('click', () => this.testEvents());
+          testConversionBtn?.addEventListener('click', () => this.testConversion());
+        },
+        
+        togglePanel: function() {
+          const panel = document.getElementById('debug-panel');
+          this.isOpen = !this.isOpen;
+          panel.style.display = this.isOpen ? 'block' : 'none';
+          
+          if (this.isOpen) {
+            this.checkAnalyticsStatus();
+          }
+        },
+        
+        checkAnalyticsStatus: function() {
+          const statuses = {
+            'gtm-status': window.dataLayer ? '✅ Active' : '❌ Not Detected',
+            'ga4-status': window.gtag ? '✅ Active' : '❌ Not Detected', 
+            'fb-status': window.fbq ? '✅ Active' : '❌ Not Detected',
+            'linkedin-status': window.lintrk ? '✅ Active' : '❌ Not Detected',
+            'hotjar-status': window.hj ? '✅ Active' : '❌ Not Detected',
+            'clarity-status': window.clarity ? '✅ Active' : '❌ Not Detected'
+          };
+          
+          Object.entries(statuses).forEach(([id, status]) => {
+            const element = document.getElementById(id);
+            if (element) {
+              const span = element.querySelector('span');
+              span.innerHTML = status;
+              span.style.color = status.includes('✅') ? '#10b981' : '#ef4444';
+            }
+          });
+          
+          // Check custom analytics
+          if (window.ZMAnalytics) {
+            this.log('✅ ZMAnalytics system active', 'success');
+          }
+          
+          if (window.ZMServerTracking) {
+            this.log('✅ Server-side tracking active', 'success');
+          }
+        },
+        
+        interceptAnalyticsCalls: function() {
+          // Intercept dataLayer pushes
+          if (window.dataLayer) {
+            const originalPush = window.dataLayer.push;
+            window.dataLayer.push = (...args) => {
+              this.log(`📤 DataLayer: ${JSON.stringify(args[0], null, 2)}`, 'info');
+              return originalPush.apply(window.dataLayer, args);
+            };
+          }
+          
+          // Intercept gtag calls
+          if (window.gtag) {
+            const originalGtag = window.gtag;
+            window.gtag = (...args) => {
+              this.log(`📈 GA4: ${args[0]} - ${JSON.stringify(args.slice(1), null, 2)}`, 'info');
+              return originalGtag.apply(window, args);
+            };
+          }
+          
+          // Intercept Facebook Pixel calls
+          if (window.fbq) {
+            const originalFbq = window.fbq;
+            window.fbq = (...args) => {
+              this.log(`📘 FB Pixel: ${args[0]} - ${JSON.stringify(args.slice(1), null, 2)}`, 'info');
+              return originalFbq.apply(window, args);
+            };
+          }
+          
+          // Intercept custom analytics calls
+          if (window.ZMAnalytics) {
+            const originalTrack = window.ZMAnalytics.track;
+            window.ZMAnalytics.track = (eventName, eventData) => {
+              this.log(`🎯 ZM Analytics: ${eventName} - ${JSON.stringify(eventData, null, 2)}`, 'success');
+              return originalTrack.call(window.ZMAnalytics, eventName, eventData);
+            };
+          }
+        },
+        
+        testEvents: function() {
+          this.log('🧪 Testing analytics events...', 'info');
+          
+          // Test various events
+          if (window.ZMAnalytics) {
+            window.ZMAnalytics.trackButtonClick('Test Button', 'primary', '/test');
+            window.ZMAnalytics.trackVideoPlay('/test-video.mp4', 120);
+            window.ZMAnalytics.trackExternalLink('https://example.com', 'Test Link');
+            window.ZMAnalytics.trackDownload('test.pdf', 'pdf');
+            window.ZMAnalytics.trackScrollDepth(50);
+          } else {
+            this.log('❌ ZMAnalytics not available for testing', 'error');
+          }
+        },
+        
+        testConversion: function() {
+          this.log('🎯 Testing conversion events...', 'info');
+          
+          if (window.ZMAnalytics) {
+            window.ZMAnalytics.trackFormSubmit('test_form', 'growth');
+            window.ZMAnalytics.trackConsultationBooking('scale');
+            window.ZMAnalytics.trackPricingView('starter');
+          }
+          
+          if (window.ZMServerTracking) {
+            window.ZMServerTracking.trackConversion('test_conversion', 1000, 'USD');
+          }
+          
+          this.log('✅ Conversion test events sent', 'success');
+        },
+        
+        log: function(message, type = 'info') {
+          const logElement = document.getElementById('debug-log');
+          if (!logElement) return;
+          
+          const colors = {
+            info: '#3b82f6',
+            success: '#10b981', 
+            error: '#ef4444',
+            warning: '#f59e0b'
+          };
+          
+          const timestamp = new Date().toLocaleTimeString();
+          const logEntry = document.createElement('div');
+          logEntry.style.color = colors[type] || colors.info;
+          logEntry.style.fontSize = '10px';
+          logEntry.style.marginBottom = '2px';
+          logEntry.style.borderLeft = `2px solid ${colors[type]}`;
+          logEntry.style.paddingLeft = '6px';
+          logEntry.innerHTML = `[${timestamp}] ${message}`;
+          
+          logElement.appendChild(logEntry);
+          logElement.scrollTop = logElement.scrollHeight;
+          
+          // Limit log entries
+          this.logCount++;
+          if (this.logCount > 100) {
+            logElement.removeChild(logElement.firstChild);
+            this.logCount--;
+          }
+        },
+        
+        clearLog: function() {
+          const logElement = document.getElementById('debug-log');
+          if (logElement) {
+            logElement.innerHTML = '<div style="color: #10b981; font-size: 10px; margin-bottom: 4px;">Log cleared</div>';
+            this.logCount = 0;
+          }
+        }
+      };
+      
+      // Initialize debugger when DOM is ready
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', () => debuggerState.init());
+      } else {
+        debuggerState.init();
+      }
+      
+      // Make debugger globally available
+      window.ZMDebugger = debuggerState;
+      
+    })();
+  </script>
+)}
+
+<!-- Analytics Verification Tests (Dev Only) -->
+{isDev && (
+  <script is:inline>
+    // Automated Analytics Tests
+    setTimeout(function() {
+      console.group('🔍 ZeroMotion Analytics Verification');
+      
+      // Test 1: Check if tracking systems are loaded
+      const systems = {
+        'Google Tag Manager': !!window.dataLayer,
+        'GA4': !!window.gtag,
+        'Facebook Pixel': !!window.fbq,
+        'LinkedIn Insight': !!window.lintrk,
+        'Hotjar': !!window.hj,
+        'Microsoft Clarity': !!window.clarity,
+        'ZM Analytics': !!window.ZMAnalytics,
+        'ZM Server Tracking': !!window.ZMServerTracking
+      };
+      
+      console.table(systems);
+      
+      // Test 2: Check environment variables
+      const envVars = {
+        'GTM_ID': !!import.meta.env.PUBLIC_GTM_ID,
+        'GA4_ID': !!import.meta.env.PUBLIC_GA4_ID,
+        'FB_PIXEL_ID': !!import.meta.env.PUBLIC_FB_PIXEL_ID,
+        'LINKEDIN_ID': !!import.meta.env.PUBLIC_LINKEDIN_PARTNER_ID,
+        'HOTJAR_ID': !!import.meta.env.PUBLIC_HOTJAR_ID,
+        'CLARITY_ID': !!import.meta.env.PUBLIC_CLARITY_ID,
+        'GTM_SERVER_URL': !!import.meta.env.PUBLIC_GTM_SERVER_URL
+      };
+      
+      // Environment Variables: envVars
+
+      // Test 3: Verify cookie consent system
+      // Cookie Consent System: !!document.getElementById('cookie-consent-banner')
+      
+      // Test 4: Check for tracking elements
+      const trackingElements = {
+        'Forms with tracking': document.querySelectorAll('form').length,
+        'Videos for tracking': document.querySelectorAll('video').length,
+        'External links': document.querySelectorAll('a[href^="http"]:not([href*="' + window.location.hostname + '"])').length,
+        'Download links': document.querySelectorAll('a[href$=".pdf"], a[href$=".doc"], a[href$=".docx"]').length
+      };
+      
+      // trackingElements
+      
+      // console.groupEnd();
+
+      // Auto-test if in development
+      if (window.location.hostname === 'localhost') {
+        // 🧪 Running automated tests...
+
+        // Test page view tracking
+        if (window.ZMAnalytics) {
+          window.ZMAnalytics.trackPageView();
+          // ✅ Page view test completed
+        }
+
+        // Test scroll tracking
+        window.scrollTo(0, document.body.scrollHeight * 0.3);
+        setTimeout(() => {
+          window.scrollTo(0, 0);
+          // ✅ Scroll tracking test completed
+        }, 1000);
+      }
+      
+    }, 3000);
+  </script>
+)}
+

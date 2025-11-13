@@ -1,0 +1,286 @@
+---
+export interface Props {
+  src: string;
+  poster?: string;
+  width?: number;
+  height?: number;
+  autoplay?: boolean;
+  loop?: boolean;
+  muted?: boolean;
+  controls?: boolean;
+  playsinline?: boolean;
+  loading?: 'lazy' | 'eager';
+  class?: string;
+  preload?: 'none' | 'metadata' | 'auto';
+  quality?: 'low' | 'medium' | 'high';
+  priority?: boolean;
+  aspectRatio?: string;
+}
+
+const {
+  src,
+  poster,
+  width,
+  height,
+  autoplay = false,
+  loop = false,
+  muted = true,
+  controls = false,
+  playsinline = true,
+  loading = 'lazy',
+  class: className = '',
+  preload = 'metadata',
+  quality = 'medium',
+  priority = false,
+  aspectRatio = '16/9',
+  ...rest
+} = Astro.props;
+
+// Determine preload strategy based on priority and loading
+const actualPreload = priority ? 'metadata' : (loading === 'eager' ? 'metadata' : 'none');
+const actualLoading = priority ? 'eager' : loading;
+
+// Generate video ID for intersection observer
+const videoId = `video-${Math.random().toString(36).substr(2, 9)}`;
+---
+
+<div 
+  class={`optimized-video-container ${className}`}
+  style={`aspect-ratio: ${aspectRatio}`}
+  data-video-container
+>
+  <video
+    id={videoId}
+    src={actualLoading === 'lazy' ? undefined : src}
+    data-src={actualLoading === 'lazy' ? src : undefined}
+    poster={poster}
+    width={width}
+    height={height}
+    autoplay={autoplay && actualLoading !== 'lazy'}
+    loop={loop}
+    muted={muted}
+    controls={controls}
+    playsinline={playsinline}
+    preload={actualPreload}
+    class="optimized-video"
+    data-loading={actualLoading}
+    data-quality={quality}
+    aria-label="Video content"
+    role="img"
+    {...rest}
+  >
+    <source src={src} type="video/mp4" />
+    <p>Your browser doesn't support HTML5 video. <a href={src}>Download the video</a> instead.</p>
+  </video>
+
+  <!-- Loading placeholder for lazy videos -->
+  {actualLoading === 'lazy' && (
+    <div class="video-placeholder" data-placeholder aria-hidden="true">
+      <div class="video-placeholder-content">
+        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" aria-label="Video play icon">
+          <path d="M8 5v14l11-7L8 5z" fill="currentColor" opacity="0.7"/>
+        </svg>
+        <span aria-live="polite" aria-label="Video is loading">Loading video...</span>
+      </div>
+    </div>
+  )}
+</div>
+
+<script>
+  // Lazy loading implementation for videos
+  class OptimizedVideoLoader {
+    private observer: IntersectionObserver | null = null;
+
+    constructor() {
+      this.init();
+    }
+
+    init() {
+      if ('IntersectionObserver' in window) {
+        this.observer = new IntersectionObserver(
+          this.handleIntersection.bind(this),
+          {
+            rootMargin: '50px 0px',
+            threshold: 0.1
+          }
+        );
+
+        this.observeVideos();
+      } else {
+        // Fallback for older browsers
+        this.loadAllVideos();
+      }
+
+      // Handle network conditions
+      this.handleNetworkConditions();
+    }
+
+    observeVideos() {
+      const lazyVideos = document.querySelectorAll('video[data-loading="lazy"]');
+      lazyVideos.forEach(video => {
+        this.observer?.observe(video);
+      });
+    }
+
+    handleIntersection(entries: IntersectionObserverEntry[]) {
+      entries.forEach((entry: IntersectionObserverEntry) => {
+        if (entry.isIntersecting) {
+          const video = entry.target as HTMLVideoElement;
+          this.loadVideo(video);
+          this.observer?.unobserve(video);
+        }
+      });
+    }
+
+    loadVideo(video: HTMLVideoElement) {
+      const src = video.dataset.src;
+      const placeholder = video.parentElement?.querySelector('[data-placeholder]');
+      
+      if (src) {
+        // Show loading state
+        video.style.opacity = '0';
+        
+        // Load the video
+        video.src = src;
+        video.load();
+        
+        // Handle load completion
+        video.addEventListener('loadeddata', () => {
+          video.style.opacity = '1';
+          placeholder?.remove();
+          
+          // Auto-play if specified and user hasn't interacted
+          if (video.hasAttribute('autoplay') && video.muted) {
+            video.play().catch(() => {
+              // Silently fail if autoplay is blocked
+            });
+          }
+        }, { once: true });
+
+        // Handle load error
+        video.addEventListener('error', () => {
+          placeholder?.remove();
+          console.warn('Failed to load video:', src);
+        }, { once: true });
+      }
+    }
+
+    loadAllVideos() {
+      const lazyVideos = document.querySelectorAll('video[data-loading="lazy"]');
+      lazyVideos.forEach(video => {
+        this.loadVideo(video as HTMLVideoElement);
+      });
+    }
+
+    handleNetworkConditions() {
+      if ('connection' in navigator) {
+        const connection = (navigator as any).connection;
+        
+        // Adjust video quality based on connection
+        if (connection.effectiveType === '2g' || connection.effectiveType === 'slow-2g') {
+          // Disable autoplay on slow connections
+          const autoplayVideos = document.querySelectorAll('video[autoplay]');
+          autoplayVideos.forEach(video => {
+            (video as HTMLVideoElement).autoplay = false;
+          });
+        }
+      }
+    }
+  }
+
+  // Initialize when DOM is ready
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', () => {
+      new OptimizedVideoLoader();
+    });
+  } else {
+    new OptimizedVideoLoader();
+  }
+</script>
+
+<style>
+  .optimized-video-container {
+    position: relative;
+    display: block;
+    width: 100%;
+    overflow: hidden;
+    background: #000;
+    border-radius: inherit;
+  }
+
+  .optimized-video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    display: block;
+    transition: opacity 0.3s ease;
+    
+    /* Optimize video rendering */
+    transform: translateZ(0);
+    backface-visibility: hidden;
+    will-change: auto;
+  }
+
+  .optimized-video:hover {
+    will-change: transform, opacity;
+  }
+
+  .optimized-video:not(:hover) {
+    will-change: auto;
+  }
+
+  .video-placeholder {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%);
+    color: #888;
+    z-index: 1;
+  }
+
+  .video-placeholder-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    opacity: 0.7;
+  }
+
+  .video-placeholder-content svg {
+    animation: pulse 2s infinite;
+  }
+
+  .video-placeholder-content span {
+    font-size: 14px;
+    font-weight: 500;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 0.7; }
+    50% { opacity: 1; }
+  }
+
+  /* Reduce motion for accessibility */
+  @media (prefers-reduced-motion: reduce) {
+    .optimized-video {
+      transition: none;
+    }
+    
+    .video-placeholder-content svg {
+      animation: none;
+    }
+  }
+
+  /* Low power mode optimizations */
+  @media (prefers-reduced-motion: reduce) {
+    .optimized-video {
+      will-change: auto !important;
+    }
+  }
+</style>

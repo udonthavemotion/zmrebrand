@@ -1,0 +1,61 @@
+{
+  "version": "2.1.0",
+  "timestamp": "2024-01-01T00:00:00.000Z",
+  "assets": {
+    "critical": [
+      "/",
+      "/pricing",
+      "/services/web-design",
+      "/services/brand-identity",
+      "/about",
+      "/contact"
+    ],
+    "static": [
+      "/favico/favicon-32x32.png",
+      "/favico/android-chrome-192x192.png",
+      "/favico/apple-touch-icon.png",
+      "/brand/ZeroMotion-Outline.png",
+      "/_astro/*",
+      "/assets/*"
+    ],
+    "fonts": [
+      "https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap"
+    ],
+    "external": [
+      "https://fonts.gstatic.com",
+      "https://www.googletagmanager.com",
+      "https://www.google-analytics.com",
+      "https://api.gohighlevel.com"
+    ]
+  },
+  "cacheStrategy": {
+    "critical": "network-first",
+    "static": "cache-first",
+    "fonts": "stale-while-revalidate",
+    "api": "network-first",
+    "analytics": "network-only"
+  },
+  "cacheDuration": {
+    "critical": 86400,
+    "static": 31536000,
+    "fonts": 604800,
+    "api": 300,
+    "analytics": 0
+  },
+  "preload": [
+    "/favico/android-chrome-512x512.png",
+    "/brand/ZeroMotion-Outline.png",
+    "/_astro/global.css",
+    "https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap"
+  ],
+  "preconnect": [
+    "https://fonts.googleapis.com",
+    "https://fonts.gstatic.com",
+    "https://www.googletagmanager.com",
+    "https://app.gohighlevel.com"
+  ],
+  "dns-prefetch": [
+    "https://api.gohighlevel.com",
+    "https://vercel.com"
+  ]
+}

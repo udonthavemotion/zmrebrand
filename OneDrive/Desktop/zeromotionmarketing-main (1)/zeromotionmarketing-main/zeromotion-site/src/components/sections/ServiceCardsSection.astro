@@ -1,0 +1,39 @@
+---
+export interface Props {
+  title?: string;
+  cards: Array<{
+    title: string;
+    description: string;
+    icon?: string;
+  }>;
+  layout?: 'grid-2' | 'grid-3' | 'grid-4';
+}
+
+const { 
+  title,
+  cards,
+  layout = 'grid-3'
+} = Astro.props as Props;
+---
+
+{title && <h2 class="h2" style="margin-bottom:18px">{title}</h2>}
+<div class={layout}>
+  {cards.map(card => (
+    <div class="card">
+      {card.icon && <div class="card-icon" set:html={card.icon} />}
+      <h3 class="h2">{card.title}</h3>
+      <p>{card.description}</p>
+    </div>
+  ))}
+</div>
+
+<style>
+  .card-icon {
+    margin-bottom: 12px;
+    opacity: 0.8;
+  }
+  .card-icon :global(svg) {
+    width: 24px;
+    height: 24px;
+  }
+</style>

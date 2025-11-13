@@ -1,0 +1,121 @@
+---
+// Mobile Sticky CTA Bar - Only visible on mobile devices
+---
+
+<div class="mobile-sticky-cta" aria-label="Mobile call-to-action bar">
+  <button 
+    data-open-strategist-modal
+    class="mobile-cta-button"
+    aria-label="Get started with free consultation"
+  >
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+    </svg>
+    <span class="font-semibold">Get Started - Free Consultation</span>
+  </button>
+</div>
+
+<style>
+  .mobile-sticky-cta {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 40; /* Below navbar (50) */
+    padding: 0.75rem 1rem;
+    padding-bottom: calc(0.75rem + env(safe-area-inset-bottom, 0px));
+    background: linear-gradient(135deg, #6E00FF 0%, #4B00FF 100%);
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 
+      0 -4px 20px rgba(0, 0, 0, 0.3),
+      0 -2px 10px rgba(139, 92, 246, 0.2);
+    transform: translateY(100%);
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    display: none; /* Hidden by default, shown by JS on mobile */
+  }
+  
+  .mobile-sticky-cta.visible {
+    transform: translateY(0);
+  }
+  
+  .mobile-cta-button {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.625rem;
+    padding: 1rem;
+    font-size: 1.0625rem;
+    font-weight: 600;
+    border-radius: 12px;
+    background: white;
+    color: #6E00FF;
+    border: none;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+    transition: all 0.2s ease;
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+    min-height: 48px; /* WCAG touch target */
+  }
+  
+  .mobile-cta-button:active {
+    transform: scale(0.98);
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
+  }
+  
+  /* Only show on mobile */
+  @media (max-width: 767px) {
+    .mobile-sticky-cta {
+      display: block;
+    }
+  }
+  
+  /* Respect reduced motion */
+  @media (prefers-reduced-motion: reduce) {
+    .mobile-sticky-cta {
+      transition: none;
+    }
+  }
+  
+  /* Extra padding for devices with notches (iPhone X+) */
+  @supports (padding-bottom: env(safe-area-inset-bottom)) {
+    .mobile-sticky-cta {
+      padding-bottom: calc(0.75rem + env(safe-area-inset-bottom));
+    }
+  }
+</style>
+
+<script>
+  // Show mobile sticky CTA after scrolling past hero
+  const initMobileStickyCTA = () => {
+    const hero = document.querySelector('[data-hero]');
+    const stickyCTA = document.querySelector('.mobile-sticky-cta');
+    
+    if (hero && stickyCTA && window.innerWidth < 768) {
+      const observer = new IntersectionObserver(
+        ([entry]) => {
+          // Show CTA when hero is not in view
+          stickyCTA.classList.toggle('visible', !entry.isIntersecting);
+        },
+        { 
+          threshold: 0,
+          rootMargin: '-50px 0px 0px 0px' // Trigger slightly before hero leaves viewport
+        }
+      );
+      
+      observer.observe(hero);
+    }
+  };
+  
+  // Initialize on page load
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initMobileStickyCTA);
+  } else {
+    initMobileStickyCTA();
+  }
+  
+  // Reinitialize on view transitions (Astro)
+  document.addEventListener('astro:page-load', initMobileStickyCTA);
+</script>
+

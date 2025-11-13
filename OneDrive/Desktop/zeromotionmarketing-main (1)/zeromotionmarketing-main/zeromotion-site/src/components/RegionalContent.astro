@@ -1,0 +1,258 @@
+---
+// Regional Content Adaptation Component
+// Adapts content based on user's geolocation for better localization
+
+export interface RegionalContentProps {
+  defaultContent: string;
+  regionalVariants?: {
+    [countryCode: string]: string;
+  };
+  regionalMessages?: {
+    [countryCode: string]: {
+      message: string;
+      cta?: string;
+      phone?: string;
+    };
+  };
+}
+
+const {
+  defaultContent,
+  regionalVariants = {},
+  regionalMessages = {}
+} = Astro.props as RegionalContentProps;
+
+// Default regional content
+const defaultVariants = {
+  'US': 'Serving businesses across the United States with localized digital marketing solutions.',
+  'CA': 'Canadian businesses: Get compliant digital marketing solutions tailored for your market.',
+  'GB': 'UK businesses: GDPR-compliant digital marketing and web design services.',
+  'AU': 'Australian businesses: Local SEO and digital marketing expertise for your region.',
+  'DE': 'Deutsche Unternehmen: Lokale SEO und digitale Marketing-Dienstleistungen.',
+  'FR': 'Entreprises françaises: Solutions de marketing digital conformes au RGPD.',
+  'ES': 'Empresas españolas: Marketing digital y diseño web adaptado a su mercado.',
+  'BR': 'Empresas brasileiras: Soluções de marketing digital locais e personalizadas.',
+  'MX': 'Empresas mexicanas: Marketing digital y diseño web para su mercado local.',
+  'IN': 'Indian businesses: Localized digital marketing and web development services.',
+};
+
+// Default regional messages
+const defaultMessages = {
+  'US': {
+    message: 'Connect with our US-based team for personalized digital marketing solutions.',
+    cta: 'Get US Consultation',
+    phone: '+1-985-303-2016'
+  },
+  'CA': {
+    message: 'Canadian businesses get priority support with our North American team.',
+    cta: 'Book Canadian Consultation',
+    phone: '+1-985-303-2016'
+  },
+  'GB': {
+    message: 'GDPR-compliant digital marketing services for UK businesses.',
+    cta: 'UK Consultation',
+    phone: '+44-20-1234-5678'
+  },
+  'AU': {
+    message: 'Australian businesses: Local expertise with global standards.',
+    cta: 'Australian Consultation',
+    phone: '+61-2-1234-5678'
+  }
+};
+
+// Merge defaults with provided variants
+const contentVariants = { ...defaultVariants, ...regionalVariants };
+const messageVariants = { ...defaultMessages, ...regionalMessages };
+---
+
+<div id="regional-content" class="regional-content">
+  <div id="regional-message" class="regional-message" aria-live="polite">
+    {defaultContent}
+  </div>
+  <div id="regional-cta" class="regional-cta" style="display: none;"></div>
+</div>
+
+<script>
+  // Regional content adaptation with geolocation
+  class RegionalContentManager {
+    private regionalVariants: { [key: string]: string };
+    private messageVariants: { [key: string]: any };
+
+    constructor(variants: { [key: string]: string }, messages: { [key: string]: any }) {
+      this.regionalVariants = variants;
+      this.messageVariants = messages;
+      this.init();
+    }
+
+    async init() {
+      try {
+        // Import geolocation service
+        const { geolocationService } = await import('/src/lib/geolocation.ts');
+        const location = await geolocationService.getLocation();
+
+        if (location) {
+          this.adaptContent(location);
+          this.trackRegionalEngagement(location);
+        }
+      } catch (error) {
+        console.warn('Regional content adaptation failed:', error);
+      }
+    }
+
+    adaptContent(location: any) {
+      const countryCode = location.countryCode.toUpperCase();
+      const regionCode = location.regionCode?.toUpperCase();
+
+      // Update content based on country
+      const contentElement = document.getElementById('regional-message');
+      const ctaElement = document.getElementById('regional-cta');
+
+      if (contentElement && this.regionalVariants[countryCode]) {
+        contentElement.textContent = this.regionalVariants[countryCode];
+        contentElement.setAttribute('data-region', countryCode);
+      }
+
+      // Add regional CTA if available
+      if (ctaElement && this.messageVariants[countryCode]) {
+        const message = this.messageVariants[countryCode];
+        ctaElement.style.display = 'block';
+
+        // Create CTA button
+        if (message.cta) {
+          const ctaButton = document.createElement('a');
+          ctaButton.href = '#contact';
+          ctaButton.className = 'btn btn-primary regional-cta-btn';
+          ctaButton.textContent = message.cta;
+          ctaButton.setAttribute('data-region', countryCode);
+          ctaButton.setAttribute('aria-label', `${message.cta} for ${location.country}`);
+
+          ctaElement.appendChild(ctaButton);
+        }
+
+        // Add regional phone if available
+        if (message.phone) {
+          const phoneLink = document.createElement('a');
+          phoneLink.href = `tel:${message.phone}`;
+          phoneLink.className = 'regional-phone';
+          phoneLink.textContent = message.phone;
+          phoneLink.setAttribute('aria-label', `Call us at ${message.phone}`);
+
+          ctaElement.appendChild(phoneLink);
+        }
+      }
+
+      // Add regional schema markup
+      this.addRegionalSchema(location);
+    }
+
+    addRegionalSchema(location: any) {
+      const countryCode = location.countryCode.toUpperCase();
+      const regionalSchema = {
+        "@context": "https://schema.org",
+        "@type": "Organization",
+        "name": "ZeroMotion Marketing",
+        "address": {
+          "@type": "PostalAddress",
+          "addressCountry": location.country,
+          "addressRegion": location.region,
+          "addressLocality": location.city
+        },
+        "areaServed": {
+          "@type": "Country",
+          "name": location.country
+        }
+      };
+
+      // Add to page schema
+      const script = document.createElement('script');
+      script.type = 'application/ld+json';
+      script.textContent = JSON.stringify(regionalSchema);
+      document.head.appendChild(script);
+    }
+
+    trackRegionalEngagement(location: any) {
+      // Track regional engagement for analytics
+      if (window.ZMAnalytics) {
+        window.ZMAnalytics.track('regional_content_loaded', {
+          country: location.country,
+          region: location.region,
+          city: location.city,
+          timezone: location.timezone
+        });
+      }
+
+      // Store regional preference
+      try {
+        localStorage.setItem('zm-region', JSON.stringify({
+          country: location.country,
+          region: location.region,
+          timestamp: Date.now()
+        }));
+      } catch (error) {
+        console.warn('Could not store regional preference:', error);
+      }
+    }
+
+    // Get stored regional preference
+    getStoredRegion() {
+      try {
+        const stored = localStorage.getItem('zm-region');
+        return stored ? JSON.parse(stored) : null;
+      } catch (error) {
+        return null;
+      }
+    }
+  }
+
+  // Initialize with provided variants
+  const variants = {defaultContent};
+  const messages = {defaultMessages};
+
+  new RegionalContentManager(variants, messages);
+</script>
+
+<style>
+  .regional-content {
+    position: relative;
+  }
+
+  .regional-message {
+    transition: opacity 0.3s ease;
+  }
+
+  .regional-cta {
+    margin-top: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    align-items: flex-start;
+  }
+
+  .regional-cta-btn {
+    font-size: 0.875rem;
+    padding: 0.5rem 1rem;
+  }
+
+  .regional-phone {
+    font-size: 0.875rem;
+    color: var(--zm-primary);
+    text-decoration: none;
+    font-weight: 500;
+  }
+
+  .regional-phone:hover {
+    text-decoration: underline;
+  }
+
+  /* Responsive adjustments */
+  @media (max-width: 640px) {
+    .regional-cta {
+      align-items: center;
+    }
+
+    .regional-cta-btn {
+      width: 100%;
+      text-align: center;
+    }
+  }
+</style>

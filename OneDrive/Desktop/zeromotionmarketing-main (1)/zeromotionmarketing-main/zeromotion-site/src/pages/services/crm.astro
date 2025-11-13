@@ -1,0 +1,1194 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import ModernBookingModal from "../../components/ModernBookingModal.astro";
+import TextureVideoSection from "../../components/sections/TextureVideoSection.astro";
+import DarkContentSection from "../../components/sections/DarkContentSection.astro";
+import { getAlternatingTexture, getPreloadTextures } from "../../lib/textures.ts";
+
+// Texture videos for alternating sections
+const texture1 = getAlternatingTexture(0);
+const texture2 = getAlternatingTexture(1);
+const texture3 = getAlternatingTexture(2);
+const texture4 = getAlternatingTexture(3);
+const preloadTextures = getPreloadTextures(4);
+
+// Hero video
+const HERO_VIDEO = "/pictures/web design page/webpage.mp4";
+
+// Cache-busting for images
+const cacheVersion = Date.now();
+
+// Page metadata
+const pageTitle = "CRM Automation Services | ZeroMotion Marketing | Louisiana's Advanced Business Platform";
+const pageDescription = "Louisiana's most advanced CRM automation platform. AI-powered lead management, instant follow-up, and business automation for growing companies.";
+const pageKeywords = "CRM automation Louisiana, business automation, lead management, sales automation, Louisiana CRM, business software, AI automation";
+
+// Structured data for CRM service
+const structuredData = {
+  "@context": "https://schema.org",
+  "@type": "Service",
+  "name": "CRM Automation Services",
+  "description": pageDescription,
+  "provider": {
+    "@type": "Organization",
+    "name": "ZeroMotion Marketing",
+    "address": {
+      "@type": "PostalAddress",
+      "addressLocality": "Houma",
+      "addressRegion": "Louisiana",
+      "addressCountry": "US"
+    }
+  },
+  "areaServed": "Louisiana",
+  "serviceType": "CRM Automation and Business Process Management"
+};
+---
+
+<BaseLayout 
+  title={pageTitle}
+  description={pageDescription}
+  ogImage="/og-webdesign.png"
+>
+  <!-- Hero Section -->
+  <section class="relative h-screen flex items-center justify-center overflow-hidden bg-black text-white">
+    <!-- Video Background - Enhanced for bright, colorful display -->
+    <div class="absolute inset-0 z-0">
+      <video 
+        autoplay 
+        muted 
+        loop 
+        playsinline 
+        preload="auto"
+        class="w-full h-full object-cover stable-crm-video"
+        style="filter: brightness(0.85) contrast(1.15) saturate(1.2); will-change: transform; opacity: 0.75;"
+        aria-hidden="true"
+        onloadstart="this.style.visibility='visible'"
+        oncanplay="this.classList.add('loaded')"
+      >
+        <source src={HERO_VIDEO} type="video/mp4" />
+      </video>
+    </div>
+    
+    <!-- Workflow Overlay -->
+    <div class="absolute inset-0 z-5 opacity-20">
+      <div class="w-full h-full bg-gradient-to-br from-purple-600/30 to-transparent"></div>
+      <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-64 h-64 opacity-30">
+        <img 
+          src={`/assets/zeromotion_workflow_1_lead_capture.png?v=${cacheVersion}`} 
+          alt="Lead capture workflow" 
+          class="w-full h-full object-contain"
+          loading="eager"
+        />
+      </div>
+    </div>
+    
+    <!-- Content -->
+    <div class="relative z-10 container mx-auto px-6 text-center">
+      <h1 class="h1 mb-6 max-w-5xl mx-auto">
+        A Modern CRM That <span class="text-purple-400">Automates Your Growth</span>
+      </h1>
+      <p class="text-xl md:text-2xl text-gray-300 mb-8 max-w-4xl mx-auto">
+        Built on ZeroMotion CRM, enhanced with AI, and engineered for modern businesses. Stop losing leads to slow follow-up—automate your way to market leadership.
+      </p>
+      
+      <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
+                 <ModernBookingModal 
+           plan="crm"
+           triggerText="Book One-on-One CRM Demo"
+         />
+        <a href="#features" class="btn-ghost" data-event="crm_features_scroll">See CRM Features</a>
+      </div>
+      
+      <p class="text-sm text-purple-300 mt-6">
+        AI-powered • Built for real operators
+      </p>
+    </div>
+  </section>
+
+  <!-- CRM Superiority Section -->
+  <TextureVideoSection textureVideo={texture1}>
+    <div class="crm-superiority-section">
+      <div class="grid md:grid-cols-2 gap-12 items-center">
+        <div>
+          <h2 class="h2 mb-6">More Than CRM—It's Your Competitive Advantage</h2>
+          <p class="sub mb-8">While competitors manually chase leads, you dominate with automation</p>
+          
+          <ul class="space-y-4 text-lg">
+            <li class="flex items-start gap-3">
+              <span class="text-purple-400 text-xl">🚀</span>
+              <span><strong>Instant Lead Response</strong> — AI responds within 60 seconds, 24/7</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="text-purple-400 text-xl">⚡</span>
+              <span><strong>Pipeline Automation</strong> — Leads automatically sorted, scored, and nurtured</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="text-purple-400 text-xl">🎯</span>
+              <span><strong>Smart Booking</strong> — Calendars, payments, and follow-ups run themselves</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="text-purple-400 text-xl">🔒</span>
+              <span><strong>Industry-Focused</strong> — Built for growing businesses across all sectors</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="text-purple-400 text-xl">📊</span>
+              <span><strong>Real-Time Insights</strong> — Know your ROI, not just your vanity metrics</span>
+            </li>
+          </ul>
+        </div>
+        
+        <div class="crm-visual-container">
+          <img
+            src="/assets/crm-main-dashboard.png"
+            alt="ZeroMotion CRM dashboard showing lead management and automation features"
+            loading="lazy"
+            class="crm-main-image"
+          />
+          
+          <!-- Floating CRM Automation Screenshot -->
+          <div class="crm-automation-popup">
+            <img
+              src="/assets/crm-automation-screenshot.png"
+              alt="ZeroMotion CRM automation workflow interface showing advanced pipeline management"
+              loading="lazy"
+              class="crm-popup-image-seamless"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+  </TextureVideoSection>
+
+  <!-- CRM Implementation Hierarchy -->
+  <section class="hero-video-section section">
+    <div class="implementation-hierarchy">
+      <h2 class="h2" style="color: #8b5cf6; text-align: center; margin-bottom: 20px;">CRM Implementation That Scales With Your Business</h2>
+      <p class="sub" style="text-align: center; margin-bottom: 50px; color: #e2e8f0;">From setup to market domination in strategic phases</p>
+      
+      <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+        <div class="card text-center">
+          <div class="w-24 h-24 mx-auto mb-6 relative">
+            <img 
+              src={`/assets/implementation/week1-2-foundation-v2.png?v=${cacheVersion}`} 
+              alt="Foundation setup phase - ZeroMotion agency dashboard" 
+              class="w-full h-full object-contain"
+              loading="lazy"
+            />
+          </div>
+          <h3 class="h3 mb-3 text-purple-400">Week 1-2</h3>
+          <h4 class="text-lg font-bold mb-2">Foundation Setup</h4>
+          <p class="text-gray-300 text-sm">CRM configuration, lead capture forms, and basic automation workflows.</p>
+        </div>
+        
+        <div class="card text-center">
+          <div class="w-24 h-24 mx-auto mb-6 relative">
+            <img 
+              src={`/assets/implementation/week3-4-automation-v2.png?v=${cacheVersion}`} 
+              alt="Automation implementation phase - ZeroMotion opportunities pipeline dashboard" 
+              class="w-full h-full object-contain"
+              loading="lazy"
+            />
+          </div>
+          <h3 class="h3 mb-3 text-purple-400">Week 3-4</h3>
+          <h4 class="text-lg font-bold mb-2">Automation Implementation</h4>
+          <p class="text-gray-300 text-sm">Advanced pipelines, email sequences, and AI-powered lead scoring.</p>
+        </div>
+        
+        <div class="card text-center">
+          <div class="w-24 h-24 mx-auto mb-6 relative">
+            <img 
+              src={`/assets/implementation/week5-6-communication-v2.png?v=${cacheVersion}`} 
+              alt="Communication hub phase - ZeroMotion agency communication dashboard" 
+              class="w-full h-full object-contain"
+              loading="lazy"
+            />
+          </div>
+          <h3 class="h3 mb-3 text-purple-400">Week 5-6</h3>
+          <h4 class="text-lg font-bold mb-2">Communication Hub</h4>
+          <p class="text-gray-300 text-sm">SMS automation, appointment booking, and integrated payment processing.</p>
+        </div>
+        
+        <div class="card text-center">
+          <div class="w-24 h-24 mx-auto mb-6 relative">
+            <img 
+              src={`/assets/implementation/week7-full-operation-v2.png?v=${cacheVersion}`} 
+              alt="Full operation phase - ZeroMotion digital presence dashboard with mobile and tablet views" 
+              class="w-full h-full object-contain"
+              loading="lazy"
+            />
+          </div>
+          <h3 class="h3 mb-3 text-purple-400">Week 7+</h3>
+          <h4 class="text-lg font-bold mb-2">Full Operation</h4>
+          <p class="text-gray-300 text-sm">Complete automation, analytics integration, and ongoing optimization.</p>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Hero Video Background -->
+    <video 
+      src="/photos/homepage_hero.mp4" 
+      autoplay 
+      muted 
+      loop 
+      playsinline
+      preload="auto"
+      class="hero-background-video stable-hero-video"
+      style="opacity: 0.8; filter: brightness(0.8) contrast(1.1) saturate(1.2); will-change: transform;"
+      onloadstart="this.style.visibility='visible'"
+      oncanplay="this.classList.add('loaded')"
+      width="1920"
+      height="1080"
+      aria-hidden="true"
+      role="img"
+      aria-label="Background video showing ZeroMotion's CRM implementation process"
+    ></video>
+    
+    <!-- Overlay gradient for text readability -->
+    <div class="hero-video-overlay"></div>
+  </section>
+
+  <!-- CRM Features Showcase -->
+  <section class="hero-video-section section">
+    <div class="crm-features-section">
+      <div class="grid md:grid-cols-2 gap-12 items-center">
+        <div class="order-2 md:order-1">
+          <div class="crm-isometric-container">
+            <img
+              src="/assets/zeromotion-crm-isometric.png"
+              alt="ZeroMotion CRM platform isometric view showing automation features"
+              class="crm-isometric-image float-animation"
+              loading="lazy"
+            />
+          </div>
+        </div>
+        
+        <div class="order-1 md:order-2">
+          <h2 class="h2 mb-6">CRM Features That Drive Business Growth</h2>
+          <p class="sub mb-8">Six core capabilities that transform how you capture and convert leads</p>
+          
+          <div class="grid md:grid-cols-2 lg:grid-cols-2 gap-6">
+            <div class="space-y-4">
+              <div class="w-12 h-12 bg-purple-600 rounded-lg flex items-center justify-center">
+                <span class="text-xl">📝</span>
+              </div>
+              <h4 class="text-xl font-bold text-purple-400">Lead Capture</h4>
+              <p class="text-gray-300">Smart forms that integrate with everything—websites, social media, and offline touchpoints.</p>
+            </div>
+            
+            <div class="space-y-4">
+              <div class="w-12 h-12 bg-purple-600 rounded-lg flex items-center justify-center">
+                <span class="text-xl">🔄</span>
+              </div>
+              <h4 class="text-xl font-bold text-purple-400">Auto Follow-up</h4>
+              <p class="text-gray-300">SMS and email sequences that convert prospects into customers automatically.</p>
+            </div>
+            
+            <div class="space-y-4">
+              <div class="w-12 h-12 bg-purple-600 rounded-lg flex items-center justify-center">
+                <span class="text-xl">📊</span>
+              </div>
+              <h4 class="text-xl font-bold text-purple-400">Pipeline Tracking</h4>
+              <p class="text-gray-300">Visual sales pipeline with deal progression and revenue forecasting.</p>
+            </div>
+            
+            <div class="space-y-4">
+              <div class="w-12 h-12 bg-purple-600 rounded-lg flex items-center justify-center">
+                <span class="text-xl">💳</span>
+              </div>
+              <h4 class="text-xl font-bold text-purple-400">Payment Processing</h4>
+              <p class="text-gray-300">Stripe integration for instant transactions and automated billing cycles.</p>
+            </div>
+            
+            <div class="space-y-4">
+              <div class="w-12 h-12 bg-purple-600 rounded-lg flex items-center justify-center">
+                <span class="text-xl">📅</span>
+              </div>
+              <h4 class="text-xl font-bold text-purple-400">Calendar Booking</h4>
+              <p class="text-gray-300">Automated appointment scheduling with confirmation and reminder workflows.</p>
+            </div>
+            
+            <div class="space-y-4">
+              <div class="w-12 h-12 bg-purple-600 rounded-lg flex items-center justify-center">
+                <span class="text-xl">💬</span>
+              </div>
+              <h4 class="text-xl font-bold text-purple-400">SMS Automation</h4>
+              <p class="text-gray-300">Compliant messaging workflows that nurture leads into sales.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Hero Video Background -->
+    <video 
+      src="/photos/homepage_hero.mp4" 
+      autoplay 
+      muted 
+      loop 
+      playsinline
+      preload="auto"
+      class="hero-background-video stable-hero-video"
+      style="opacity: 0.8; filter: brightness(0.8) contrast(1.1) saturate(1.2); will-change: transform;"
+      onloadstart="this.style.visibility='visible'"
+      oncanplay="this.classList.add('loaded')"
+      width="1920"
+      height="1080"
+      aria-hidden="true"
+      role="img"
+      aria-label="Background video showing ZeroMotion's CRM features"
+    ></video>
+    
+    <!-- Overlay gradient for text readability -->
+    <div class="hero-video-overlay"></div>
+  </section>
+
+  <!-- Integration Superiority Comparison -->
+  <section class="hero-video-section section">
+    <div class="comparison-section">
+      <h2 class="h2" style="color: #8b5cf6; text-align: center; margin-bottom: 20px;">Why ZeroMotion CRM Dominates the Competition</h2>
+      <p class="sub" style="text-align: center; margin-bottom: 40px; color: #e2e8f0;">See the difference between manual processes, generic CRM, and ZeroMotion automation</p>
+      
+      <div class="table-container" style="overflow-x: auto; -webkit-overflow-scrolling: touch; margin: 0 -1rem;">
+        <table class="comparison-table" style="width: 100%; border-collapse: collapse; background: rgba(0, 0, 0, 0.4); border-radius: 15px; overflow: hidden; margin: 0 1rem;">
+          <thead>
+            <tr>
+              <th style="background: linear-gradient(45deg, #8b5cf6, #a855f7); color: white; padding: 20px; text-align: left; font-weight: bold;">Features</th>
+              <th style="background: linear-gradient(45deg, #ef4444, #dc2626); color: white; padding: 20px; text-align: center; font-weight: bold;">Manual Processes</th>
+              <th style="background: linear-gradient(45deg, #f59e0b, #d97706); color: white; padding: 20px; text-align: center; font-weight: bold;">Generic CRM</th>
+              <th style="background: linear-gradient(45deg, #10b981, #059669); color: white; padding: 20px; text-align: center; font-weight: bold;">ZeroMotion CRM</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="feature-name" style="padding: 16px; font-weight: bold; color: #ffffff; border-bottom: 1px solid rgba(139, 92, 246, 0.2);">Lead Response Time</td>
+              <td data-label="Manual Processes" style="padding: 16px; text-align: center; color: #fca5a5; border-bottom: 1px solid rgba(139, 92, 246, 0.2);">Hours to Days</td>
+              <td data-label="Generic CRM" style="padding: 16px; text-align: center; color: #fde68a; border-bottom: 1px solid rgba(139, 92, 246, 0.2);">Basic Notifications</td>
+              <td data-label="ZeroMotion CRM" style="padding: 16px; text-align: center; color: #86efac; border-bottom: 1px solid rgba(139, 92, 246, 0.2);">60 Seconds (AI-Powered)</td>
+            </tr>
+            <tr>
+              <td class="feature-name" style="padding: 16px; font-weight: bold; color: #ffffff; border-bottom: 1px solid rgba(139, 92, 246, 0.2);">Follow-up Automation</td>
+              <td data-label="Manual Processes" style="padding: 16px; text-align: center; color: #fca5a5; border-bottom: 1px solid rgba(139, 92, 246, 0.2);">Manual Emails/Calls</td>
+              <td data-label="Generic CRM" style="padding: 16px; text-align: center; color: #fde68a; border-bottom: 1px solid rgba(139, 92, 246, 0.2);">Basic Sequences</td>
+              <td data-label="ZeroMotion CRM" style="padding: 16px; text-align: center; color: #86efac; border-bottom: 1px solid rgba(139, 92, 246, 0.2);">Advanced Multi-Channel</td>
+            </tr>
+            <tr>
+              <td class="feature-name" style="padding: 16px; font-weight: bold; color: #ffffff; border-bottom: 1px solid rgba(139, 92, 246, 0.2);">Business Integration</td>
+              <td data-label="Manual Processes" style="padding: 16px; text-align: center; color: #fca5a5; border-bottom: 1px solid rgba(139, 92, 246, 0.2);">None</td>
+              <td data-label="Generic CRM" style="padding: 16px; text-align: center; color: #fde68a; border-bottom: 1px solid rgba(139, 92, 246, 0.2);">Generic Templates</td>
+              <td data-label="ZeroMotion CRM" style="padding: 16px; text-align: center; color: #86efac; border-bottom: 1px solid rgba(139, 92, 246, 0.2);">Industry-Focused Setup</td>
+            </tr>
+            <tr>
+              <td class="feature-name" style="padding: 16px; font-weight: bold; color: #ffffff; border-bottom: 1px solid rgba(139, 92, 246, 0.2);">AI Enhancement</td>
+              <td data-label="Manual Processes" style="padding: 16px; text-align: center; color: #fca5a5; border-bottom: 1px solid rgba(139, 92, 246, 0.2);">None</td>
+              <td data-label="Generic CRM" style="padding: 16px; text-align: center; color: #fde68a; border-bottom: 1px solid rgba(139, 92, 246, 0.2);">Basic Automation</td>
+              <td data-label="ZeroMotion CRM" style="padding: 16px; text-align: center; color: #86efac; border-bottom: 1px solid rgba(139, 92, 246, 0.2);">Predictive Analytics</td>
+            </tr>
+            <tr>
+              <td class="feature-name" style="padding: 16px; font-weight: bold; color: #ffffff; border-bottom: 1px solid rgba(139, 92, 246, 0.2);">Business Growth Impact</td>
+              <td data-label="Manual Processes" style="padding: 16px; text-align: center; color: #fca5a5; border-bottom: 1px solid rgba(139, 92, 246, 0.2);">Limited</td>
+              <td data-label="Generic CRM" style="padding: 16px; text-align: center; color: #fde68a; border-bottom: 1px solid rgba(139, 92, 246, 0.2);">Moderate Improvement</td>
+              <td data-label="ZeroMotion CRM" style="padding: 16px; text-align: center; color: #86efac; border-bottom: 1px solid rgba(139, 92, 246, 0.2);">Explosive Growth</td>
+            </tr>
+            <tr class="result-row" style="background: rgba(139, 92, 246, 0.15); font-weight: bold; font-size: 1.1rem;">
+              <td class="feature-name" style="padding: 16px; font-weight: bold; color: #8b5cf6;">Result</td>
+              <td data-label="Manual Processes" style="padding: 16px; text-align: center; font-weight: bold; color: #ef4444;">Loses Deals</td>
+              <td data-label="Generic CRM" style="padding: 16px; text-align: center; font-weight: bold; color: #f59e0b;">Manages Contacts</td>
+              <td data-label="ZeroMotion CRM" style="padding: 16px; text-align: center; font-weight: bold; color: #10b981;">Dominates Market</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      
+      <div class="text-center mt-8">
+        <ModernBookingModal 
+          plan="crm"
+          triggerText="See CRM Demo"
+        />
+      </div>
+    </div>
+    
+    <!-- Hero Video Background -->
+    <video 
+      src="/photos/homepage_hero.mp4" 
+      autoplay 
+      muted 
+      loop 
+      playsinline
+      preload="auto"
+      class="hero-background-video stable-hero-video"
+      style="opacity: 0.8; filter: brightness(0.8) contrast(1.1) saturate(1.2); will-change: transform;"
+      onloadstart="this.style.visibility='visible'"
+      oncanplay="this.classList.add('loaded')"
+      width="1920"
+      height="1080"
+      aria-hidden="true"
+      role="img"
+      aria-label="Background video showing ZeroMotion's CRM comparison"
+    ></video>
+    
+    <!-- Overlay gradient for text readability -->
+    <div class="hero-video-overlay"></div>
+  </section>
+
+  <!-- Pricing & Plans Integration -->
+  <TextureVideoSection textureVideo={texture3}>
+    <div class="pricing-integration-section">
+      <h2 class="h2 mb-6 text-center">CRM Integration Across All Growth Stages</h2>
+      <p class="sub mb-12 text-center">How our automation platform enhances your business at every level</p>
+      
+      <div class="grid md:grid-cols-3 gap-8">
+        <div class="card pkg system-card">
+          <h3 class="h3 text-purple-400 mb-4">Starter CRM</h3>
+          <div class="price mb-4">Custom Quote • Entry Level</div>
+          <p class="text-sm text-gray-400 mb-6">Perfect for new businesses</p>
+          
+          <ul class="space-y-3 mb-8">
+            <li>✓ Basic CRM setup & lead capture</li>
+            <li>✓ Auto-SMS responses</li>
+            <li>✓ Simple email sequences</li>
+            <li>✓ Contact management</li>
+            <li>✓ Basic reporting</li>
+          </ul>
+          
+          <a 
+            href="/plans/starter"
+            class="btn-primary"
+            data-event="crm_starter_plan_view"
+          >
+            View Starter Plan Details
+          </a>
+        </div>
+        
+        <div class="card pkg system-card popular-card" style="border-color: rgba(139, 92, 246, 0.8); box-shadow: 0 15px 30px rgba(139, 92, 246, 0.2);">
+          <span class="badge" style="position: absolute; top: -15px; left: 50%; transform: translateX(-50%); background: linear-gradient(45deg, #8b5cf6, #a855f7); color: white; padding: 8px 20px; border-radius: 20px; font-weight: bold; font-size: 14px; white-space: nowrap;">Most Popular for Growing Businesses</span>
+          <h3 class="h3 text-purple-400 mb-4">Growth CRM</h3>
+          <div class="price mb-4">Custom Quote • Most Popular</div>
+          <p class="text-sm text-gray-400 mb-6">For expanding operations</p>
+          
+          <ul class="space-y-3 mb-8">
+            <li>✓ Advanced automation & funnels</li>
+            <li>✓ Multi-channel campaigns</li>
+            <li>✓ Pipeline management</li>
+            <li>✓ Advanced reporting & analytics</li>
+            <li>✓ Team collaboration tools</li>
+          </ul>
+          
+          <a 
+            href="/plans/growth"
+            class="btn-primary"
+            data-event="crm_growth_plan_view"
+          >
+            View Growth Plan Details
+          </a>
+        </div>
+        
+        <div class="card pkg system-card">
+          <h3 class="h3 text-purple-400 mb-4">Scale CRM</h3>
+          <div class="price mb-4">Custom Quote • Enterprise</div>
+          <p class="text-sm text-gray-400 mb-6">Enterprise solutions for market leaders</p>
+          
+          <ul class="space-y-3 mb-8">
+            <li>✓ Enterprise CRM & AI chatbots</li>
+            <li>✓ Predictive analytics</li>
+            <li>✓ Custom integrations</li>
+            <li>✓ Multi-location management</li>
+            <li>✓ Dedicated success manager</li>
+          </ul>
+          
+          <a 
+            href="/plans/scale"
+            class="btn-primary"
+            data-event="crm_scale_plan_view"
+          >
+            View Scale Plan Details
+          </a>
+        </div>
+      </div>
+    </div>
+  </TextureVideoSection>
+
+  <!-- Modern Business Focus -->
+  <DarkContentSection background="rgba(139, 92, 246, 0.06)">
+    <div class="louisiana-focus-section">
+      <h2 class="h2" style="color: #8b5cf6; text-align: center; margin-bottom: 20px;">Built for Modern Business Culture</h2>
+      <p class="sub" style="text-align: center; margin-bottom: 50px; color: #e2e8f0;">Why growing companies choose ZeroMotion CRM over generic solutions</p>
+      
+      <div class="grid md:grid-cols-2 gap-12">
+        <div class="space-y-8">
+          <div class="flex items-start gap-4">
+            <div class="w-12 h-12 bg-purple-600 rounded-lg flex items-center justify-center flex-shrink-0">
+              <span class="text-xl">🏠</span>
+            </div>
+            <div>
+              <h4 class="text-xl font-bold text-purple-400 mb-2">Business Expertise</h4>
+              <p class="text-gray-300">Built for modern business culture. We understand how companies operate and what drives results in competitive markets.</p>
+            </div>
+          </div>
+          
+          <div class="flex items-start gap-4">
+            <div class="w-12 h-12 bg-purple-600 rounded-lg flex items-center justify-center flex-shrink-0">
+              <span class="text-xl">🏭</span>
+            </div>
+            <div>
+              <h4 class="text-xl font-bold text-purple-400 mb-2">Industry Understanding</h4>
+              <p class="text-gray-300">Specialized automation for diverse industries including service, retail, construction, and professional services. Pre-built workflows for common business scenarios.</p>
+            </div>
+          </div>
+        </div>
+        
+        <div class="space-y-8">
+          <div class="flex items-start gap-4">
+            <div class="w-12 h-12 bg-purple-600 rounded-lg flex items-center justify-center flex-shrink-0">
+              <span class="text-xl">⚖️</span>
+            </div>
+            <div>
+              <h4 class="text-xl font-bold text-purple-400 mb-2">Compliance Ready</h4>
+              <p class="text-gray-300">Business regulations and messaging laws built into every automation. Stay compliant while staying competitive.</p>
+            </div>
+          </div>
+          
+          <div class="flex items-start gap-4">
+            <div class="w-12 h-12 bg-purple-600 rounded-lg flex items-center justify-center flex-shrink-0">
+              <span class="text-xl">🤝</span>
+            </div>
+            <div>
+              <h4 class="text-xl font-bold text-purple-400 mb-2">Personal Support</h4>
+              <p class="text-gray-300">Direct access to our dedicated team, not offshore support. Real people who understand business challenges and opportunities.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </DarkContentSection>
+
+  <!-- FAQ & Objection Handling -->
+  <TextureVideoSection textureVideo={texture4}>
+    <div class="faq-section">
+      <h2 class="h2 mb-6" id="features">CRM Questions? We Have Business-Focused Answers</h2>
+      <p class="sub mb-8">Everything growing businesses ask about professional CRM automation</p>
+      
+      <div class="faq-grid">
+        <div class="faq-card card" onclick="window.dataLayer&&dataLayer.push({event:'crm_faq_click', question:'data-security'})" data-event="crm_faq_click" data-question="data-security">
+          <div class="faq-icon">
+            <span>🔒</span>
+          </div>
+          <div class="faq-content">
+            <strong class="faq-question">How secure is my customer data?</strong>
+            <p class="faq-answer">Your data is protected with enterprise-grade security including SSL encryption, regular backups, and compliance with business data protection standards. We maintain strict access controls and never share your customer information.</p>
+          </div>
+        </div>
+        
+        <div class="faq-card card" onclick="window.dataLayer&&dataLayer.push({event:'crm_faq_click', question:'existing-crm'})" data-event="crm_faq_click" data-question="existing-crm">
+          <div class="faq-icon">
+            <span>🔄</span>
+          </div>
+          <div class="faq-content">
+            <strong class="faq-question">What if I already have a CRM system?</strong>
+            <p class="faq-answer">We specialize in seamless migrations and integrations. Most businesses see immediate improvements in lead response time and conversion rates. We'll audit your current system and create a migration plan that protects your data while upgrading your capabilities.</p>
+          </div>
+        </div>
+        
+        <div class="faq-card card" onclick="window.dataLayer&&dataLayer.push({event:'crm_faq_click', question:'implementation-time'})" data-event="crm_faq_click" data-question="implementation-time">
+          <div class="faq-icon">
+            <span>⏱️</span>
+          </div>
+          <div class="faq-content">
+            <strong class="faq-question">How long does implementation take?</strong>
+            <p class="faq-answer">Starter setups: 1-2 weeks. Growth implementations: 3-4 weeks. Scale projects: 6-8 weeks. We work around your business schedule and provide training for your team throughout the process.</p>
+          </div>
+        </div>
+        
+        <div class="faq-card card" onclick="window.dataLayer&&dataLayer.push({event:'crm_faq_click', question:'lead-response'})" data-event="crm_faq_click" data-question="lead-response">
+          <div class="faq-icon">
+            <span>⚡</span>
+          </div>
+          <div class="faq-content">
+            <strong class="faq-question">How fast does the system respond to new leads?</strong>
+            <p class="faq-answer">Our AI-powered system responds to new leads within 60 seconds, 24/7. Instant SMS and email notifications ensure no opportunity is missed, dramatically improving your conversion rates compared to manual follow-up.</p>
+          </div>
+        </div>
+        
+        <div class="faq-card card" onclick="window.dataLayer&&dataLayer.push({event:'crm_faq_click', question:'training-support'})" data-event="crm_faq_click" data-question="training-support">
+          <div class="faq-icon">
+            <span>🎓</span>
+          </div>
+          <div class="faq-content">
+            <strong class="faq-question">Do you provide training and support?</strong>
+            <p class="faq-answer">Absolutely! Every implementation includes comprehensive team training, detailed documentation, and 30 days of optimization support. We offer ongoing support plans and our dedicated team is always available for growing businesses.</p>
+          </div>
+        </div>
+        
+        <div class="faq-card card" onclick="window.dataLayer&&dataLayer.push({event:'crm_faq_click', question:'website-integration'})" data-event="crm_faq_click" data-question="website-integration">
+          <div class="faq-icon">
+            <span>🔗</span>
+          </div>
+          <div class="faq-content">
+            <strong class="faq-question">Can it integrate with my existing website and marketing?</strong>
+            <p class="faq-answer">Yes! Our CRM integrates with any website, social media platforms, and existing marketing tools. We specialize in creating unified systems that work together seamlessly—no more data silos or manual transfers.</p>
+          </div>
+        </div>
+        
+        <div class="faq-card card" onclick="window.dataLayer&&dataLayer.push({event:'crm_faq_click', question:'roi-tracking'})" data-event="crm_faq_click" data-question="roi-tracking">
+          <div class="faq-icon">
+            <span>📊</span>
+          </div>
+          <div class="faq-content">
+            <strong class="faq-question">How do I track ROI and performance?</strong>
+            <p class="faq-answer">Built-in analytics track lead sources, conversion rates, revenue attribution, and campaign performance. Real-time dashboards show exactly which marketing efforts are driving results and profitable growth.</p>
+          </div>
+        </div>
+        
+        <div class="faq-card card" onclick="window.dataLayer&&dataLayer.push({event:'crm_faq_click', question:'business-setup'})" data-event="crm_faq_click" data-question="business-setup">
+          <div class="faq-icon">
+            <span>⚙️</span>
+          </div>
+          <div class="faq-content">
+            <strong class="faq-question">What's included in the business setup?</strong>
+            <p class="faq-answer">Compliance configurations, industry-specific messaging templates, business hour settings, automated workflows tailored to your industry, and custom pipeline stages that match your sales process.</p>
+          </div>
+        </div>
+        
+        <div class="faq-card card" onclick="window.dataLayer&&dataLayer.push({event:'crm_faq_click', question:'scalability'})" data-event="crm_faq_click" data-question="scalability">
+          <div class="faq-icon">
+            <span>📈</span>
+          </div>
+          <div class="faq-content">
+            <strong class="faq-question">Will the system grow with my business?</strong>
+            <p class="faq-answer">Absolutely. Our CRM scales from startup to enterprise with unlimited contacts, advanced automation workflows, team collaboration tools, and multi-location management capabilities as your business expands.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </TextureVideoSection>
+
+  <!-- Final Conversion CTA Section -->
+  <DarkContentSection background="rgba(139, 92, 246, 0.1)">
+    <div class="final-cta-section text-center max-w-4xl mx-auto">
+      <h2 class="h2" style="color: #8b5cf6; margin-bottom: 20px;">Ready to Automate Your Way to Market Leadership?</h2>
+      <p class="sub" style="margin-bottom: 40px; color: #e2e8f0;">Stop losing deals to manual processes. Get advanced business automation platform.</p>
+      
+      <p class="text-xl text-gray-300 mb-8">
+        While your competitors manually chase leads and lose deals to slow follow-up, 
+        you'll dominate with AI-powered automation that converts prospects into customers 
+        around the clock. Built for growing businesses by automation experts.
+      </p>
+      
+      <div class="flex flex-col sm:flex-row gap-4 justify-center items-center mb-8">
+         <ModernBookingModal 
+           plan="crm"
+           triggerText="Book One-on-One CRM Demo"
+         />
+        <a href="/pricing" class="btn-ghost" data-event="crm_systems_view">See Complete Systems</a>
+      </div>
+      
+      <div class="flex justify-center items-center gap-8 text-sm text-purple-300">
+        <span>No obligation</span>
+        <span>•</span>
+        <span>30-minute demo</span>
+        <span>•</span>
+        <span>Custom business setup</span>
+      </div>
+      
+      <div class="mt-12 p-6 bg-gradient-to-r from-purple-900/30 to-transparent rounded-lg border border-purple-500/30">
+        <h4 class="text-lg font-bold text-purple-400 mb-3">What Happens Next?</h4>
+        <div class="grid md:grid-cols-3 gap-6 text-sm">
+          <div class="text-center">
+            <div class="w-8 h-8 bg-purple-600 rounded-full flex items-center justify-center mx-auto mb-2">
+              <span class="font-bold">1</span>
+            </div>
+            <p class="text-gray-300">30-minute discovery call to understand your business and current processes</p>
+          </div>
+          <div class="text-center">
+            <div class="w-8 h-8 bg-purple-600 rounded-full flex items-center justify-center mx-auto mb-2">
+              <span class="font-bold">2</span>
+            </div>
+            <p class="text-gray-300">Custom CRM demo tailored to your business and industry</p>
+          </div>
+          <div class="text-center">
+            <div class="w-8 h-8 bg-purple-600 rounded-full flex items-center justify-center mx-auto mb-2">
+              <span class="font-bold">3</span>
+            </div>
+            <p class="text-gray-300">Implementation roadmap and timeline for your automation transformation</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </DarkContentSection>
+ </BaseLayout>
+
+<script is:inline>
+  // Analytics tracking for CRM page interactions
+  window.dataLayer = window.dataLayer || [];
+  
+  // Track CRM interactions and plan views
+  document.addEventListener('click', function(e) {
+    const target = e.target.closest('[data-event]');
+    if (target) {
+      const event = target.getAttribute('data-event');
+      const question = target.getAttribute('data-question');
+      
+      // Track plan view clicks specifically
+      if (event && event.includes('plan_view')) {
+        window.dataLayer.push({
+          event: 'crm_plan_navigation',
+          action: event,
+          plan_type: event.replace('crm_', '').replace('_plan_view', ''),
+          timestamp: Date.now()
+        });
+      } else {
+        window.dataLayer.push({
+          event: 'crm_interaction',
+          action: event,
+          question: question || 'general',
+          timestamp: Date.now()
+        });
+      }
+    }
+  });
+  
+  // Track scroll depth for engagement
+  let maxScroll = 0;
+  window.addEventListener('scroll', function() {
+    const scrollPercent = Math.round((window.scrollY / (document.body.scrollHeight - window.innerHeight)) * 100);
+    if (scrollPercent > maxScroll) {
+      maxScroll = scrollPercent;
+      if (maxScroll >= 25 && maxScroll < 50) {
+        window.dataLayer.push({ event: 'crm_scroll_25' });
+      } else if (maxScroll >= 50 && maxScroll < 75) {
+        window.dataLayer.push({ event: 'crm_scroll_50' });
+      } else if (maxScroll >= 75) {
+        window.dataLayer.push({ event: 'crm_scroll_75' });
+      }
+    }
+  });
+</script>
+
+<style>
+  /* Enhanced CRM video stability */
+  .stable-crm-video {
+    visibility: hidden; /* Hide until loaded to prevent flicker */
+    background: transparent;
+    transform: translateZ(0); /* Force hardware acceleration */
+    -webkit-transform: translateZ(0);
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    perspective: 1000px;
+    -webkit-perspective: 1000px;
+    image-rendering: optimizeQuality;
+    transition: opacity 0.4s ease-in-out;
+    object-position: center center;
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: optimize-contrast;
+  }
+  
+  .stable-crm-video.loaded {
+    visibility: visible;
+  }
+  
+  /* Prevent video flickering during load */
+  .stable-crm-video:not(.loaded) {
+    opacity: 0 !important;
+  }
+  
+  .stable-crm-video.loaded {
+    opacity: 0.75 !important;
+  }
+  
+  /* Mobile optimizations for CRM video */
+  @media (max-width: 768px) {
+    .stable-crm-video {
+      transform: translate3d(0, 0, 0); /* Better mobile performance */
+      -webkit-transform: translate3d(0, 0, 0);
+    }
+  }
+
+  /* Hero Video Section Styling for CRM page */
+  .hero-video-section {
+    position: relative;
+    overflow: hidden;
+    background: var(--zm-bg);
+  }
+  
+  .hero-background-video {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: 0;
+    pointer-events: none;
+    visibility: hidden; /* Hide until loaded to prevent flicker */
+    background: transparent;
+    transform: translateZ(0); /* Force hardware acceleration */
+    -webkit-transform: translateZ(0);
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    perspective: 1000px;
+    -webkit-perspective: 1000px;
+    image-rendering: optimizeQuality;
+    transition: opacity 0.4s ease-in-out;
+    object-position: center center;
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: optimize-contrast;
+  }
+  
+  .hero-background-video.loaded {
+    visibility: visible;
+  }
+  
+  /* Prevent video flickering during load */
+  .hero-background-video:not(.loaded) {
+    opacity: 0 !important;
+  }
+  
+  .hero-background-video.loaded {
+    opacity: 0.8 !important;
+  }
+  
+  .hero-video-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(0, 0, 0, 0.4), rgba(139, 92, 246, 0.1));
+    z-index: 0;
+    pointer-events: none;
+  }
+  
+  /* Ensure content is above video */
+  .hero-video-section .implementation-hierarchy,
+  .hero-video-section .crm-features-section,
+  .hero-video-section .comparison-section {
+    position: relative;
+    z-index: 1;
+    padding: var(--zm-gap-xl) 0;
+  }
+  
+  /* Enhance text readability over video */
+  .hero-video-section h1,
+  .hero-video-section h2,
+  .hero-video-section h3,
+  .hero-video-section h4,
+  .hero-video-section h5,
+  .hero-video-section h6 {
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.7);
+  }
+  
+  .hero-video-section p,
+  .hero-video-section li,
+  .hero-video-section span,
+  .hero-video-section strong {
+    text-shadow: 0 1px 4px rgba(0, 0, 0, 0.5);
+  }
+  
+  /* Enhanced card readability over video */
+  .hero-video-section .card {
+    background: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(139, 92, 246, 0.3);
+  }
+  
+  /* Enhanced table readability over video */
+  .hero-video-section .comparison-table {
+    background: rgba(0, 0, 0, 0.8) !important;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+  }
+  
+  /* Mobile optimizations for hero video sections */
+  @media (max-width: 768px) {
+    .hero-background-video {
+      transform: translate3d(0, 0, 0); /* Better mobile performance */
+      -webkit-transform: translate3d(0, 0, 0);
+    }
+  }
+
+  /* FAQ Section Styling */
+  .faq-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 24px;
+    margin-top: 40px;
+  }
+
+  .faq-card {
+    display: flex;
+    align-items: flex-start;
+    gap: 20px;
+    padding: 32px;
+    background: rgba(0, 0, 0, 0.8);
+    border: 2px solid rgba(139, 92, 246, 0.3);
+    border-radius: 20px;
+    transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+  }
+
+  .faq-card:hover {
+    background: rgba(0, 0, 0, 0.95);
+    border-color: rgba(139, 92, 246, 0.8);
+    box-shadow: 
+      0 20px 50px rgba(139, 92, 246, 0.3),
+      0 8px 25px rgba(139, 92, 246, 0.2);
+    transform: translateY(-6px) scale(1.02);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+  }
+
+  .faq-icon {
+    flex-shrink: 0;
+    width: 48px;
+    height: 48px;
+    background: linear-gradient(135deg, rgba(139, 92, 246, 0.8), rgba(168, 85, 247, 0.6));
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    box-shadow: 0 4px 12px rgba(139, 92, 246, 0.3);
+  }
+
+  .faq-content {
+    flex: 1;
+  }
+
+  .faq-question {
+    color: #ffffff;
+    font-size: 1.1rem;
+    font-weight: 700;
+    margin-bottom: 12px;
+    display: block;
+    line-height: 1.4;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8);
+  }
+
+  .faq-answer {
+    color: #f1f5f9;
+    font-size: 0.95rem;
+    line-height: 1.6;
+    margin: 0;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.6);
+  }
+
+  /* Mobile FAQ adjustments */
+  @media (max-width: 768px) {
+    .faq-grid {
+      grid-template-columns: 1fr;
+      gap: 20px;
+    }
+
+    .faq-card {
+      padding: 24px;
+      gap: 16px;
+    }
+
+    .faq-card:hover {
+      transform: translateY(-2px) scale(1.01);
+    }
+
+    .faq-icon {
+      width: 40px;
+      height: 40px;
+      font-size: 18px;
+    }
+
+    .faq-question {
+      font-size: 1rem;
+    }
+
+    .faq-answer {
+      font-size: 0.9rem;
+    }
+  }
+
+  /* Enhanced touch interaction for mobile */
+  @media (hover: none) and (pointer: coarse) {
+    .faq-card:active {
+      background: rgba(0, 0, 0, 0.9);
+      border-color: rgba(139, 92, 246, 0.7);
+      transform: scale(0.98);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+    }
+  }
+
+  /* Custom animations for CRM page */
+  @keyframes float {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-10px); }
+  }
+  
+  .float-animation {
+    animation: float 6s ease-in-out infinite;
+  }
+  
+  /* Table responsive styles */
+  table {
+    border-spacing: 0;
+  }
+  
+  /* Enhanced hover effects for CRM features */
+  .card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 20px 40px rgba(110, 0, 255, 0.2);
+  }
+  
+  /* FAQ details styling */
+  details summary::-webkit-details-marker {
+    display: none;
+  }
+  
+  details summary {
+    position: relative;
+    padding-right: 2rem;
+  }
+  
+  details summary::after {
+    content: '+';
+    position: absolute;
+    right: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 1.5rem;
+    color: #8b5cf6;
+    transition: transform 0.3s ease;
+  }
+  
+  details[open] summary::after {
+    transform: translateY(-50%) rotate(45deg);
+  }
+  
+  /* CRM Visual Container with Floating Popup */
+  .crm-visual-container {
+    position: relative;
+  }
+  
+  .crm-automation-popup {
+    position: absolute;
+    top: -20px;
+    right: -30px;
+    z-index: 10;
+    transform: rotate(3deg);
+    animation: float 8s ease-in-out infinite;
+    filter: drop-shadow(0 15px 30px rgba(110, 0, 255, 0.4));
+  }
+  
+  .crm-main-image {
+    max-width: 100%;
+    height: auto;
+    transition: all 0.3s ease;
+    filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.3));
+  }
+  
+  .crm-main-image:hover {
+    transform: scale(1.02);
+    filter: drop-shadow(0 15px 30px rgba(110, 0, 255, 0.4));
+  }
+  
+  .crm-popup-image-seamless {
+    max-width: 280px;
+    height: auto;
+    transition: all 0.3s ease;
+    filter: drop-shadow(0 15px 30px rgba(0, 0, 0, 0.4));
+  }
+  
+  .crm-popup-image-seamless:hover {
+    transform: scale(1.05) rotate(-2deg);
+    filter: drop-shadow(0 20px 40px rgba(110, 0, 255, 0.6));
+  }
+  
+  /* Responsive adjustments */
+  @media (max-width: 768px) {
+    .crm-automation-popup {
+      position: static;
+      transform: none;
+      margin-top: 2rem;
+      text-align: center;
+    }
+    
+    .crm-popup-image-seamless {
+      max-width: 100%;
+    }
+  }
+  
+  /* Sophisticated rounded sections */
+  .implementation-hierarchy,
+  .comparison-section {
+    position: relative;
+    border-radius: 32px;
+    margin: 2rem 1rem;
+    padding: 4rem 2rem;
+    overflow: hidden;
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    box-shadow: 
+      0 8px 32px rgba(139, 92, 246, 0.15),
+      0 1px 0 rgba(255, 255, 255, 0.05) inset,
+      0 -1px 0 rgba(0, 0, 0, 0.1) inset;
+    transition: all 0.3s ease;
+  }
+  
+  .implementation-hierarchy:hover,
+  .comparison-section:hover {
+    transform: translateY(-2px);
+    box-shadow: 
+      0 16px 48px rgba(139, 92, 246, 0.2),
+      0 1px 0 rgba(255, 255, 255, 0.08) inset,
+      0 -1px 0 rgba(0, 0, 0, 0.15) inset;
+  }
+  
+  .implementation-hierarchy::before,
+  .comparison-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, 
+      rgba(139, 92, 246, 0.08) 0%,
+      rgba(168, 85, 247, 0.05) 50%,
+      rgba(139, 92, 246, 0.12) 100%
+    );
+    border-radius: inherit;
+    pointer-events: none;
+    z-index: 1;
+  }
+  
+  .implementation-hierarchy > *,
+  .comparison-section > * {
+    position: relative;
+    z-index: 2;
+  }
+  
+  /* Card styling within rounded sections */
+  .implementation-hierarchy .card,
+  .comparison-section .card {
+    border-radius: 20px;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(139, 92, 246, 0.2);
+    transition: all 0.3s ease;
+  }
+  
+  .implementation-hierarchy .card:hover,
+  .comparison-section .card:hover {
+    background: rgba(139, 92, 246, 0.05);
+    border-color: rgba(139, 92, 246, 0.3);
+    transform: translateY(-2px);
+  }
+  
+  /* Responsive adjustments for rounded sections */
+  @media (max-width: 768px) {
+    .implementation-hierarchy,
+    .comparison-section {
+      margin: 1rem 0.5rem;
+      padding: 2rem 1rem;
+      border-radius: 24px;
+    }
+  }
+</style>

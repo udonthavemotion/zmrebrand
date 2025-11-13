@@ -1,0 +1,30 @@
+# Vercel ignore file - exclude unnecessary files from deployment
+node_modules/
+.git/
+.astro/
+.vscode/
+.idea/
+*.log
+.DS_Store
+.env.local
+.env.*.local
+dist/
+.vercel/
+
+# Documentation (not needed for build)
+docs/
+*.md
+!README.md
+
+# Test files
+tests/
+*.test.ts
+*.test.js
+*.spec.ts
+*.spec.js
+
+# Development files
+.eslintrc.cjs
+.prettierrc.cjs
+.prettierignore
+

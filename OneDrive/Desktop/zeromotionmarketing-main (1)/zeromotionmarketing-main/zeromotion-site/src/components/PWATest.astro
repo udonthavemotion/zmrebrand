@@ -1,0 +1,171 @@
+---
+// PWA and Mobile Testing Component
+---
+
+<div id="pwa-test-results" style="display: none; position: fixed; top: 20px; right: 20px; background: rgba(0,0,0,0.9); color: white; padding: 20px; border-radius: 8px; z-index: 9999; font-family: monospace; font-size: 12px; max-width: 300px;">
+  <h3 style="margin: 0 0 10px 0; color: #8b5cf6;">PWA Test Results</h3>
+  <div id="test-output"></div>
+  <button onclick="document.getElementById('pwa-test-results').style.display='none'" style="margin-top: 10px; background: #8b5cf6; border: none; color: white; padding: 5px 10px; border-radius: 4px; cursor: pointer;">Close</button>
+</div>
+
+<script>
+  // PWA and Mobile Testing Script
+  class PWATester {
+    constructor() {
+      this.results = [];
+    }
+
+    log(message, status = 'info') {
+      const colors = {
+        success: '#10b981',
+        error: '#ef4444',
+        warning: '#f59e0b',
+        info: '#6b7280'
+      };
+      this.results.push(`<div style="color: ${colors[status]}; margin: 5px 0;">[${status.toUpperCase()}] ${message}</div>`);
+    }
+
+    async testPWAInstallability() {
+      this.log('Testing PWA Installability...');
+
+      // Check Service Worker
+      if ('serviceWorker' in navigator) {
+        try {
+          const registration = await navigator.serviceWorker.ready;
+          this.log('Service Worker registered successfully', 'success');
+
+          // Check manifest
+          const manifestResponse = await fetch('/favico/site.webmanifest');
+          if (manifestResponse.ok) {
+            const manifest = await manifestResponse.json();
+            this.log(`Manifest loaded: ${manifest.name}`, 'success');
+          } else {
+            this.log('Manifest not accessible', 'error');
+          }
+        } catch (error) {
+          this.log(`Service Worker error: ${error.message}`, 'error');
+        }
+      } else {
+        this.log('Service Worker not supported', 'error');
+      }
+
+      // Check if installable
+      const isStandalone = window.matchMedia('(display-mode: standalone)').matches;
+      const isIOSStandalone = window.navigator.standalone === true;
+
+      if (isStandalone || isIOSStandalone) {
+        this.log('App is running in standalone mode', 'success');
+      } else {
+        this.log('App is running in browser mode');
+      }
+
+      // Check PWA features
+      const features = [
+        ['Notification', 'Notification' in window],
+        ['PushManager', 'PushManager' in window],
+        ['Background Sync', 'serviceWorker' in navigator && 'sync' in window.ServiceWorkerRegistration.prototype],
+        ['Background Fetch', 'serviceWorker' in navigator && 'backgroundFetch' in window.ServiceWorkerRegistration.prototype]
+      ];
+
+      features.forEach(([name, supported]) => {
+        this.log(`${name}: ${supported ? 'Supported' : 'Not supported'}`, supported ? 'success' : 'warning');
+      });
+    }
+
+    testMobileOptimizations() {
+      this.log('Testing Mobile Optimizations...');
+
+      // Check viewport
+      const viewport = document.querySelector('meta[name="viewport"]');
+      if (viewport) {
+        this.log(`Viewport: ${viewport.content}`, 'success');
+      } else {
+        this.log('Viewport meta tag missing', 'error');
+      }
+
+      // Check touch targets
+      const buttons = document.querySelectorAll('button, [role="button"], a');
+      let smallTargets = 0;
+      buttons.forEach(btn => {
+        const rect = btn.getBoundingClientRect();
+        if (rect.width < 44 || rect.height < 44) {
+          smallTargets++;
+        }
+      });
+
+      if (smallTargets === 0) {
+        this.log('All touch targets meet 44px minimum', 'success');
+      } else {
+        this.log(`${smallTargets} touch targets are smaller than 44px`, 'warning');
+      }
+
+      // Check for horizontal scroll
+      const hasHorizontalScroll = document.documentElement.scrollWidth > document.documentElement.clientWidth;
+      if (hasHorizontalScroll) {
+        this.log('Horizontal scroll detected', 'warning');
+      } else {
+        this.log('No horizontal scroll detected', 'success');
+      }
+
+      // Check input types
+      const inputs = document.querySelectorAll('input[type="tel"], input[type="email"]');
+      this.log(`Mobile-optimized inputs found: ${inputs.length}`, inputs.length > 0 ? 'success' : 'info');
+    }
+
+    testPerformance() {
+      this.log('Testing Performance...');
+
+      // Check for lazy loading
+      const lazyImages = document.querySelectorAll('img[loading="lazy"]');
+      this.log(`Lazy-loaded images: ${lazyImages.length}`, lazyImages.length > 0 ? 'success' : 'info');
+
+      // Check for preloaded resources
+      const preloaded = document.querySelectorAll('link[rel="preload"]');
+      this.log(`Preloaded resources: ${preloaded.length}`, preloaded.length > 0 ? 'success' : 'info');
+
+      // Check font display
+      const fonts = document.querySelectorAll('link[href*="fonts.googleapis.com"]');
+      fonts.forEach(font => {
+        if (font.href.includes('display=swap')) {
+          this.log('Font display=swap detected', 'success');
+        }
+      });
+    }
+
+    async runAllTests() {
+      this.results = [];
+      await this.testPWAInstallability();
+      this.testMobileOptimizations();
+      this.testPerformance();
+
+      // Display results
+      const output = document.getElementById('test-output');
+      if (output) {
+        output.innerHTML = this.results.join('');
+        document.getElementById('pwa-test-results').style.display = 'block';
+      }
+
+      // PWA Test Results: this.results.join('\n')
+    }
+  }
+
+  // Make tester available globally for debugging
+  window.PWATester = PWATester;
+
+  // Auto-run tests if in development
+  if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
+    setTimeout(() => {
+      const tester = new PWATester();
+      tester.runAllTests();
+    }, 2000);
+  }
+
+  // Add keyboard shortcut to run tests (Ctrl+Shift+T)
+  document.addEventListener('keydown', (e) => {
+    if (e.ctrlKey && e.shiftKey && e.key === 'T') {
+      e.preventDefault();
+      const tester = new PWATester();
+      tester.runAllTests();
+    }
+  });
+</script>

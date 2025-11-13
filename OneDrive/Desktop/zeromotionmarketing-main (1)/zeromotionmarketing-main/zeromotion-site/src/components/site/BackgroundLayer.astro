@@ -1,0 +1,314 @@
+---
+interface Props {
+  poster: string;
+  desktopSrc?: string;
+  mobileSrc?: string;
+  overlay?: "none" | "vignette" | "grid" | "dots";
+}
+
+const { poster, desktopSrc, mobileSrc, overlay = "vignette" } = Astro.props;
+---
+
+<div class="background-layer" data-bg>
+  <!-- Background Video -->
+  {desktopSrc && (
+    <video
+      data-bg-video
+      class="background-video"
+      poster={poster}
+      preload="metadata"
+      muted
+      loop
+      playsinline
+      autoplay
+      aria-hidden="true"
+      role="img"
+      crossorigin="anonymous"
+    >
+      <source src={desktopSrc} type="video/mp4" />
+    </video>
+  )}
+
+  <!-- Fallback Image -->
+  <img
+    data-bg-image
+    class="background-image"
+    src={poster}
+    alt=""
+    loading="lazy"
+    decoding="async"
+    aria-hidden="true"
+  />
+
+  <!-- Overlay -->
+  {overlay !== "none" && (
+    <div class="background-overlay" data-overlay={overlay}></div>
+  )}
+</div>
+
+<style>
+  .background-layer {
+    position: fixed;
+    inset: 0;
+    z-index: -10;
+    overflow: hidden;
+    pointer-events: none;
+  }
+
+  .background-video,
+  .background-image {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    opacity: 0;
+    transition: opacity 0.4s ease-in-out;
+    will-change: opacity;
+  }
+
+  .background-video.loaded,
+  .background-image.loaded {
+    opacity: 0.8;
+  }
+
+  /* Vignette overlay (default) */
+  .background-overlay[data-overlay="vignette"] {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      135deg,
+      rgba(0, 0, 0, 0.3) 0%,
+      rgba(139, 92, 246, 0.1) 50%,
+      rgba(0, 0, 0, 0.2) 100%
+    );
+    pointer-events: none;
+  }
+
+  /* Grid overlay */
+  .background-overlay[data-overlay="grid"] {
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(139, 92, 246, 0.1) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(139, 92, 246, 0.1) 1px, transparent 1px);
+    background-size: 50px 50px;
+    pointer-events: none;
+  }
+
+  /* Dots overlay */
+  .background-overlay[data-overlay="dots"] {
+    position: absolute;
+    inset: 0;
+    background-image: radial-gradient(circle, rgba(139, 92, 246, 0.1) 1px, transparent 1px);
+    background-size: 20px 20px;
+    pointer-events: none;
+  }
+
+  /* Hide videos when reduced motion is preferred */
+  @media (prefers-reduced-motion: reduce) {
+    .background-video {
+      display: none;
+    }
+    .background-image {
+      display: block;
+      opacity: 0.8;
+    }
+  }
+
+  /* Mobile optimizations */
+  @media (max-width: 768px) {
+    .background-video:not(.mobile-allowed) {
+      display: none;
+    }
+    .background-image {
+      display: block;
+      opacity: 0.8;
+    }
+  }
+</style>
+
+<script>
+  class BackgroundLayerManager {
+    private static instances: BackgroundLayerManager[] = [];
+    private element: HTMLElement;
+    private video: HTMLVideoElement | null = null;
+    private image: HTMLImageElement | null = null;
+    private observer: IntersectionObserver | null = null;
+    private isVisible = false;
+
+    constructor(element: HTMLElement) {
+      this.element = element;
+      this.video = element.querySelector('[data-bg-video]');
+      this.image = element.querySelector('[data-bg-image]');
+
+      // Register instance for global management
+      BackgroundLayerManager.instances.push(this);
+
+      this.initialize();
+    }
+
+    private async initialize() {
+      // Check if user prefers reduced motion
+      const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+      if (prefersReducedMotion) {
+        this.showImage();
+        return;
+      }
+
+      // Setup intersection observer for lazy loading
+      this.setupIntersectionObserver();
+
+      // Check connection quality for mobile
+      const isMobile = window.innerWidth < 768;
+      if (isMobile) {
+        await this.handleMobileVideo();
+      } else {
+        this.initializeDesktopVideo();
+      }
+
+      // Ensure only one background video plays at a time
+      this.ensureSingleActiveVideo();
+    }
+
+    private setupIntersectionObserver() {
+      this.observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            this.isVisible = entry.isIntersecting;
+            if (this.video) {
+              if (entry.isIntersecting) {
+                this.playVideo();
+              } else {
+                this.pauseVideo();
+              }
+            }
+          });
+        },
+        {
+          threshold: 0.5, // 50% visible
+          rootMargin: '10px'
+        }
+      );
+
+      this.observer.observe(this.element);
+    }
+
+    private async handleMobileVideo() {
+      try {
+        // Check connection quality
+        const connection = (navigator as any).connection;
+        const isFastConnection = !connection ||
+          connection.effectiveType === '4g' ||
+          connection.effectiveType === '5g';
+
+        // Check battery saver
+        const battery = (navigator as any).getBattery ?
+          await (navigator as any).getBattery() : null;
+        const isBatteryOk = !battery || !battery.charging && battery.level > 0.2;
+
+        if (isFastConnection && isBatteryOk && this.video) {
+          this.video.classList.add('mobile-allowed');
+          this.initializeVideo();
+        } else {
+          this.showImage();
+        }
+      } catch (error) {
+        console.warn('Error checking mobile conditions:', error);
+        this.showImage();
+      }
+    }
+
+    private initializeDesktopVideo() {
+      if (this.video) {
+        this.initializeVideo();
+      } else {
+        this.showImage();
+      }
+    }
+
+    private initializeVideo() {
+      if (!this.video) return;
+
+      this.video.addEventListener('loadeddata', () => {
+        this.video!.classList.add('loaded');
+      });
+
+      this.video.addEventListener('error', () => {
+        console.warn('Background video failed to load, using image fallback');
+        this.showImage();
+      });
+
+      // Load video if visible
+      if (this.isVisible) {
+        this.playVideo();
+      }
+    }
+
+    private playVideo() {
+      if (this.video && this.isVisible) {
+        this.video.play().catch(() => {
+          // Video failed to play, show image
+          this.showImage();
+        });
+      }
+    }
+
+    private pauseVideo() {
+      if (this.video) {
+        this.video.pause();
+      }
+    }
+
+    private showImage() {
+      if (this.image) {
+        this.image.classList.add('loaded');
+      }
+      if (this.video) {
+        this.video.style.display = 'none';
+      }
+    }
+
+    private ensureSingleActiveVideo() {
+      // Pause all other background videos
+      BackgroundLayerManager.instances.forEach(instance => {
+        if (instance !== this && instance.video && instance !== this) {
+          instance.pauseVideo();
+        }
+      });
+
+      // Also pause any other background videos on the page
+      const allBgVideos = document.querySelectorAll('video[data-bg]:not([data-bg-video])');
+      allBgVideos.forEach(video => {
+        (video as HTMLVideoElement).pause();
+      });
+    }
+
+    static cleanup() {
+      this.instances.forEach(instance => {
+        if (instance.observer) {
+          instance.observer.disconnect();
+        }
+        if (instance.video) {
+          instance.video.pause();
+        }
+      });
+      this.instances = [];
+    }
+  }
+
+  // Initialize when DOM is ready
+  document.addEventListener('DOMContentLoaded', () => {
+    const backgroundLayers = document.querySelectorAll('[data-bg]');
+    backgroundLayers.forEach(layer => {
+      new BackgroundLayerManager(layer as HTMLElement);
+    });
+  });
+
+  // Cleanup on page unload
+  window.addEventListener('beforeunload', () => {
+    BackgroundLayerManager.cleanup();
+  });
+</script>

@@ -1,0 +1,1138 @@
+---
+// ZEROMOTION-AD-CAMPAIGNS-REBRAND-2025
+import BaseLayout from "../layouts/BaseLayout.astro";
+import ModernBookingModal from "../components/ModernBookingModal.astro";
+import DarkContentSection from "../components/sections/DarkContentSection.astro";
+import BackgroundLayer from "../components/site/BackgroundLayer.astro";
+import SEOInternalLinks from "../components/SEOInternalLinks.astro";
+import VideoBg from "../components/common/VideoBg.astro";
+
+const HERO_VIDEO = "/pictures/web design page/beautiful.mp4";
+
+// SEO Configuration for Ad Campaigns Service Page
+const title = "Complete Marketing Systems | ZeroMotion Marketing | Houma, LA";
+const description = "Stop running ads in isolation. Get website + advertising + branding + AI working together as one intelligent system that turns every dollar into maximum ROI. Complete marketing systems for Houma businesses.";
+const keywords = "integrated marketing systems Houma LA, complete marketing systems Thibodaux Louisiana, advertising website branding AI integration Louisiana, marketing automation Houma, conversion-focused advertising Louisiana";
+const canonical = "/ad-campaigns";
+const ogImage = "/og-webdesign.png";
+
+// Ad Campaigns Service Schema
+const adCampaignsSchema = [
+  {
+    "@context": "https://schema.org",
+    "@type": "Service",
+    "name": "Complete Marketing Systems",
+    "description": "Integrated marketing systems combining advertising, websites, branding, and AI automation for Louisiana businesses.",
+    "provider": {
+      "@type": "Organization",
+      "name": "ZeroMotion Marketing",
+      "url": "https://zeromotion.marketing"
+    },
+    "serviceType": "Integrated Marketing Systems",
+    "areaServed": [
+      {
+        "@type": "City",
+        "name": "Houma",
+        "addressRegion": "LA"
+      },
+      {
+        "@type": "City",
+        "name": "Thibodaux",
+        "addressRegion": "LA"
+      }
+    ],
+    "hasOfferCatalog": {
+      "@type": "OfferCatalog",
+      "name": "Marketing Systems",
+      "itemListElement": [
+        {
+          "@type": "Offer",
+          "itemOffered": {
+            "@type": "Service",
+            "name": "Starter Website + Smart Advertising",
+            "description": "Complete marketing system with website and targeted advertising"
+          },
+          "priceRange": "$200-$300"
+        },
+        {
+          "@type": "Offer",
+          "itemOffered": {
+            "@type": "Service",
+            "name": "Growth Marketing + Automation System",
+            "description": "Advanced marketing ecosystem with multi-platform advertising"
+          },
+          "priceRange": "$1000-$1500"
+        }
+      ]
+    }
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "Why do you combine website, ads, branding, and AI instead of just running ads?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Because ads without optimized websites waste 40-60% of your budget. When your ads drive traffic to conversion-optimized websites with consistent branding and smart automation, every component amplifies the others for maximum ROI."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Can I get just advertising without the website and branding components?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "We focus on complete marketing systems because they deliver better results. However, if you have a high-converting website and strong brand, we can integrate our advertising with your existing assets."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How is this different from other advertising agencies?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Most agencies just run ads and hope your website converts. We optimize your entire customer journey - from ad click to website conversion to automated follow-up. This integrated approach typically delivers 60% better ROI than standalone advertising."
+        }
+      }
+    ]
+  }
+];
+---
+
+<BaseLayout {title} {description} {keywords} {canonical} {ogImage} schema={adCampaignsSchema}>
+  <!-- Preload critical videos for smooth experience -->
+  <link rel="preload" as="video" href={HERO_VIDEO} type="video/mp4" crossorigin="anonymous" />
+  <link rel="dns-prefetch" href="//zeromotion.marketing" />
+  <meta name="video-quality" content="ultra-high" />
+  <meta name="video-preload" content="auto" />
+
+  <!-- Background Layer -->
+  <BackgroundLayer
+    poster="/pictures/web design page/beautiful.mp4"
+    desktopSrc="/pictures/web design page/beautiful.mp4"
+    overlay="vignette"
+  />
+
+  <div class="ad-campaigns">
+    <section class="hero" data-hero>
+      <div class="container-page ad-hero">
+        <h1 class="h1">Complete Marketing Systems That Convert + Scale + Dominate</h1>
+        <p class="sub">
+          Stop running ads in isolation. Get website + advertising + branding + AI working together as one intelligent system that turns every dollar into maximum ROI.
+        </p>
+        <div class="btn-row">
+          <a
+            class="btn btn-primary"
+            href="#pricing"
+            onclick="window.dataLayer&&dataLayer.push({event:'cta_click',label:'See Complete Marketing Systems'})"
+            data-event="adcampaigns_complete_system_view"
+            ><span class="btn-text-main">See Complete Marketing Systems</span></a
+          >
+          <a
+            class="btn-ghost"
+            href="#how"
+            onclick="window.dataLayer&&dataLayer.push({event:'cta_click',label:'How Integration Works'})"
+            data-event="adcampaigns_integration_benefits_view"
+            ><span class="btn-text-main">How Integration Works</span></a
+          >
+        </div>
+        <div class="platforms">
+          Meta • Google • TikTok • YouTube • Maps • Retargeting
+        </div>
+      </div>
+    </section>
+
+    <!-- Integration benefits section -->
+    <section class="section" style="position: relative; isolation: isolate; padding: var(--zm-gap-xl) 0;">
+      <VideoBg src="/assets/textures/36471-410610193_small.mp4" opacity={0.15} />
+      <div class="container-page">
+        <div id="integration-benefits" class="merged-integration-section" style="text-align: center; max-width: 1200px; margin: 0 auto; position: relative; z-index: 1;">
+          <h2 class="h2" style="color: #8b5cf6; margin-bottom: 24px;">Why Integrated Marketing Systems Outperform Standalone Ads</h2>
+          <p class="sub" style="margin-bottom: 60px; color: #e2e8f0; max-width: 800px; margin-left: auto; margin-right: auto;">Ads without optimized websites, consistent branding, and smart automation waste 60% of your budget</p>
+
+          <div class="benefits-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 40px; margin: 40px 0; justify-content: center;">
+            <div class="benefit-card card" style="text-align: center; position: relative; border: 2px solid rgba(139, 92, 246, 0.3); transition: all 0.3s ease;">
+              <div class="benefit-icon" style="font-size: 3.5rem; color: #8b5cf6; margin-bottom: 25px;">🚀</div>
+              <h3 class="h3" style="color: #ffffff; margin-bottom: 20px;">Website + Ads = Higher Conversion</h3>
+              <p style="color: #e2e8f0; line-height: 1.6;">Your ads drive traffic to conversion-optimized websites, not generic landing pages. Every click has the best chance to become a customer.</p>
+            </div>
+
+            <div class="benefit-card card" style="text-align: center; position: relative; border: 2px solid rgba(139, 92, 246, 0.3); transition: all 0.3s ease;">
+              <div class="benefit-icon" style="font-size: 3.5rem; color: #8b5cf6; margin-bottom: 25px;">🎯</div>
+              <h3 class="h3" style="color: #ffffff; margin-bottom: 20px;">Brand + Ads = Trust That Converts</h3>
+              <p style="color: #e2e8f0; line-height: 1.6;">Your ads, website, and follow-up emails all match your professional brand. Consistent messaging builds trust that converts prospects into customers.</p>
+            </div>
+
+            <div class="benefit-card card" style="text-align: center; position: relative; border: 2px solid rgba(139, 92, 246, 0.3); transition: all 0.3s ease;">
+              <div class="benefit-icon" style="font-size: 3.5rem; color: #8b5cf6; margin-bottom: 25px;">🤖</div>
+              <h3 class="h3" style="color: #ffffff; margin-bottom: 20px;">AI + Ads = Smart Optimization</h3>
+              <p style="color: #e2e8f0; line-height: 1.6;">AI monitors your ad performance, website behavior, and lead quality to automatically optimize campaigns for maximum ROI.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- How Our Integrated Marketing Systems Work -->
+    <section class="adcampaigns-hero-video-section section">
+      <div class="enhanced-process" id="how">
+        <h2 class="h2" style="color: #8b5cf6; text-align: center; margin-bottom: 40px;">How Our Integrated Marketing Systems Work</h2>
+        <p class="sub" style="text-align: center; margin-bottom: 40px; color: #e2e8f0;">Every component amplifies the others for maximum business growth</p>
+
+        <div class="process-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 30px;">
+          <div class="process-step card">
+            <div class="process-number">1</div>
+            <h3 class="h3" style="color: #ffffff; margin-bottom: 15px;">Analyze Your Complete Business System</h3>
+            <p style="color: #e2e8f0; line-height: 1.5;">We analyze your current website, brand positioning, ad performance, and customer journey to identify integration opportunities that most competitors miss.</p>
+          </div>
+
+          <div class="process-step card">
+            <div class="process-number">2</div>
+            <h3 class="h3" style="color: #ffffff; margin-bottom: 15px;">Build Integrated Marketing Infrastructure</h3>
+            <p style="color: #e2e8f0; line-height: 1.5;">We optimize your website for conversions, align your brand messaging across all platforms, and set up AI automation that works with your advertising campaigns.</p>
+          </div>
+
+          <div class="process-step card">
+            <div class="process-number">3</div>
+            <h3 class="h3" style="color: #ffffff; margin-bottom: 15px;">Launch Coordinated Campaigns</h3>
+            <p style="color: #e2e8f0; line-height: 1.5;">We launch advertising campaigns that drive traffic to conversion-optimized websites with brand-consistent messaging and AI-powered lead qualification.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Hero Video Background -->
+      <video
+        src="/pictures/web design page/beautiful.mp4"
+        autoplay
+        muted
+        loop
+        playsinline
+        preload="auto"
+        class="adcampaigns-hero-background-video stable-hero-video"
+        style="opacity: 0.8; filter: brightness(0.8) contrast(1.1) saturate(1.2); will-change: transform; position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; z-index: 0;"
+        onloadstart="this.style.visibility='visible'"
+        oncanplay="this.classList.add('loaded')"
+        width="1920"
+        height="1080"
+        aria-hidden="true"
+        role="img"
+        aria-label="Background video showing ZeroMotion's integrated marketing process"
+      ></video>
+
+      <!-- Overlay gradient for text readability -->
+      <div class="adcampaigns-hero-video-overlay" style="position: absolute; inset: 0; background: linear-gradient(135deg, rgba(0, 0, 0, 0.3), rgba(139, 92, 246, 0.05), rgba(0, 0, 0, 0.2)); z-index: 1; pointer-events: none;"></div>
+    </section>
+
+    <!-- Industries We Scale in Houma -->
+    <section class="industries-section section" style="position: relative; isolation: isolate; padding: var(--zm-gap-xl) 0;">
+      <div class="container-page">
+        <div style="text-align: center; margin-bottom: 50px; position: relative; z-index: 1;">
+          <h2 class="h2" style="margin-bottom: 20px;">Industries We Scale in Houma</h2>
+          <p class="sub" style="max-width: 800px; margin: 0 auto 20px auto;">
+            Complete marketing systems tailored for each industry's unique challenges and opportunities
+          </p>
+        </div>
+
+        <div class="benefits-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 40px; margin: 40px 0; justify-content: center;">
+          <!-- Construction & Trades -->
+          <div class="benefit-card card industry-card" style="text-align: center; position: relative; border: 2px solid rgba(139, 92, 246, 0.3); transition: all 0.3s ease;">
+            <VideoBg src="/videos/industries/construction.mp4" opacity={0.2} />
+            <div class="benefit-icon" style="font-size: 4rem; color: #8b5cf6; margin-bottom: 30px;">🏗️</div>
+            <h3 class="h3" style="color: #ffffff; margin-bottom: 24px; font-weight: 700;">Construction & Trades</h3>
+            <p style="color: #e2e8f0; line-height: 1.7; margin-bottom: 20px; font-size: 1.05rem;">Booked jobs, not just clicks.</p>
+            <p class="sub" style="color: #e2e8f0; opacity: 0.85; font-size: 0.95rem; line-height: 1.6;">Emergency-call campaigns • Radius targeting • Call-only ads • After-hours retargeting</p>
+            <div class="industry-enhancement" style="background: rgba(139, 92, 246, 0.1); border-left: 4px solid #8b5cf6; padding: 20px; margin-top: 15px; border-radius: 8px;">
+              <p style="color: #e2e8f0; margin-bottom: 10px; font-size: 1.05rem;">Complete system includes contractor-optimized website + targeted ads + professional brand + automated lead qualification</p>
+              <p class="result-focus" style="color: #10b981; font-weight: bold; font-size: 1.1rem;">Average 40% increase in qualified leads within 60 days</p>
+            </div>
+          </div>
+
+          <!-- Real Estate -->
+          <div class="benefit-card card industry-card" style="text-align: center; position: relative; border: 2px solid rgba(139, 92, 246, 0.3); transition: all 0.3s ease;">
+            <VideoBg src="/videos/industries/real-estate.mp4" opacity={0.2} />
+            <div class="benefit-icon" style="font-size: 4rem; color: #8b5cf6; margin-bottom: 30px;">🏠</div>
+            <h3 class="h3" style="color: #ffffff; margin-bottom: 24px; font-weight: 700;">Real Estate</h3>
+            <p style="color: #e2e8f0; line-height: 1.7; margin-bottom: 20px; font-size: 1.05rem;">Showings and signed contracts.</p>
+            <p class="sub" style="color: #e2e8f0; opacity: 0.85; font-size: 0.95rem; line-height: 1.6;">Lead forms that qualify • Home value hooks • Lookalike buyers • Map pin targeting</p>
+            <div class="industry-enhancement" style="background: rgba(139, 92, 246, 0.1); border-left: 4px solid #8b5cf6; padding: 20px; margin-top: 15px; border-radius: 8px;">
+              <p style="color: #e2e8f0; margin-bottom: 10px; font-size: 1.05rem;">Integrated approach includes agent websites + listing promotion + brand consistency + automated lead nurturing</p>
+              <p class="result-focus" style="color: #10b981; font-weight: bold; font-size: 1.1rem;">Typical 60% improvement in lead-to-appointment conversion</p>
+            </div>
+          </div>
+
+          <!-- Auto Detailing & Tint -->
+          <div class="benefit-card card industry-card" style="text-align: center; position: relative; border: 2px solid rgba(139, 92, 246, 0.3); transition: all 0.3s ease;">
+            <VideoBg src="/videos/industries/auto.mp4" opacity={0.2} />
+            <div class="benefit-icon" style="font-size: 4rem; color: #8b5cf6; margin-bottom: 30px;">🚗</div>
+            <h3 class="h3" style="color: #ffffff; margin-bottom: 24px; font-weight: 700;">Auto Detailing & Tint</h3>
+            <p style="color: #e2e8f0; line-height: 1.7; margin-bottom: 20px; font-size: 1.05rem;">Calendars filled weekly.</p>
+            <p class="sub" style="color: #e2e8f0; opacity: 0.85; font-size: 0.95rem; line-height: 1.6;">Local intent keywords • Promo bundles • Instagram DM capture • Review boosts</p>
+            <div class="industry-enhancement" style="background: rgba(139, 92, 246, 0.1); border-left: 4px solid #8b5cf6; padding: 20px; margin-top: 15px; border-radius: 8px;">
+              <p style="color: #e2e8f0; margin-bottom: 10px; font-size: 1.05rem;">Complete system includes service-focused website + local advertising + brand differentiation + automated booking</p>
+              <p class="result-focus" style="color: #10b981; font-weight: bold; font-size: 1.1rem;">Usually 50% increase in online bookings within 90 days</p>
+            </div>
+          </div>
+        </div>
+
+        <div style="text-align: center; margin-top: 40px; position: relative; z-index: 1;">
+          <p class="sub" style="color: #e2e8f0;">
+            <a
+              href="#consultation-booking"
+              class="underline underline-offset-4"
+              data-cta="industries_tailor_cta"
+              style="color: #8b5cf6;"
+              >Don't see your industry? We'll tailor it. →</a>
+          </p>
+        </div>
+      </div>
+    </section>
+
+          <!-- Complete Business Growth System -->
+    <section class="adcampaigns-comparison-video-section section">
+      <div class="container-page">
+        <div id="pricing">
+          <div style="text-align: center; margin-bottom: 50px;">
+            <h2 class="h2" style="margin-bottom: 20px;">Choose Your Complete Marketing System</h2>
+            <p class="sub" style="color: #e2e8f0; max-width: 800px; margin: 0 auto;">Website optimization + advertising + branding + AI automation working together</p>
+          </div>
+
+          <div class="pricing-cards-modern" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 40px; max-width: 1400px; margin: 0 auto; padding: 20px 0; justify-content: center;">
+            <!-- Starter System - Subscription Focus -->
+            <div class="card pkg system-card subscription-focus" style="border: 3px solid rgba(34, 197, 94, 0.6); background: linear-gradient(135deg, rgba(34, 197, 94, 0.1), rgba(34, 197, 94, 0.05)); position: relative; text-align: center; padding: 40px 30px 60px 30px; border-radius: 25px; overflow: visible; margin-bottom: 20px;">
+              <div class="model-indicator" style="position: absolute; top: -15px; left: 50%; transform: translateX(-50%); background: linear-gradient(135deg, #22c55e, #16a34a); color: white; padding: 8px 20px; border-radius: 20px; font-weight: bold; font-size: 12px; text-transform: uppercase; letter-spacing: 1px;">
+                🚀 STARTER SYSTEM
+              </div>
+
+              <h3 class="h2" style="color: #22c55e; margin-bottom: 25px; font-weight: 700;">Starter Website + Smart Advertising</h3>
+              <div class="pricing-highlight" style="background: rgba(0, 0, 0, 0.4); padding: 25px; border-radius: 15px; margin-bottom: 30px;">
+                <div style="font-size: 2.2rem; font-weight: bold; color: #ffffff; line-height: 1;">$200–$300</div>
+                <div style="color: #22c55e; font-weight: 600; margin: 8px 0;">build cost</div>
+                <div style="font-size: 1.8rem; font-weight: bold; color: #22c55e;">+ $75–$100/mo</div>
+                <div style="color: #e2e8f0; opacity: 0.8; font-size: 0.9rem; margin-top: 10px;">
+                  <strong style="color: #22c55e;">Professional website + targeted ads</strong>
+                </div>
+              </div>
+
+              <p class="system-description" style="color: #e2e8f0; margin: 25px 0; line-height: 1.6; font-size: 1rem;">Professional website with conversion optimization + targeted advertising + brand consistency + smart lead automation. Perfect for new businesses ready to grow systematically.</p>
+
+              <ul style="text-align: left; margin: 30px 0; color: #e2e8f0; padding-left: 0; list-style: none;">
+                <li style="margin-bottom: 15px; padding-left: 30px; position: relative;"><span style="position: absolute; left: 0; color: #22c55e; font-weight: bold; font-size: 1.2rem;">✓</span> Conversion-optimized website (1-3 pages)</li>
+                <li style="margin-bottom: 15px; padding-left: 30px; position: relative;"><span style="position: absolute; left: 0; color: #22c55e; font-weight: bold; font-size: 1.2rem;">✓</span> Google Ads OR Facebook Ads (your choice)</li>
+                <li style="margin-bottom: 15px; padding-left: 30px; position: relative;"><span style="position: absolute; left: 0; color: #22c55e; font-weight: bold; font-size: 1.2rem;">✓</span> Brand-consistent ad creative and messaging</li>
+                <li style="margin-bottom: 15px; padding-left: 30px; position: relative;"><span style="position: absolute; left: 0; color: #22c55e; font-weight: bold; font-size: 1.2rem;">✓</span> Smart lead capture and automated follow-up</li>
+                <li style="margin-bottom: 15px; padding-left: 30px; position: relative;"><span style="position: absolute; left: 0; color: #22c55e; font-weight: bold; font-size: 1.2rem;">✓</span> Basic performance tracking and optimization</li>
+                <li style="margin-bottom: 15px; padding-left: 30px; position: relative;"><span style="position: absolute; left: 0; color: #22c55e; font-weight: bold; font-size: 1.2rem;">✓</span> Monthly strategy review and adjustments</li>
+              </ul>
+
+              <a
+                class="btn-primary subscription-cta"
+                href="#consultation-booking"
+                onclick="window.dataLayer&&dataLayer.push({event:'cta_click',label:'Start Starter System'})"
+                style="background: linear-gradient(135deg, #22c55e, #16a34a); width: calc(100% - 20px); padding: 18px; font-weight: 700; font-size: 1.1rem; border-radius: 12px; text-transform: none; transition: all 0.3s ease; position: absolute; bottom: 15px; left: 50%; transform: translateX(-50%); box-shadow: 0 8px 25px rgba(34, 197, 94, 0.4); z-index: 10;"
+                >🚀 Start Your Marketing System</a
+              >
+            </div>
+
+            <!-- Growth System - Popular -->
+            <div class="card pkg system-card popular-card project-focus" style="border: 3px solid rgba(139, 92, 246, 0.8); background: linear-gradient(135deg, rgba(139, 92, 246, 0.15), rgba(139, 92, 246, 0.08)); position: relative; text-align: center; padding: 40px 30px 60px 30px; border-radius: 25px; box-shadow: 0 25px 50px rgba(139, 92, 246, 0.25); overflow: visible; margin-bottom: 20px;">
+              <div class="popular-badge" style="position: absolute; top: -18px; left: 50%; transform: translateX(-50%); background: linear-gradient(135deg, #f59e0b, #d97706); color: white; padding: 10px 25px; border-radius: 25px; font-weight: bold; font-size: 13px; text-transform: uppercase; letter-spacing: 1px; box-shadow: 0 5px 15px rgba(245, 158, 11, 0.4);">
+                ⭐ MOST POPULAR
+              </div>
+              <div class="model-indicator" style="position: absolute; top: 8px; left: 50%; transform: translateX(-50%); background: linear-gradient(135deg, #8b5cf6, #a855f7); color: white; padding: 6px 18px; border-radius: 15px; font-weight: bold; font-size: 11px; text-transform: uppercase; letter-spacing: 1px;">
+                💎 GROWTH SYSTEM
+              </div>
+
+              <h3 class="h2" style="color: #8b5cf6; margin: 35px 0 25px 0; font-weight: 700;">Growth Marketing + Automation System</h3>
+              <div class="pricing-highlight" style="background: rgba(0, 0, 0, 0.5); padding: 30px; border-radius: 15px; margin-bottom: 30px; border: 2px solid rgba(139, 92, 246, 0.3);">
+                <div style="font-size: 2.5rem; font-weight: bold; color: #ffffff; line-height: 1;">$1,000–$1,500</div>
+                <div style="color: #8b5cf6; font-weight: 600; margin: 8px 0;">setup cost</div>
+                <div style="font-size: 1.2rem; color: #8b5cf6; font-weight: 600;">+ $150–$300/mo</div>
+                <div style="color: #e2e8f0; opacity: 0.9; font-size: 0.9rem; margin-top: 12px;">
+                  <strong style="color: #8b5cf6;">Complete marketing ecosystem</strong>
+                </div>
+              </div>
+
+              <p class="system-description" style="color: #e2e8f0; margin: 25px 0; line-height: 1.6; font-size: 1rem;">Complete marketing ecosystem with multi-platform advertising, conversion funnels, brand integration, and AI-powered automation for growing businesses.</p>
+
+              <ul style="text-align: left; margin: 30px 0; color: #e2e8f0; padding-left: 0; list-style: none;">
+                <li style="margin-bottom: 15px; padding-left: 30px; position: relative;"><span style="position: absolute; left: 0; color: #8b5cf6; font-weight: bold; font-size: 1.2rem;">✓</span> Advanced website with conversion funnels</li>
+                <li style="margin-bottom: 15px; padding-left: 30px; position: relative;"><span style="position: absolute; left: 0; color: #8b5cf6; font-weight: bold; font-size: 1.2rem;">✓</span> Google Ads + Facebook Ads + retargeting campaigns</li>
+                <li style="margin-bottom: 15px; padding-left: 30px; position: relative;"><span style="position: absolute; left: 0; color: #8b5cf6; font-weight: bold; font-size: 1.2rem;">✓</span> Brand-consistent email sequences and templates</li>
+                <li style="margin-bottom: 15px; padding-left: 30px; position: relative;"><span style="position: absolute; left: 0; color: #8b5cf6; font-weight: bold; font-size: 1.2rem;">✓</span> AI-powered lead scoring and qualification</li>
+                <li style="margin-bottom: 15px; padding-left: 30px; position: relative;"><span style="position: absolute; left: 0; color: #8b5cf6; font-weight: bold; font-size: 1.2rem;">✓</span> Social media integration and automated posting</li>
+                <li style="margin-bottom: 15px; padding-left: 30px; position: relative;"><span style="position: absolute; left: 0; color: #8b5cf6; font-weight: bold; font-size: 1.2rem;">✓</span> Advanced analytics and ROI tracking</li>
+              </ul>
+
+              <a
+                class="btn-primary custom-cta"
+                href="#consultation-booking"
+                onclick="window.dataLayer&&dataLayer.push({event:'cta_click',label:'Start Growth System'})"
+                style="background: linear-gradient(135deg, #8b5cf6, #a855f7); width: calc(100% - 20px); padding: 18px; font-weight: 700; font-size: 1.1rem; border-radius: 12px; text-transform: none; transition: all 0.3s ease; position: absolute; bottom: 15px; left: 50%; transform: translateX(-50%); box-shadow: 0 8px 25px rgba(139, 92, 246, 0.4); z-index: 10;"
+                >💎 Start Growth System</a
+              >
+            </div>
+
+            <!-- Scale & Dominate System -->
+            <div class="card pkg system-card enterprise-focus" style="border: 3px solid rgba(245, 158, 11, 0.6); background: linear-gradient(135deg, rgba(245, 158, 11, 0.1), rgba(245, 158, 11, 0.05)); position: relative; text-align: center; padding: 40px 30px 60px 30px; border-radius: 25px; overflow: visible; margin-bottom: 20px;">
+              <div class="model-indicator" style="position: absolute; top: -15px; left: 50%; transform: translateX(-50%); background: linear-gradient(135deg, #f59e0b, #d97706); color: white; padding: 8px 20px; border-radius: 20px; font-weight: bold; font-size: 12px; text-transform: uppercase; letter-spacing: 1px;">
+                🚀 ENTERPRISE SYSTEM
+              </div>
+
+              <h3 class="h2" style="color: #f59e0b; margin-bottom: 25px; font-weight: 700;">Scale & Dominate + AI Intelligence</h3>
+              <div class="pricing-highlight" style="background: rgba(0, 0, 0, 0.4); padding: 25px; border-radius: 15px; margin-bottom: 30px;">
+                <div style="font-size: 2rem; font-weight: bold; color: #ffffff; line-height: 1;">$2,000–$5,000+</div>
+                <div style="color: #f59e0b; font-weight: 600; margin: 8px 0;">per month</div>
+                <div style="color: #e2e8f0; opacity: 0.8; font-size: 0.9rem; margin-top: 10px;">
+                  <strong style="color: #f59e0b;">Enterprise marketing system</strong>
+                </div>
+              </div>
+
+              <p class="system-description" style="color: #e2e8f0; margin: 25px 0; line-height: 1.6; font-size: 1rem;">Enterprise marketing system with premium brand strategy, multi-platform domination, and AI-powered competitive intelligence for market leaders.</p>
+
+              <ul style="text-align: left; margin: 30px 0; color: #e2e8f0; padding-left: 0; list-style: none;">
+                <li style="margin-bottom: 15px; padding-left: 30px; position: relative;"><span style="position: absolute; left: 0; color: #f59e0b; font-weight: bold; font-size: 1.2rem;">✓</span> Premium website with advanced conversion optimization</li>
+                <li style="margin-bottom: 15px; padding-left: 30px; position: relative;"><span style="position: absolute; left: 0; color: #f59e0b; font-weight: bold; font-size: 1.2rem;">✓</span> All advertising platforms + advanced campaign strategies</li>
+                <li style="margin-bottom: 15px; padding-left: 30px; position: relative;"><span style="position: absolute; left: 0; color: #f59e0b; font-weight: bold; font-size: 1.2rem;">✓</span> Premium brand positioning and market differentiation</li>
+                <li style="margin-bottom: 15px; padding-left: 30px; position: relative;"><span style="position: absolute; left: 0; color: #f59e0b; font-weight: bold; font-size: 1.2rem;">✓</span> AI-powered competitor monitoring and market intelligence</li>
+                <li style="margin-bottom: 15px; padding-left: 30px; position: relative;"><span style="position: absolute; left: 0; color: #f59e0b; font-weight: bold; font-size: 1.2rem;">✓</span> Advanced attribution modeling and profit optimization</li>
+                <li style="margin-bottom: 15px; padding-left: 30px; position: relative;"><span style="position: absolute; left: 0; color: #f59e0b; font-weight: bold; font-size: 1.2rem;">✓</span> Dedicated strategist and priority optimization</li>
+              </ul>
+
+              <a
+                class="btn-primary enterprise-cta"
+                href="#consultation-booking"
+                onclick="window.dataLayer&&dataLayer.push({event:'cta_click',label:'Start Enterprise System'})"
+                style="background: linear-gradient(135deg, #f59e0b, #d97706); width: calc(100% - 20px); padding: 18px; font-weight: 700; font-size: 1.1rem; border-radius: 12px; text-transform: none; transition: all 0.3s ease; position: absolute; bottom: 15px; left: 50%; transform: translateX(-50%); box-shadow: 0 8px 25px rgba(245, 158, 11, 0.4); z-index: 10;"
+                >🚀 Dominate Your Market</a
+              >
+            </div>
+          </div>
+          <p class="sub" style="margin-top:20px;font-size:14px;text-align:center;color:#e2e8f0;opacity:0.8">
+            *Pricing is flexible by industry and seasonality. Ask about local partner rates.
+          </p>
+        </div>
+      </div>
+
+      <!-- Video Background -->
+      <video
+        src="/assets/implementation/12602693_1920_1080_30fps.mp4"
+        autoplay
+        muted
+        loop
+        playsinline
+        preload="metadata"
+        class="adcampaigns-comparison-background-video stable-hero-video"
+        style="opacity: 0.8; filter: brightness(0.75) contrast(1.15) saturate(1.3) hue-rotate(0deg); will-change: transform;"
+        onloadstart="this.style.visibility='visible'; this.style.imageRendering='optimizeQuality';"
+        oncanplay="this.classList.add('loaded'); this.style.transform='translateZ(0)'; this.preload='auto';"
+        onloadeddata="this.style.filter='brightness(0.75) contrast(1.15) saturate(1.3) hue-rotate(0deg) blur(0px)';"
+        onloadedmetadata="this.style.opacity='0.8';"
+        width="1920"
+        height="1080"
+        crossorigin="anonymous"
+        disablepictureinpicture
+        x-webkit-airplay="deny"
+        aria-hidden="true"
+        role="img"
+        aria-label="Background video for marketing systems pricing section"
+      ></video>
+
+      <!-- Subtle overlay gradient for text readability -->
+      <div class="adcampaigns-comparison-video-overlay" style="position: absolute; inset: 0; background: linear-gradient(135deg, rgba(0, 0, 0, 0.25), rgba(139, 92, 246, 0.02), rgba(0, 0, 0, 0.2)); z-index: 1; pointer-events: none; opacity: 0.6;"></div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="adcampaigns-extended-hero-video-section section">
+      <div class="adcampaigns-faq-content-section">
+        <div class="container-page">
+          <div style="text-align: center; margin-bottom: 60px;">
+            <h2 class="h2" style="margin-bottom: 16px; background: linear-gradient(135deg, #8b5cf6, #a855f7); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">Frequently Asked Questions</h2>
+            <p class="sub" style="color: #e2e8f0; max-width: 600px; margin: 0 auto;">Everything you need to know about our integrated marketing systems</p>
+          </div>
+          <div class="adcampaigns-faq-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(450px, 1fr)); gap: 32px; max-width: 1400px; margin: 0 auto;">
+            <div class="card adcampaigns-faq-card" onclick="window.dataLayer&&dataLayer.push({event:'adcampaigns_faq_click', question:'integration-approach'})" data-event="adcampaigns_faq_click" data-question="integration-approach" style="background: linear-gradient(135deg, rgba(139, 92, 246, 0.1), rgba(139, 92, 246, 0.05)); border: 1px solid rgba(139, 92, 246, 0.3); backdrop-filter: blur(10px); transition: all 0.3s ease; position: relative; overflow: hidden;">
+              <div style="position: absolute; top: 0; left: 0; width: 4px; height: 100%; background: linear-gradient(to bottom, #8b5cf6, #a855f7);"></div>
+              <div style="font-size: 2rem; color: #8b5cf6; margin-bottom: 16px; text-shadow: 0 2px 4px rgba(0,0,0,0.3);">🎯</div>
+              <h3 style="color: #ffffff; font-weight: 700; margin-bottom: 16px; font-size: 1.1rem;">Why do you combine website, ads, branding, and AI instead of just running ads?</h3>
+              <p style="color: #e2e8f0; line-height: 1.7; margin: 0;">Because ads without optimized websites waste 40-60% of your budget. When your ads drive traffic to conversion-optimized websites with consistent branding and smart automation, every component amplifies the others for maximum ROI.</p>
+            </div>
+            <div class="card adcampaigns-faq-card" onclick="window.dataLayer&&dataLayer.push({event:'adcampaigns_faq_click', question:'standalone-ads'})" data-event="adcampaigns_faq_click" data-question="standalone-ads" style="background: linear-gradient(135deg, rgba(139, 92, 246, 0.1), rgba(139, 92, 246, 0.05)); border: 1px solid rgba(139, 92, 246, 0.3); backdrop-filter: blur(10px); transition: all 0.3s ease; position: relative; overflow: hidden;">
+              <div style="position: absolute; top: 0; left: 0; width: 4px; height: 100%; background: linear-gradient(to bottom, #8b5cf6, #a855f7);"></div>
+              <div style="font-size: 2rem; color: #8b5cf6; margin-bottom: 16px; text-shadow: 0 2px 4px rgba(0,0,0,0.3);">🚀</div>
+              <h3 style="color: #ffffff; font-weight: 700; margin-bottom: 16px; font-size: 1.1rem;">Can I get just advertising without the website and branding components?</h3>
+              <p style="color: #e2e8f0; line-height: 1.7; margin: 0;">We focus on complete marketing systems because they deliver better results. However, if you have a high-converting website and strong brand, we can integrate our advertising with your existing assets.</p>
+            </div>
+            <div class="card adcampaigns-faq-card" onclick="window.dataLayer&&dataLayer.push({event:'adcampaigns_faq_click', question:'agency-difference'})" data-event="adcampaigns_faq_click" data-question="agency-difference" style="background: linear-gradient(135deg, rgba(139, 92, 246, 0.1), rgba(139, 92, 246, 0.05)); border: 1px solid rgba(139, 92, 246, 0.3); backdrop-filter: blur(10px); transition: all 0.3s ease; position: relative; overflow: hidden;">
+              <div style="position: absolute; top: 0; left: 0; width: 4px; height: 100%; background: linear-gradient(to bottom, #8b5cf6, #a855f7);"></div>
+              <div style="font-size: 2rem; color: #8b5cf6; margin-bottom: 16px; text-shadow: 0 2px 4px rgba(0,0,0,0.3);">💎</div>
+              <h3 style="color: #ffffff; font-weight: 700; margin-bottom: 16px; font-size: 1.1rem;">How is this different from other advertising agencies?</h3>
+              <p style="color: #e2e8f0; line-height: 1.7; margin: 0;">Most agencies just run ads and hope your website converts. We optimize your entire customer journey - from ad click to website conversion to automated follow-up. This integrated approach typically delivers 60% better ROI than standalone advertising.</p>
+            </div>
+            <div class="card adcampaigns-faq-card" onclick="window.dataLayer&&dataLayer.push({event:'adcampaigns_faq_click', question:'existing-website'})" data-event="adcampaigns_faq_click" data-question="existing-website" style="background: linear-gradient(135deg, rgba(139, 92, 246, 0.1), rgba(139, 92, 246, 0.05)); border: 1px solid rgba(139, 92, 246, 0.3); backdrop-filter: blur(10px); transition: all 0.3s ease; position: relative; overflow: hidden;">
+              <div style="position: absolute; top: 0; left: 0; width: 4px; height: 100%; background: linear-gradient(to bottom, #8b5cf6, #a855f7);"></div>
+              <div style="font-size: 2rem; color: #8b5cf6; margin-bottom: 16px; text-shadow: 0 2px 4px rgba(0,0,0,0.3);">⚡</div>
+              <h3 style="color: #ffffff; font-weight: 700; margin-bottom: 16px; font-size: 1.1rem;">What if I already have a website but need better advertising?</h3>
+              <p style="color: #e2e8f0; line-height: 1.7; margin: 0;">Perfect! We'll audit your current website for conversion optimization, integrate our advertising campaigns with your existing assets, and add AI automation to maximize your results.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Hero Video Background (spans FAQ section) -->
+      <video
+        src="/pictures/web design page/beautiful.mp4"
+        autoplay
+        muted
+        loop
+        playsinline
+        preload="auto"
+        class="adcampaigns-extended-hero-background-video stable-hero-video"
+        style="opacity: 0.8; filter: brightness(0.8) contrast(1.1) saturate(1.2); will-change: transform;"
+        onloadstart="this.style.visibility='visible'"
+        oncanplay="this.classList.add('loaded')"
+        width="1920"
+        height="1080"
+        aria-hidden="true"
+        role="img"
+        aria-label="Background video showing ZeroMotion's marketing development process"
+      ></video>
+
+      <!-- Subtle overlay gradient for text readability -->
+      <div class="adcampaigns-extended-hero-video-overlay" style="position: absolute; inset: 0; background: linear-gradient(135deg, rgba(0, 0, 0, 0.15), rgba(139, 92, 246, 0.02), rgba(0, 0, 0, 0.1)); z-index: 1; pointer-events: none; opacity: 0.5;"></div>
+    </section>
+
+    <!-- Related Services Section -->
+    <section class="related-services-section">
+      <div class="container-page">
+        <SEOInternalLinks currentPage="/ad-campaigns" context="service" />
+      </div>
+    </section>
+
+    <!-- Final CTA: Dark section -->
+    <DarkContentSection>
+      <div id="consultation-booking" style="max-width:800px;margin:0 auto;text-align:center">
+        <div style="text-align: center; margin-bottom: 40px;">
+          <h2 class="h2" style="margin-bottom: 20px;">Ready for Marketing That Actually Grows Your Business?</h2>
+          <p class="sub" style="max-width: 600px; margin: 0 auto;">
+          Stop running ads in isolation. Get the complete system that turns advertising spend into predictable business growth.
+        </p>
+        </div>
+
+        <div style="margin-bottom:24px; display: flex; gap: 16px; justify-content: center; flex-wrap: wrap;">
+          <ModernBookingModal
+            plan="ad-campaigns"
+            triggerText="Book Free Consultation"
+            triggerClass="btn-primary"
+          />
+          <a
+            href="/pricing"
+            class="btn-ghost"
+            onclick="window.dataLayer&&dataLayer.push({event:'cta_click',label:'See Complete Systems'})"
+            style="padding: 15px 30px;"
+          >
+            See Complete Systems
+          </a>
+        </div>
+
+        <div style="display:flex;gap:16px;justify-content:center;flex-wrap:wrap;margin-bottom:24px">
+          <div style="display:flex;align-items:center;gap:8px;color:rgba(255,255,255,0.7);font-size:14px">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="12" r="10"/>
+              <path d="M9 12l2 2 4-4"/>
+            </svg>
+            No obligation
+          </div>
+          <div style="display:flex;align-items:center;gap:8px;color:rgba(255,255,255,0.7);font-size:14px">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="12" r="10"/>
+              <path d="M9 12l2 2 4-4"/>
+            </svg>
+            Enterprise strategy
+          </div>
+          <div style="display:flex;align-items:center;gap:8px;color:rgba(255,255,255,0.7);font-size:14px">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="12" r="10"/>
+              <path d="M9 12l2 2 4-4"/>
+            </svg>
+            Market domination
+          </div>
+        </div>
+      </div>
+    </DarkContentSection>
+
+    <style>
+      /* Process Step Styling */
+      .process-number {
+        background: linear-gradient(45deg, #8b5cf6, #a855f7);
+        color: white;
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.8rem;
+        font-weight: bold;
+        margin: 0 auto 25px;
+      }
+
+      /* Perfect Button Styling Throughout Page */
+      .btn-primary,
+      .subscription-cta,
+      .custom-cta,
+      .enterprise-cta {
+        display: inline-block;
+        padding: 15px 30px;
+        font-weight: 700;
+        font-size: 1rem;
+        text-decoration: none;
+        border-radius: 12px;
+        border: none;
+        cursor: pointer;
+        transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        text-align: center;
+        line-height: 1.2;
+        letter-spacing: 0.5px;
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+      }
+
+      .btn-primary:hover,
+      .subscription-cta:hover,
+      .custom-cta:hover,
+      .enterprise-cta:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 15px 35px rgba(139, 92, 246, 0.4);
+        text-decoration: none;
+      }
+
+      /* Enhanced Button Positioning for Absolute Buttons */
+      .system-card .btn-primary {
+        position: absolute;
+        bottom: 15px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: calc(100% - 20px);
+        z-index: 10;
+      }
+
+      .system-card .btn-primary:hover {
+        transform: translateX(-50%) translateY(-5px);
+        box-shadow: 0 20px 40px rgba(139, 92, 246, 0.5);
+      }
+
+      /* Specific hover effects for different button types */
+      .subscription-cta:hover {
+        box-shadow: 0 20px 40px rgba(34, 197, 94, 0.5);
+      }
+
+      .enterprise-cta:hover {
+        box-shadow: 0 20px 40px rgba(245, 158, 11, 0.5);
+      }
+
+      .btn-ghost {
+        display: inline-block;
+        padding: 15px 30px;
+        font-weight: 600;
+        font-size: 1rem;
+        text-decoration: none;
+        border-radius: 12px;
+        border: 2px solid rgba(139, 92, 246, 0.6);
+        background: transparent;
+        color: #8b5cf6;
+        cursor: pointer;
+        transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        text-align: center;
+        line-height: 1.2;
+        letter-spacing: 0.5px;
+      }
+
+      .btn-ghost:hover {
+        transform: translateY(-3px);
+        background: rgba(139, 92, 246, 0.1);
+        border-color: rgba(139, 92, 246, 0.8);
+        box-shadow: 0 10px 25px rgba(139, 92, 246, 0.2);
+        text-decoration: none;
+      }
+
+      /* Hero Section */
+      .hero[data-hero] {
+        position: relative;
+        overflow: hidden;
+        min-height: 70vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .ad-hero {
+        max-width: 980px;
+        margin: 0 auto;
+        text-align: center;
+      }
+
+      .ad-hero .h1 {
+        line-height: 1.1;
+        letter-spacing: -0.01em;
+        margin-bottom: 24px;
+      }
+
+      .ad-hero .sub {
+        max-width: 780px;
+        margin: 0 auto 32px;
+        line-height: 1.55;
+        opacity: 0.85;
+      }
+
+      .btn-row {
+        display: flex;
+        justify-content: center;
+        gap: 14px;
+        flex-wrap: wrap;
+      }
+
+      .platforms {
+        opacity: 0.7;
+        margin-top: 16px;
+        font-size: 0.9rem;
+      }
+
+      /* Mobile Responsiveness */
+      @media (max-width: 768px) {
+        .benefits-grid {
+          display: flex;
+          overflow-x: auto;
+          scroll-snap-type: x mandatory;
+          gap: 16px;
+          padding-inline: 12px;
+          scrollbar-width: none;
+          -ms-overflow-style: none;
+        }
+
+        .benefits-grid::-webkit-scrollbar {
+          display: none;
+        }
+
+        .benefit-card {
+          scroll-snap-align: center;
+          flex: 0 0 82%;
+          min-width: 300px;
+        }
+
+        .pricing-cards-modern {
+          grid-template-columns: 1fr !important;
+          gap: 24px !important;
+        }
+
+        .system-card {
+          padding: 30px 20px 50px 20px !important;
+        }
+
+        .system-card .btn-primary {
+          bottom: 10px;
+          width: calc(100% - 15px);
+          padding: 15px 20px;
+          font-size: 0.95rem;
+        }
+
+        .system-card .btn-primary:hover {
+          transform: translateX(-50%) translateY(-3px);
+        }
+
+        .process-grid {
+          grid-template-columns: 1fr !important;
+          gap: 25px !important;
+        }
+      }
+
+      /* Industry Enhancement Styling */
+      .industry-enhancement {
+        background: rgba(139, 92, 246, 0.1);
+        border-left: 4px solid #8b5cf6;
+        padding: 20px;
+        margin-top: 15px;
+        border-radius: 8px;
+      }
+
+      .result-focus {
+        color: #10b981;
+        font-weight: bold;
+        font-size: 1.1rem;
+      }
+
+      /* Industry Card Hover Effects */
+      .industry-card {
+        transition: transform 0.24s ease, box-shadow 0.24s ease;
+      }
+
+      @media (prefers-reduced-motion: no-preference) {
+        .industry-card:hover,
+        .industry-card:focus-within {
+          transform: translateY(-2px) scale(1.01);
+          box-shadow: 0 0 0 1px rgba(160, 120, 255, 0.25), 0 12px 40px rgba(80, 0, 220, 0.25);
+        }
+      }
+
+      /* Ad Campaigns Hero Video Section Styling */
+      .adcampaigns-hero-video-section {
+        position: relative;
+        overflow: hidden;
+        background: var(--zm-bg);
+      }
+
+      .adcampaigns-hero-background-video {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        z-index: 0;
+        pointer-events: none;
+        visibility: hidden;
+        background: transparent;
+        transform: translateZ(0);
+        -webkit-transform: translateZ(0);
+        backface-visibility: hidden;
+        -webkit-backface-visibility: hidden;
+        perspective: 1000px;
+        -webkit-perspective: 1000px;
+        image-rendering: optimizeQuality;
+        transition: opacity 0.4s ease-in-out;
+        object-position: center center;
+        image-rendering: -webkit-optimize-contrast;
+        image-rendering: optimize-contrast;
+      }
+
+      .adcampaigns-hero-background-video.loaded {
+        visibility: visible;
+      }
+
+      .adcampaigns-hero-background-video:not(.loaded) {
+        opacity: 0 !important;
+      }
+
+      .adcampaigns-hero-background-video.loaded {
+        opacity: 0.8 !important;
+      }
+
+      .adcampaigns-hero-video-overlay {
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(135deg, rgba(0, 0, 0, 0.4), rgba(139, 92, 246, 0.1));
+        z-index: 0;
+        pointer-events: none;
+      }
+
+      /* Ensure content is above video */
+      .adcampaigns-hero-video-section .enhanced-process,
+      .hero-video-section > div {
+        position: relative;
+        z-index: 1;
+        padding: var(--zm-gap-xl) 0;
+      }
+
+      /* Enhance text readability over video */
+      .adcampaigns-hero-video-section h1,
+      .adcampaigns-hero-video-section h2,
+      .adcampaigns-hero-video-section h3,
+      .adcampaigns-hero-video-section h4,
+      .adcampaigns-hero-video-section h5,
+      .adcampaigns-hero-video-section h6 {
+        text-shadow: 0 2px 8px rgba(0, 0, 0, 0.7);
+      }
+
+      .adcampaigns-hero-video-section p,
+      .adcampaigns-hero-video-section li,
+      .adcampaigns-hero-video-section span {
+        text-shadow: 0 1px 4px rgba(0, 0, 0, 0.5);
+      }
+
+      /* Ad Campaigns Comparison Video Section Styling */
+      .adcampaigns-comparison-video-section {
+        position: relative;
+        overflow: hidden;
+        background: var(--zm-bg);
+      }
+
+      .adcampaigns-comparison-background-video {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        z-index: 0;
+        pointer-events: none;
+        visibility: hidden;
+        background: transparent;
+        transform: translateZ(0);
+        -webkit-transform: translateZ(0);
+        backface-visibility: hidden;
+        -webkit-backface-visibility: hidden;
+        perspective: 1000px;
+        -webkit-perspective: 1000px;
+        image-rendering: optimizeQuality;
+        transition: opacity 0.4s ease-in-out;
+        object-position: center center;
+        image-rendering: -webkit-optimize-contrast;
+        image-rendering: optimize-contrast;
+      }
+
+      .adcampaigns-comparison-background-video.loaded {
+        visibility: visible;
+      }
+
+      .adcampaigns-comparison-background-video:not(.loaded) {
+        opacity: 0 !important;
+      }
+
+      .adcampaigns-comparison-background-video.loaded {
+        opacity: 0.8 !important;
+      }
+
+      .adcampaigns-comparison-video-overlay {
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(135deg, rgba(0, 0, 0, 0.4), rgba(139, 92, 246, 0.1));
+        z-index: 0;
+        pointer-events: none;
+      }
+
+      /* Ensure content is above video */
+      .adcampaigns-comparison-video-section > div {
+        position: relative;
+        z-index: 1;
+        padding: var(--zm-gap-xl) 0;
+      }
+
+      /* Enhance text readability over video */
+      .adcampaigns-comparison-video-section h1,
+      .adcampaigns-comparison-video-section h2,
+      .adcampaigns-comparison-video-section h3,
+      .adcampaigns-comparison-video-section h4,
+      .adcampaigns-comparison-video-section h5,
+      .adcampaigns-comparison-video-section h6 {
+        text-shadow: 0 2px 8px rgba(0, 0, 0, 0.7);
+      }
+
+      .adcampaigns-comparison-video-section p,
+      .adcampaigns-comparison-video-section li,
+      .adcampaigns-comparison-video-section span {
+        text-shadow: 0 1px 4px rgba(0, 0, 0, 0.5);
+      }
+
+      /* Ad Campaigns Extended Hero Video Section Styling (FAQ) */
+      .adcampaigns-extended-hero-video-section {
+        position: relative;
+        overflow: hidden;
+        background: var(--zm-bg);
+      }
+
+      .adcampaigns-extended-hero-background-video {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        z-index: 0;
+        pointer-events: none;
+        visibility: hidden;
+        background: transparent;
+        transform: translateZ(0);
+        -webkit-transform: translateZ(0);
+        backface-visibility: hidden;
+        -webkit-backface-visibility: hidden;
+        perspective: 1000px;
+        -webkit-perspective: 1000px;
+        image-rendering: optimizeQuality;
+        transition: opacity 0.4s ease-in-out;
+        object-position: center center;
+        image-rendering: -webkit-optimize-contrast;
+        image-rendering: optimize-contrast;
+      }
+
+      .adcampaigns-extended-hero-background-video.loaded {
+        visibility: visible;
+      }
+
+      .adcampaigns-extended-hero-background-video:not(.loaded) {
+        opacity: 0 !important;
+      }
+
+      .adcampaigns-extended-hero-background-video.loaded {
+        opacity: 0.8 !important;
+      }
+
+      .adcampaigns-extended-hero-video-overlay {
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(135deg, rgba(0, 0, 0, 0.4), rgba(139, 92, 246, 0.1));
+        z-index: 0;
+        pointer-events: none;
+      }
+
+      /* Content sections within extended hero video */
+      .adcampaigns-faq-content-section {
+        position: relative;
+        z-index: 1;
+        padding: var(--zm-gap-xl) 0;
+      }
+
+      /* Enhance text readability over extended video */
+      .adcampaigns-extended-hero-video-section h1,
+      .adcampaigns-extended-hero-video-section h2,
+      .adcampaigns-extended-hero-video-section h3,
+      .adcampaigns-extended-hero-video-section h4,
+      .adcampaigns-extended-hero-video-section h5,
+      .adcampaigns-extended-hero-video-section h6 {
+        text-shadow: 0 2px 8px rgba(0, 0, 0, 0.7);
+      }
+
+      .adcampaigns-extended-hero-video-section p,
+      .adcampaigns-extended-hero-video-section li,
+      .adcampaigns-extended-hero-video-section span,
+      .adcampaigns-extended-hero-video-section strong {
+        text-shadow: 0 1px 4px rgba(0, 0, 0, 0.5);
+      }
+
+      /* Enhanced card readability over video */
+      .adcampaigns-extended-hero-video-section .card {
+        background: rgba(0, 0, 0, 0.7);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        border: 1px solid rgba(139, 92, 246, 0.3);
+      }
+
+      /* Industry Card Video Backgrounds */
+      .industry-card {
+        position: relative;
+        overflow: hidden;
+        border-radius: 16px;
+      }
+
+      .industry-card .zm-video-bg {
+        border-radius: 14px;
+      }
+
+      .industry-card .benefit-icon,
+      .industry-card .h3,
+      .industry-card p,
+      .industry-card .sub,
+      .industry-card .industry-enhancement {
+        position: relative;
+        z-index: 2;
+      }
+
+      /* Ad Campaigns FAQ Card Hover Effects */
+      .adcampaigns-faq-card {
+        transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94) !important;
+        cursor: pointer;
+      }
+
+      .adcampaigns-faq-card:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 20px 40px rgba(139, 92, 246, 0.3);
+        border-color: rgba(139, 92, 246, 0.6) !important;
+        background: linear-gradient(135deg, rgba(139, 92, 246, 0.15), rgba(139, 92, 246, 0.08)) !important;
+      }
+
+      .adcampaigns-faq-card:hover .faq-icon {
+        transform: scale(1.1);
+        transition: transform 0.3s ease;
+      }
+    </style>
+
+    <script is:inline>
+      window.dataLayer = window.dataLayer || [];
+
+      // Ad Campaigns Page - Advanced video optimization for background videos
+      document.addEventListener('DOMContentLoaded', function() {
+        const heroVideo = document.querySelector('.ad-campaigns .uhd-video');
+        const processVideo = document.querySelector('.ad-campaigns .hero-background-video');
+        const pricingVideo = document.querySelector('.ad-campaigns .comparison-background-video');
+        const faqVideo = document.querySelector('.ad-campaigns .extended-hero-background-video');
+
+        // Helper function to optimize video loading
+        function optimizeVideo(video, videoType) {
+          if (!video) return;
+
+          // Force maximum quality settings
+          video.setAttribute('playsinline', 'true');
+          video.setAttribute('webkit-playsinline', 'true');
+          video.setAttribute('x5-playsinline', 'true');
+
+          // Enhanced loading for quality
+          video.addEventListener('loadstart', function() {
+            this.style.imageRendering = 'optimizeQuality';
+            this.style.visibility = 'visible';
+          });
+
+          video.addEventListener('canplay', function() {
+            this.classList.add('loaded');
+            this.style.transform = 'translateZ(0)';
+            if (videoType === 'hero') {
+              this.style.filter = 'brightness(0.85) contrast(1.25) saturate(1.4) hue-rotate(0deg) blur(0px)';
+            } else if (videoType === 'comparison') {
+              this.style.filter = 'brightness(0.75) contrast(1.15) saturate(1.3) hue-rotate(0deg) blur(0px)';
+            } else {
+              this.style.filter = 'brightness(0.8) contrast(1.1) saturate(1.2) hue-rotate(0deg) blur(0px)';
+            }
+            // Switch to auto preload for full video loading
+            this.preload = 'auto';
+          });
+
+          video.addEventListener('loadeddata', function() {
+            this.style.imageRendering = 'optimizeQuality';
+            this.style.transform = 'translateZ(0) translate3d(0, 0, 0)';
+          });
+
+          video.addEventListener('play', function() {
+            this.style.imageRendering = 'optimizeQuality';
+          });
+
+          // Handle quality degradation prevention
+          video.addEventListener('waiting', function() {
+            this.style.imageRendering = 'optimizeQuality';
+          });
+
+          // Ensure video loads on Vercel
+          video.addEventListener('error', function() {
+            console.warn(`${videoType} video failed to load, retrying...`);
+            setTimeout(() => {
+              this.load();
+            }, 1000);
+          });
+        }
+
+        // Optimize all videos
+        optimizeVideo(heroVideo, 'hero');
+        optimizeVideo(processVideo, 'background');
+        optimizeVideo(pricingVideo, 'comparison');
+        optimizeVideo(faqVideo, 'background');
+      });
+
+      document.addEventListener(
+        "submit",
+        function (e) {
+          var target = e.target;
+          if (target && target.closest && target.closest("[data-gf-form]")) {
+            window.dataLayer.push({
+              event: "form_submit",
+              label: "GHL Ad Campaigns Form",
+            });
+          }
+        },
+        true,
+      );
+    </script>
+  </div>
+</BaseLayout>
+
+<!--
+Performance checklist
+- Uses existing typography and spacing via global.css
+- Images lazy-loaded; zero CLS
+- Accessible landmarks and labels
+- Simple background without complex texture overlays
+-->

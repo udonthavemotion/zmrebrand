@@ -1,0 +1,222 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+
+// Get ZRM CRM configuration from environment variables
+const formBase = import.meta.env.PUBLIC_GHL_FORM_BASE || 'https://dashboard.zeromotionmarketing.com';
+const formId = import.meta.env.PUBLIC_GHL_FORM_ID || 'n9og5xkVVmjupqiLT2R6';
+const formUrl = `${formBase}/widget/form/${formId}`;
+const formScript = '/js/form_embed.js';
+const formScriptUrl = `${formBase}${formScript}`;
+
+// SEO Configuration for Contact Page
+const title = "Contact ZeroMotion Marketing | Get Started Today | Houma, LA";
+const description = "Ready to transform your business? Contact ZeroMotion Marketing for professional web design, digital marketing, and automation solutions in Houma, Thibodaux, and Louisiana.";
+const keywords = "contact ZeroMotion, digital marketing Houma contact, web design consultation Thibodaux, ZRM CRM setup Louisiana, marketing agency contact";
+const canonical = "/contact";
+const ogImage = "/favico/android-chrome-512x512.png";
+
+// Contact Page Schema
+const contactSchema = [
+  {
+    "@context": "https://schema.org",
+    "@type": "ContactPage",
+    "name": "Contact ZeroMotion Marketing",
+    "description": "Contact page for ZeroMotion Marketing - AI-powered digital marketing and web design services",
+    "url": "https://zeromotion.marketing/contact",
+    "mainEntity": {
+      "@type": "Organization",
+      "name": "ZeroMotion Marketing",
+      "url": "https://zeromotion.marketing",
+      "contactPoint": {
+        "@type": "ContactPoint",
+        "telephone": "+1-985-303-2016",
+        "contactType": "customer service",
+        "email": "zeromotionmarketing@gmail.com",
+        "availableLanguage": ["English"],
+        "areaServed": ["US-LA"],
+        "hoursAvailable": {
+          "@type": "OpeningHoursSpecification",
+          "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+          "opens": "09:00",
+          "closes": "17:00"
+        }
+      }
+    }
+  }
+];
+---
+
+<BaseLayout {title} {description} {keywords} {canonical} {ogImage} schema={contactSchema}>
+  <main class="relative min-h-screen pb-[env(safe-area-inset-bottom)]">
+    <!-- Minimal Hero + Form Section -->
+    <section class="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-b from-ink via-[#0d0d1a] to-ink py-12 md:py-20">
+      <!-- Subtle Background Grid -->
+      <div class="absolute inset-0 opacity-10">
+        <div class="absolute inset-0" style="background-image: linear-gradient(rgba(110, 0, 255, 0.15) 1px, transparent 1px), linear-gradient(90deg, rgba(110, 0, 255, 0.15) 1px, transparent 1px); background-size: 60px 60px;"></div>
+      </div>
+      
+      <!-- Subtle Gradient Orb -->
+      <div class="absolute top-1/4 left-1/2 -translate-x-1/2 w-[600px] h-[600px] bg-primary/10 rounded-full blur-3xl"></div>
+
+      <div class="container-page relative z-10 px-4 md:px-6 max-w-5xl mx-auto">
+        <div class="space-y-8 md:space-y-12">
+          
+          <!-- Minimal Header -->
+          <div class="text-center space-y-4 md:space-y-6">
+            <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold bg-gradient-to-br from-white via-white to-white/70 bg-clip-text text-transparent leading-tight">
+              Let's Work Together
+            </h1>
+            <p class="text-lg md:text-xl text-white/60 max-w-2xl mx-auto">
+              Fill out the form below and we'll respond within 24 hours.
+            </p>
+            
+            <!-- Minimal Contact Info -->
+            <div class="flex flex-wrap justify-center gap-4 md:gap-6 pt-4 text-sm">
+              <a 
+                href="mailto:zeromotionmarketing@gmail.com" 
+                class="inline-flex items-center gap-2 text-white/70 hover:text-primary transition-colors group"
+              >
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+                </svg>
+                <span class="group-hover:underline">zeromotionmarketing@gmail.com</span>
+              </a>
+              <a 
+                href="tel:+19853032016" 
+                class="inline-flex items-center gap-2 text-white/70 hover:text-primary transition-colors group"
+              >
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/>
+                </svg>
+                <span class="group-hover:underline">(985) 303-2016</span>
+              </a>
+            </div>
+          </div>
+
+          <!-- Form Container - Conversion-focused, fits viewport nicely -->
+          <div class="w-full max-w-2xl md:max-w-3xl mx-auto">
+            <div class="relative rounded-2xl border border-white/10 bg-black/20 backdrop-blur-md shadow-2xl">
+              <!-- Form Wrapper -->
+              <div class="w-full">
+                <iframe
+                  src={formUrl}
+                  class="w-full"
+                  style="border: none; border-radius: 16px; min-height: 1200px; height: auto; background: transparent;"
+                  id="inline-n9og5xkVVmjupqiLT2R6"
+                  data-layout="{'id':'INLINE'}"
+                  data-trigger-type="alwaysShow"
+                  data-activation-type="alwaysActivated"
+                  data-deactivation-type="neverDeactivate"
+                  data-form-name="A2P - CRM Software Registration"
+                  data-height="1200"
+                  data-layout-iframe-id="inline-n9og5xkVVmjupqiLT2R6"
+                  data-form-id="n9og5xkVVmjupqiLT2R6"
+                  title="Contact ZeroMotion Marketing"
+                  loading="eager"
+                  scrolling="yes"
+                ></iframe>
+              </div>
+            </div>
+            <!-- Trust micro-copy under form -->
+            <div class="text-center text-white/60 text-sm mt-4">
+              No spam. We’ll only use your details to follow up on this request.
+            </div>
+          </div>
+
+          <!-- Footer Note -->
+          <div class="text-center pt-4">
+            <p class="text-sm text-white/40">
+              <svg class="w-4 h-4 inline-block mr-1" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"/>
+              </svg>
+              We typically respond within 24 hours
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+</BaseLayout>
+
+<!-- ZRM CRM Form Embed Script -->
+<script define:vars={{ formScriptUrl }} type="text/javascript">
+  // Dynamically load ZRM form embed script
+  const script = document.createElement('script');
+  script.src = formScriptUrl;
+  script.type = 'text/javascript';
+  document.body.appendChild(script);
+</script>
+
+<style>
+  /* Optimized Form Container - Fully Scrollable */
+  #inline-n9og5xkVVmjupqiLT2R6 {
+    background: transparent;
+    display: block;
+    overflow: visible;
+  }
+
+  /* Responsive Height Adjustments (reduced for better fold fit) */
+  @media (max-width: 640px) {
+    /* Mobile iOS optimized */
+    #inline-n9og5xkVVmjupqiLT2R6 {
+      min-height: 1400px !important;
+      height: 1400px !important;
+    }
+  }
+
+  @media (min-width: 641px) and (max-width: 1024px) {
+    /* Tablet optimized */
+    #inline-n9og5xkVVmjupqiLT2R6 {
+      min-height: 1300px !important;
+      height: 1300px !important;
+    }
+  }
+
+  @media (min-width: 1025px) {
+    /* Desktop optimized */
+    #inline-n9og5xkVVmjupqiLT2R6 {
+      min-height: 1200px !important;
+      height: 1200px !important;
+    }
+  }
+
+  /* Smooth iframe loading animation */
+  iframe[loading="eager"] {
+    opacity: 0;
+    animation: fadeInForm 0.6s ease-out 0.2s forwards;
+  }
+
+  /* Prevent background image/text from interfering visually behind fields */
+  .rounded-2xl {
+    background-clip: padding-box;
+  }
+
+  @keyframes fadeInForm {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  /* Ensure smooth scrolling on iOS */
+  @supports (-webkit-overflow-scrolling: touch) {
+    iframe {
+      -webkit-overflow-scrolling: touch;
+    }
+  }
+
+  /* Allow natural flow and scrolling */
+  .w-full > div {
+    overflow: visible !important;
+  }
+
+  /* Ensure page can scroll naturally */
+  html, body {
+    overflow-y: auto !important;
+    overflow-x: hidden;
+  }
+</style>

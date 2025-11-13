@@ -1,0 +1,90 @@
+---
+export interface Props {
+  name: string;
+  tagline: string;
+  priceRange: string;
+  description: string;
+  features: string[];
+  highlight?: string; // "Most Popular", "Best Value", etc.
+  ctaText?: string;
+  ctaHref: string;
+  popular?: boolean;
+  workflowImage?: string;
+}
+
+const {
+  name,
+  tagline,
+  priceRange,
+  description,
+  features,
+  highlight,
+  ctaText = "Get My Quote",
+  ctaHref,
+  popular = false,
+  workflowImage
+} = Astro.props;
+---
+
+<div class={`card relative pkg reveal ${popular ? 'popular' : ''}`}>
+  {popular && (
+    <div class="badge">
+      {highlight || "Most Popular"}
+    </div>
+  )}
+
+  <!-- Removed distracting workflow background image for cleaner hover states -->
+
+  <div class="space-y-6 relative z-10">
+    <div class="text-center">
+      <h3 class="text-2xl font-bold text-white mb-3">{name}</h3>
+      <p class="text-purple-300 text-sm font-medium mb-4">{tagline}</p>
+      <div class="plan-price text-3xl font-bold text-purple-400 mb-4">
+        {priceRange}
+      </div>
+    </div>
+
+    <p class="plan-components text-gray-300 text-sm leading-relaxed mb-6">
+      {description}
+    </p>
+
+    <div class="space-y-4">
+      <h4 class="text-white font-semibold text-sm uppercase tracking-wide">What's included:</h4>
+      <ul class="space-y-3">
+        {features.map((feature) => (
+          <li class="flex items-start gap-3 text-sm text-gray-300">
+            <svg 
+              class="w-5 h-5 text-green-400 flex-shrink-0 mt-0.5" 
+              fill="none" 
+              stroke="currentColor" 
+              viewBox="0 0 24 24"
+            >
+              <path 
+                stroke-linecap="round" 
+                stroke-linejoin="round" 
+                stroke-width="2" 
+                d="M5 13l4 4L19 7"
+              />
+            </svg>
+            <span class="plan-feature">{feature}</span>
+          </li>
+        ))}
+      </ul>
+    </div>
+
+    <div class="pt-6 cta">
+      <button
+        type="button"
+        class={`btn ${popular ? "btn-primary" : "btn-ghost"} w-full`}
+        onclick={`
+          openLeadModal('${name.toLowerCase().replace(/\\s+/g, '-')}');
+          if (window.dataLayer) {
+            window.dataLayer.push({event:'cta_click',label:'Get Quote - ${name}'});
+          }
+        `}
+      >
+        {ctaText}
+      </button>
+    </div>
+  </div>
+</div>

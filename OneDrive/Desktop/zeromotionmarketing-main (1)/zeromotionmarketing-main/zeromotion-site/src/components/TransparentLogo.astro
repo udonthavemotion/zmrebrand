@@ -1,0 +1,516 @@
+---
+interface Props {
+  class?: string;
+}
+const { class: cls = "" } = Astro.props as Props;
+---
+
+<div data-logo class={`inline-block ${cls}`}>
+  <!-- Desktop: Animated video logo -->
+  <video
+    autoplay
+    muted
+    loop
+    playsinline
+    preload="auto"
+    class="h-full w-auto stable-logo-video desktop-logo"
+    aria-label="ZeroMotion animated logo"
+    onloadstart="this.style.visibility='visible'"
+    oncanplay="this.classList.add('loaded')"
+    onloadeddata="this.classList.add('loaded')"
+    disablepictureinpicture
+    disableremoteplayback
+    x-webkit-airplay="deny"
+    style="object-fit: contain; aspect-ratio: 1 / 1;"
+  >
+    <source src="/brand/ZeroMotion-Transparent-OBS-v2.webm" type="video/webm" />
+  </video>
+  
+  <!-- Mobile: Optimized static logo with responsive images -->
+  <picture class="mobile-logo">
+    <!-- WebP with multiple sizes for different screen densities -->
+    <source 
+      srcset="/optimized/brand/ZeroMotion-Mobile-Logo.webp 1x"
+      type="image/webp"
+      media="(max-width: 768px)"
+    />
+    <!-- PNG fallback with explicit dimensions -->
+    <img
+      src="/brand/ZeroMotion-Mobile-Logo.png"
+      alt="ZeroMotion Marketing - AI-powered digital marketing and web design agency serving Louisiana"
+      class="h-full w-auto"
+      style="background: transparent !important; object-fit: contain;"
+      loading="eager"
+      fetchpriority="high"
+      decoding="async"
+      width="500"
+      height="500"
+      importance="high"
+    />
+  </picture>
+  
+  <!-- Fallback for video failure -->
+  <img
+    data-fallback
+    src="/brand/ZeroMotion-Outline.svg"
+    alt="ZeroMotion Marketing - AI-powered digital marketing and web design agency serving Louisiana"
+    class="h-full w-auto fallback-logo"
+    style="display:none; background: transparent !important;"
+  />
+  
+  <noscript>
+    <img
+      src="/brand/ZeroMotion-Mobile-Logo.png"
+      alt="ZeroMotion Marketing - AI-powered digital marketing and web design agency serving Louisiana"
+      class="h-full w-auto"
+      style="background: transparent !important;"
+    />
+  </noscript>
+  <script is:inline>
+    (function(){
+      // Use requestAnimationFrame to ensure DOM is ready
+      requestAnimationFrame(function() {
+        try{
+          var logoContainer = document.querySelector('[data-logo]');
+          if (!logoContainer) return;
+
+          var video = logoContainer.querySelector('video');
+          var fallback = logoContainer.querySelector('[data-fallback]');
+
+          if (!video || !fallback) return;
+
+          var canPlayWebm = !!(video && video.canPlayType && (
+            video.canPlayType('video/webm') === 'probably' || 
+            video.canPlayType('video/webm') === 'maybe'
+          ));
+          var canPlayVideo = canPlayWebm;
+          var prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+          var isMobileSafari = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+          var isAndroid = /Android/.test(navigator.userAgent);
+
+          // Function to show fallback
+          function showFallback() {
+            video.style.display = 'none';
+            video.style.visibility = 'hidden';
+            fallback.style.display = 'inline-block';
+            fallback.style.opacity = '1';
+          }
+
+          // Function to show video
+          function showVideo() {
+            video.style.display = 'block';
+            fallback.style.display = 'none';
+            // Video visibility is controlled by CSS loading states
+          }
+
+          // Only show fallback for reduced motion preference or no video support
+          if (prefersReducedMotion) {
+            showFallback();
+            return;
+          }
+
+          // Try to show video first, fallback will be triggered by error handlers if needed
+          if (canPlayVideo) {
+            showVideo();
+          } else {
+            console.log('WebM not supported, using fallback');
+            showFallback();
+            return;
+          }
+
+          // Enhanced error handling for mobile Safari and Android
+          video.addEventListener('error', function(e) {
+            console.log('Video error:', e);
+            // Only switch to fallback if it's a real error, not just loading issues
+            if (isMobileSafari || isAndroid) {
+              // Give mobile devices more time before falling back
+              setTimeout(function() {
+                if (!video.classList.contains('loaded')) {
+                  console.log('Mobile: Video failed to load after error, using fallback');
+                  showFallback();
+                }
+              }, 2000);
+            } else {
+              showFallback();
+            }
+          }, { once: true });
+
+          // Add mobile-specific loading state management
+          if (isMobileSafari || isAndroid) {
+            // iOS Safari specific: Use loadeddata instead of progress for better reliability
+            if (isMobileSafari) {
+              video.addEventListener('loadeddata', function() {
+                console.log('iOS Safari: Video data loaded, showing video');
+                video.classList.add('loaded');
+                video.style.opacity = '1';
+                video.style.background = 'transparent';
+                video.style.backgroundColor = 'transparent';
+              });
+            } else {
+              // Android: Use progress event
+              video.addEventListener('progress', function() {
+                // Monitor loading progress on mobile
+                if (video.buffered.length > 0) {
+                  var loaded = video.buffered.end(0);
+                  var total = video.duration;
+                  if (loaded / total > 0.1) { // 10% loaded
+                    video.classList.add('loaded');
+                  }
+                }
+              });
+            }
+
+            // Handle stalled loading on mobile
+            video.addEventListener('stalled', function() {
+              console.log('Video stalled on mobile, keeping current state');
+              // Don't switch to fallback immediately, give it more time
+            });
+          }
+
+          // Enhanced mobile Safari and Android specific handling
+          if (isMobileSafari || isAndroid) {
+            video.addEventListener('loadstart', function() {
+              // Ensure transparency is maintained during load
+              video.style.background = 'transparent';
+              video.style.backgroundColor = 'transparent';
+              // Prevent black background during loading
+              video.style.opacity = '0';
+            });
+
+            video.addEventListener('loadedmetadata', function() {
+              // Force a repaint to prevent black square
+              video.style.transform = 'translateZ(0)';
+              // Ensure video dimensions are set
+              if (video.videoWidth && video.videoHeight) {
+                video.style.aspectRatio = video.videoWidth + '/' + video.videoHeight;
+              }
+            });
+
+            video.addEventListener('canplay', function() {
+              // Only show video when it can actually play
+              console.log('Mobile: Video can play, showing');
+              video.style.opacity = '1';
+              video.style.background = 'transparent';
+              video.style.backgroundColor = 'transparent';
+              video.classList.add('loaded');
+            });
+
+            // Additional iOS Safari specific event listeners
+            if (isMobileSafari) {
+              video.addEventListener('playing', function() {
+                console.log('iOS Safari: Video started playing');
+                video.classList.add('loaded');
+                video.style.opacity = '1';
+              });
+
+              // Force show video after a reasonable time on iOS Safari
+              setTimeout(function() {
+                if (!video.classList.contains('loaded') && video.readyState >= 2) {
+                  console.log('iOS Safari: Forcing video display after timeout');
+                  video.classList.add('loaded');
+                  video.style.opacity = '1';
+                  video.style.background = 'transparent';
+                  video.style.backgroundColor = 'transparent';
+                }
+              }, 5000); // 5 seconds for iOS Safari
+
+              // iOS Safari sometimes needs manual play trigger
+              video.addEventListener('touchstart', function() {
+                if (video.paused && video.readyState >= 2) {
+                  video.play().catch(function(e) {
+                    console.log('iOS Safari: Autoplay failed, will play on user interaction');
+                  });
+                }
+              }, { once: true });
+            }
+
+            // Handle mobile-specific video loading states
+            video.addEventListener('waiting', function() {
+              // Keep transparent while waiting
+              video.style.background = 'transparent';
+              video.style.backgroundColor = 'transparent';
+            });
+          }
+
+          // Ensure logo is always visible as a final safety net
+          setTimeout(function() {
+            if (video.style.display === 'none' && fallback.style.display === 'none') {
+              showVideo(); // Prefer video over fallback
+            }
+            // Extended timeout for mobile devices (8 seconds instead of 3)
+            if ((isMobileSafari || isAndroid) && video.style.display !== 'none' && !video.classList.contains('loaded')) {
+              console.log('Mobile: Video not loaded after extended timeout, using fallback');
+              showFallback();
+            }
+          }, isMobileSafari || isAndroid ? 8000 : 3000); // 8 seconds for mobile, 3 for desktop
+
+        } catch(e) {
+          console.error('Logo loading error:', e);
+          // Fallback in case of any errors - prefer video if possible
+          var logoContainer = document.querySelector('[data-logo]');
+          if (logoContainer) {
+            var fallback = logoContainer.querySelector('[data-fallback]');
+            var video = logoContainer.querySelector('video');
+            var canPlayWebm = !!(video && video.canPlayType && (
+              video.canPlayType('video/webm') === 'probably' || 
+              video.canPlayType('video/webm') === 'maybe'
+            ));
+            if (video && canPlayWebm) {
+              video.style.display = 'block';
+              if (fallback) fallback.style.display = 'none';
+            } else if (fallback) {
+              if (video) video.style.display = 'none';
+              fallback.style.display = 'inline-block';
+              fallback.style.opacity = '1';
+            }
+          }
+        }
+      });
+    })();
+  </script>
+</div>
+
+<style>
+  /* Desktop/Mobile Logo Display Logic */
+  .desktop-logo {
+    display: block;
+  }
+  
+  .mobile-logo {
+    display: none;
+  }
+  
+  .fallback-logo {
+    display: none;
+  }
+  
+  @media (max-width: 768px) {
+    .desktop-logo {
+      display: none !important;
+    }
+    
+    .mobile-logo {
+      display: block !important;
+      background: transparent !important;
+      background-color: transparent !important;
+    }
+  }
+  
+  @media (prefers-reduced-motion: reduce) {
+    .desktop-logo {
+      display: none !important;
+    }
+    
+    .mobile-logo {
+      display: block !important;
+    }
+  }
+  
+  /* Stable logo video loading - prevents mobile Safari glitch */
+  .stable-logo-video {
+    visibility: hidden; /* Hide until loaded to prevent black square glitch */
+    background: transparent !important;
+    background-color: transparent !important;
+    transform: translateZ(0); /* Force hardware acceleration */
+    -webkit-transform: translateZ(0);
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    perspective: 1000px;
+    -webkit-perspective: 1000px;
+    image-rendering: optimizeQuality;
+    transition: opacity 0.3s ease-in-out;
+  }
+  
+  .stable-logo-video.loaded {
+    visibility: visible;
+  }
+  
+  /* Prevent video flickering during load */
+  .stable-logo-video:not(.loaded) {
+    opacity: 0 !important;
+  }
+  
+  .stable-logo-video.loaded {
+    opacity: 1 !important;
+  }
+  
+  /* Container transparency for mobile */
+  [data-logo] {
+    background: transparent !important;
+    background-color: transparent !important;
+  }
+  
+  /* Mobile logo optimizations */
+  .mobile-logo {
+    display: none;
+    /* Optimize image rendering */
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: crisp-edges;
+  }
+  
+  .mobile-logo img {
+    /* Force smooth scaling */
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: crisp-edges;
+    /* Prevent layout shift */
+    width: auto;
+    height: 100%;
+    max-width: 100%;
+    /* Hardware acceleration */
+    transform: translateZ(0);
+    -webkit-transform: translateZ(0);
+    /* Maintain aspect ratio */
+    aspect-ratio: 1 / 1;
+    object-fit: contain;
+  }
+  
+  /* Mobile-specific optimizations for iOS Safari and Android */
+  @media (max-width: 768px) {
+    .stable-logo-video {
+      /* Ensure video plays on mobile */
+      -webkit-playsinline: true;
+      /* Critical iOS Safari transparency fixes */
+      background: transparent !important;
+      background-color: transparent !important;
+      /* Force hardware acceleration for better performance */
+      will-change: transform;
+      transform: translate3d(0, 0, 0);
+      -webkit-transform: translate3d(0, 0, 0);
+      /* Improved iOS transparency handling */
+      -webkit-backface-visibility: hidden;
+      backface-visibility: hidden;
+      /* Remove iOS default video styling */
+      -webkit-appearance: none;
+      border-radius: 0;
+      /* Prevent iOS video player controls */
+      -webkit-media-controls: none;
+      /* Enhanced iOS video rendering */
+      -webkit-transform-style: preserve-3d;
+      transform-style: preserve-3d;
+      /* Fix iOS Safari mask issues - remove problematic mask */
+      -webkit-mask: none;
+      mask: none;
+      /* Ensure proper video compositing on iOS */
+      -webkit-background-composite: normal;
+      /* Better object fitting for iOS */
+      object-fit: contain;
+      object-position: center center;
+      /* Prevent black background during loading */
+      opacity: 0;
+      transition: opacity 0.4s ease-in-out;
+      /* iOS Safari specific video element fixes */
+      isolation: isolate;
+      /* Force transparent background in all iOS Safari versions */
+      -webkit-background-clip: padding-box;
+      background-clip: padding-box;
+      /* Remove any potential mix-blend-mode issues */
+      mix-blend-mode: normal;
+    }
+
+    .stable-logo-video.loaded {
+      opacity: 1 !important;
+      background: transparent !important;
+      background-color: transparent !important;
+      /* Ensure loaded state maintains transparency */
+      -webkit-background-composite: normal;
+      /* Force transparency even after loading */
+      -webkit-background-clip: padding-box;
+      background-clip: padding-box;
+    }
+
+    /* iOS Safari specific fixes for video element */
+    @supports (-webkit-appearance: none) {
+      .stable-logo-video {
+        /* Additional iOS Safari video transparency fixes */
+        -webkit-transform-style: preserve-3d;
+        transform-style: preserve-3d;
+        /* Enhanced iOS transparency handling */
+        -webkit-background-attachment: scroll;
+        background-attachment: scroll;
+      }
+    }
+    
+    /* Enhanced container transparency for iOS */
+    [data-logo] {
+      background: none !important;
+      background-color: transparent !important;
+      /* iOS Safari container fixes */
+      -webkit-backface-visibility: hidden;
+      backface-visibility: hidden;
+      /* Prevent any background bleeding */
+      isolation: isolate;
+      /* Force transparent background */
+      -webkit-background-clip: padding-box;
+      background-clip: padding-box;
+      /* Remove any inherited backgrounds */
+      background-image: none !important;
+    }
+    
+    /* Completely hide iOS video controls */
+    .stable-logo-video::-webkit-media-controls-enclosure {
+      display: none !important;
+    }
+    
+    .stable-logo-video::-webkit-media-controls {
+      display: none !important;
+    }
+    
+    .stable-logo-video::-webkit-media-controls-panel {
+      display: none !important;
+    }
+    
+    .stable-logo-video::-webkit-media-controls-play-button {
+      display: none !important;
+    }
+    
+    .stable-logo-video::-webkit-media-controls-timeline-container {
+      display: none !important;
+    }
+    
+    .stable-logo-video::-webkit-media-controls-current-time-display {
+      display: none !important;
+    }
+    
+    .stable-logo-video::-webkit-media-controls-time-remaining-display {
+      display: none !important;
+    }
+    
+    .stable-logo-video::-webkit-media-controls-mute-button {
+      display: none !important;
+    }
+    
+    .stable-logo-video::-webkit-media-controls-volume-slider-container {
+      display: none !important;
+    }
+    
+    .stable-logo-video::-webkit-media-controls-fullscreen-button {
+      display: none !important;
+    }
+  }
+  
+  /* Additional iOS Safari specific fixes */
+  @supports (-webkit-touch-callout: none) {
+    .stable-logo-video {
+      /* iOS-only transparency enhancements */
+      -webkit-background-size: cover;
+      background-size: cover;
+      -webkit-background-position: center;
+      background-position: center;
+      /* Prevent iOS Safari video background issues */
+      -webkit-mask-composite: source-over;
+      mask-composite: add;
+    }
+    
+    [data-logo] {
+      /* iOS container transparency fixes */
+      -webkit-transform: translateZ(0);
+      transform: translateZ(0);
+    }
+  }
+  
+  /* Fallback image transparency */
+  [data-logo] img[data-fallback] {
+    background: transparent !important;
+    background-color: transparent !important;
+  }
+</style>

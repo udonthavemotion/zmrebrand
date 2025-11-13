@@ -1,0 +1,603 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import ModernBookingModal from "../../components/ModernBookingModal.astro";
+
+const title = "Scale & Dominate Plan | ZeroMotion Marketing";
+const description = "Enterprise-level advertising management for established businesses. Google/Meta/TikTok ads, AI chatbots, advanced funnels, weekly creative content, reputation management, and bi-weekly strategy calls. Performance guaranteed. Request a custom quote.";
+const ogImage = "/og-webdesign.png";
+---
+
+<BaseLayout {title} {description} {ogImage}>
+  <!-- Canonical URL -->
+  <link slot="head" rel="canonical" href="https://zeromotion.marketing/plans/scale" />
+  <main>
+    <!-- Hero Section -->
+    <section
+      id="scale-hero"
+      class="relative isolate overflow-hidden bg-black min-h-[70svh] sm:min-h-[78svh] grid place-items-center"
+      aria-labelledby="scale-title"
+    >
+      <video
+        class="pointer-events-none absolute inset-0 -z-10 h-full w-full object-cover stable-plan-video"
+        style="filter: brightness(0.75) contrast(1.1) saturate(1.15); will-change: transform;"
+        autoplay
+        muted
+        loop
+        playsinline
+        preload="auto"
+        onloadstart="this.style.visibility='visible'"
+        oncanplay="this.classList.add('loaded')"
+      >
+        <source src="/assets/textures/9461-219710531_small.mp4" type="video/mp4" />
+      </video>
+      <!-- Workflow Image Overlay -->
+      <div class="pointer-events-none absolute inset-0 -z-10 opacity-10">
+        <img
+          src="/assets/zeromotion_workflow_4_results.png"
+          alt=""
+          class="w-full h-full object-cover object-center"
+        />
+      </div>
+      <div
+        class="pointer-events-none absolute inset-0 -z-10 bg-gradient-to-b from-black/80 via-transparent to-black/60"
+      >
+      </div>
+      <div class="relative container-page text-center">
+        <h1 id="scale-title" class="h1 mb-6">Scale & Dominate: ads, content, and automation at full send.</h1>
+        <div class="mb-6">
+          <span class="text-3xl sm:text-4xl font-bold text-primary">Custom Quote</span>
+          <p class="text-white/70 mt-2">(plus ad spend)</p>
+        </div>
+        <p class="text-white/85 max-w-2xl mx-auto text-lg mb-8">
+          Enterprise-level advertising, AI chatbots, and comprehensive marketing management. Now includes premium brand strategy and advanced AI analytics that give you unfair competitive advantages in your market.
+        </p>
+        <div class="flex flex-col sm:flex-row gap-4 justify-center">
+          <button
+            type="button"
+            class="btn-primary"
+            onclick="openLeadModal('scale-plan'); window.dataLayer&&dataLayer.push({event:'cta_click',label:'Apply for Scale'})"
+          >
+            Apply for Scale
+          </button>
+          <button
+            type="button"
+            class="btn-ghost"
+            onclick="openStrategistModal('scale-plan'); window.dataLayer&&dataLayer.push({event:'cta_click',label:'Talk to Strategist'})"
+          >
+            Talk to a Strategist
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- What's Included Section -->
+    <section class="section-padding bg-black/20">
+      <div class="container-page">
+        <div class="text-center mb-12 reveal">
+          <h2 class="h2 mb-4">What's Included</h2>
+          <p class="text-white/70 max-w-2xl mx-auto">
+            Everything you need to dominate your market with enterprise-level marketing automation and advertising.
+          </p>
+        </div>
+
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-16">
+          <div class="card reveal">
+            <div class="p-6">
+              <div class="w-12 h-12 bg-primary/20 rounded-lg flex items-center justify-center mb-4">
+                <svg class="w-6 h-6 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"/>
+                </svg>
+              </div>
+              <h3 class="font-semibold text-white mb-2">Google/Meta/TikTok ads mgmt</h3>
+              <p class="text-white/70">Full-service advertising management across all major platforms with ongoing optimization and scaling.</p>
+            </div>
+          </div>
+
+          <div class="card reveal">
+            <div class="p-6">
+              <div class="w-12 h-12 bg-primary/20 rounded-lg flex items-center justify-center mb-4">
+                <svg class="w-6 h-6 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"/>
+                </svg>
+              </div>
+              <h3 class="font-semibold text-white mb-2">Advanced funnels + split testing</h3>
+              <p class="text-white/70">Sophisticated conversion funnels with A/B testing to maximize ROI and lead quality.</p>
+            </div>
+          </div>
+
+          <div class="card reveal">
+            <div class="p-6">
+              <div class="w-12 h-12 bg-primary/20 rounded-lg flex items-center justify-center mb-4">
+                <svg class="w-6 h-6 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/>
+                </svg>
+              </div>
+              <h3 class="font-semibold text-white mb-2">AI chatbots + site chat to pipeline</h3>
+              <p class="text-white/70">Intelligent chatbots that qualify leads 24/7 and seamlessly integrate with your sales pipeline.</p>
+            </div>
+          </div>
+
+          <div class="card reveal">
+            <div class="p-6">
+              <div class="w-12 h-12 bg-primary/20 rounded-lg flex items-center justify-center mb-4">
+                <svg class="w-6 h-6 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"/>
+                </svg>
+              </div>
+              <h3 class="font-semibold text-white mb-2">Weekly creative (UGC/AI video ads)</h3>
+              <p class="text-white/70">Fresh, high-converting video content created weekly using UGC and AI-powered creative production.</p>
+            </div>
+          </div>
+
+          <div class="card reveal">
+            <div class="p-6">
+              <div class="w-12 h-12 bg-primary/20 rounded-lg flex items-center justify-center mb-4">
+                <svg class="w-6 h-6 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"/>
+                </svg>
+              </div>
+              <h3 class="font-semibold text-white mb-2">Reputation mgmt + 24/7 lead capture</h3>
+              <p class="text-white/70">Comprehensive reputation management with round-the-clock lead capture and response systems.</p>
+            </div>
+          </div>
+
+          <div class="card reveal">
+            <div class="p-6">
+              <div class="w-12 h-12 bg-primary/20 rounded-lg flex items-center justify-center mb-4">
+                <svg class="w-6 h-6 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
+                </svg>
+              </div>
+              <h3 class="font-semibold text-white mb-2">Bi-weekly growth report & strategy call</h3>
+              <p class="text-white/70">Regular strategic reviews with detailed performance reports and growth planning sessions.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Premium Brand Strategy Section -->
+    <section class="section-padding" data-event="view_scale_enhanced_features">
+      <div class="container-page">
+        <div class="text-center mb-12 reveal">
+          <h2 class="h2 mb-4">Premium Brand Strategy Included</h2>
+          <p class="text-white/70 max-w-2xl mx-auto">
+            Strategic brand positioning that establishes you as the premium choice in your market and justifies premium pricing.
+          </p>
+        </div>
+
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-16">
+          <div class="card reveal">
+            <div class="p-6">
+              <div class="w-12 h-12 bg-primary/20 rounded-lg flex items-center justify-center mb-4">
+                <svg class="w-6 h-6 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
+                </svg>
+              </div>
+              <h3 class="font-semibold text-white mb-2">Competitive brand positioning</h3>
+              <p class="text-white/70">Research-based strategy that differentiates you from competitors and positions you as the obvious choice.</p>
+            </div>
+          </div>
+
+          <div class="card reveal">
+            <div class="p-6">
+              <div class="w-12 h-12 bg-primary/20 rounded-lg flex items-center justify-center mb-4">
+                <svg class="w-6 h-6 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"/>
+                </svg>
+              </div>
+              <h3 class="font-semibold text-white mb-2">Market leadership messaging</h3>
+              <p class="text-white/70">Brand voice that positions you as the market leader and authority, commanding premium pricing.</p>
+            </div>
+          </div>
+
+          <div class="card reveal">
+            <div class="p-6">
+              <div class="w-12 h-12 bg-primary/20 rounded-lg flex items-center justify-center mb-4">
+                <svg class="w-6 h-6 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zM21 5a2 2 0 00-2-2h-4a2 2 0 00-2 2v12a4 4 0 004 4h4a2 2 0 002-2V5z"/>
+                </svg>
+              </div>
+              <h3 class="font-semibold text-white mb-2">Premium brand asset creation</h3>
+              <p class="text-white/70">High-end visuals and assets that command premium pricing and reinforce your market leadership position.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- AI-Powered Intelligence Section -->
+    <section class="section-padding bg-black/20" data-event="scale_ai_intelligence">
+      <div class="container-page">
+        <div class="text-center mb-12 reveal">
+          <h2 class="h2 mb-4">AI-Powered Intelligence</h2>
+          <p class="text-white/70 max-w-2xl mx-auto">
+            Advanced analytics and intelligence systems that give you real-time competitive advantages and predictive insights.
+          </p>
+        </div>
+
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-16">
+          <div class="card reveal">
+            <div class="p-6">
+              <div class="w-12 h-12 bg-primary/20 rounded-lg flex items-center justify-center mb-4">
+                <svg class="w-6 h-6 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/>
+                </svg>
+              </div>
+              <h3 class="font-semibold text-white mb-2">Predictive analytics</h3>
+              <p class="text-white/70">AI forecasts market trends and opportunities before competitors, giving you strategic timing advantages.</p>
+            </div>
+          </div>
+
+          <div class="card reveal">
+            <div class="p-6">
+              <div class="w-12 h-12 bg-primary/20 rounded-lg flex items-center justify-center mb-4">
+                <svg class="w-6 h-6 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
+                </svg>
+              </div>
+              <h3 class="font-semibold text-white mb-2">Competitor monitoring</h3>
+              <p class="text-white/70">Automated intelligence on competitor moves and market changes, keeping you always one step ahead.</p>
+            </div>
+          </div>
+
+          <div class="card reveal">
+            <div class="p-6">
+              <div class="w-12 h-12 bg-primary/20 rounded-lg flex items-center justify-center mb-4">
+                <svg class="w-6 h-6 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+                </svg>
+              </div>
+              <h3 class="font-semibold text-white mb-2">Advanced conversion optimization</h3>
+              <p class="text-white/70">AI continuously improves performance across all channels while you sleep, maximizing ROI automatically.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Market Domination Section -->
+    <section class="section-padding" data-event="scale_domination_benefits">
+      <div class="container-page">
+        <div class="text-center mb-12 reveal">
+          <h2 class="h2 mb-4">How Premium Brand + AI Intelligence = Market Domination</h2>
+          <p class="text-white/70 max-w-2xl mx-auto">
+            The combination of strategic positioning and technological advantage creates unbeatable competitive advantages.
+          </p>
+        </div>
+
+        <div class="grid md:grid-cols-3 gap-6 mb-16">
+          <div class="card reveal">
+            <div class="p-6 text-center">
+              <div class="w-16 h-16 bg-primary/20 rounded-full flex items-center justify-center mx-auto mb-4">
+                <svg class="w-8 h-8 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1"/>
+                </svg>
+              </div>
+              <h3 class="font-semibold text-white mb-3">Premium Positioning</h3>
+              <p class="text-white/70">Command 30-50% higher prices with strategic brand positioning that justifies premium pricing and attracts premium clients.</p>
+            </div>
+          </div>
+
+          <div class="card reveal">
+            <div class="p-6 text-center">
+              <div class="w-16 h-16 bg-primary/20 rounded-full flex items-center justify-center mx-auto mb-4">
+                <svg class="w-8 h-8 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
+                </svg>
+              </div>
+              <h3 class="font-semibold text-white mb-3">Competitive Intelligence</h3>
+              <p class="text-white/70">Always stay one step ahead of competitor moves with automated monitoring and predictive market intelligence.</p>
+            </div>
+          </div>
+
+          <div class="card reveal">
+            <div class="p-6 text-center">
+              <div class="w-16 h-16 bg-primary/20 rounded-full flex items-center justify-center mx-auto mb-4">
+                <svg class="w-8 h-8 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
+                </svg>
+              </div>
+              <h3 class="font-semibold text-white mb-3">Automated Optimization</h3>
+              <p class="text-white/70">AI works 24/7 to improve performance across all channels while you focus on strategic growth and client relationships.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Outcome Framing Section -->
+    <section class="section-padding">
+      <div class="container-page">
+        <div class="text-center mb-12 reveal">
+          <h2 class="h2 mb-4">What Success Looks Like</h2>
+          <p class="text-white/70 max-w-2xl mx-auto">
+            We don't just run campaigns—we deliver measurable business growth with clear targets and accountability.
+          </p>
+        </div>
+
+        <div class="grid md:grid-cols-3 gap-8 mb-16">
+          <div class="text-center reveal">
+            <div class="w-20 h-20 bg-primary/20 rounded-full flex items-center justify-center mx-auto mb-6">
+              <svg class="w-10 h-10 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/>
+              </svg>
+            </div>
+            <h3 class="h3 mb-4">Lead Volume Targets</h3>
+            <p class="text-white/70">
+              We set specific monthly lead generation goals based on your capacity and growth objectives, with clear accountability metrics.
+            </p>
+          </div>
+
+          <div class="text-center reveal">
+            <div class="w-20 h-20 bg-primary/20 rounded-full flex items-center justify-center mx-auto mb-6">
+              <svg class="w-10 h-10 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1"/>
+              </svg>
+            </div>
+            <h3 class="h3 mb-4">CAC Optimization</h3>
+            <p class="text-white/70">
+              Continuous optimization of Customer Acquisition Cost to ensure profitable growth and maximum ROI on ad spend.
+            </p>
+          </div>
+
+          <div class="text-center reveal">
+            <div class="w-20 h-20 bg-primary/20 rounded-full flex items-center justify-center mx-auto mb-6">
+              <svg class="w-10 h-10 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/>
+              </svg>
+            </div>
+            <h3 class="h3 mb-4">90-Day Compounding</h3>
+            <p class="text-white/70">
+              Strategic improvements compound every 90 days, with systematic optimization that builds momentum over time.
+            </p>
+          </div>
+        </div>
+
+        <div class="card reveal">
+          <div class="p-8 text-center">
+            <h3 class="h3 mb-4">Performance Guarantee</h3>
+            <p class="text-white/80 text-lg mb-6">
+              We're so confident in our Scale system that we guarantee measurable improvement in your key metrics within 90 days, or we'll work for free until we hit your targets.
+            </p>
+            <div class="flex flex-wrap justify-center gap-4 text-sm">
+              <span class="px-4 py-2 bg-primary/20 rounded-full border border-primary/30">
+                Lead Quality Improvement
+              </span>
+              <span class="px-4 py-2 bg-primary/20 rounded-full border border-primary/30">
+                Conversion Rate Optimization
+              </span>
+              <span class="px-4 py-2 bg-primary/20 rounded-full border border-primary/30">
+                ROI Accountability
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="section-padding bg-black/20" id="faq">
+      <div class="container-page">
+        <div class="text-center mb-12 reveal">
+          <h2 class="h2 mb-4">Frequently Asked Questions</h2>
+          <p class="text-white/70 max-w-2xl mx-auto">
+            Common questions about the Scale plan and our enterprise-level approach.
+          </p>
+        </div>
+
+        <div class="max-w-4xl mx-auto">
+          <div class="space-y-4 reveal">
+            <div class="card">
+              <details class="group">
+                <summary class="flex items-center justify-between p-6 cursor-pointer list-none">
+                  <h3 class="font-semibold text-white group-hover:text-primary transition-colors">
+                    What ad budgets do you recommend?
+                  </h3>
+                  <svg
+                    class="w-5 h-5 text-white/60 group-hover:text-primary transition-all duration-200 group-open:rotate-180"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M19 9l-7 7-7-7"
+                    />
+                  </svg>
+                </summary>
+                <div class="px-6 pb-6 pt-0">
+                  <p class="text-white/80 leading-relaxed">
+                    Custom pricing based on your goals and market. We optimize based on your specific market and CAC targets to ensure profitable growth.
+                  </p>
+                </div>
+              </details>
+            </div>
+
+            <div class="card">
+              <details class="group">
+                <summary class="flex items-center justify-between p-6 cursor-pointer list-none">
+                  <h3 class="font-semibold text-white group-hover:text-primary transition-colors">
+                    Can we pause ads seasonally?
+                  </h3>
+                  <svg
+                    class="w-5 h-5 text-white/60 group-hover:text-primary transition-all duration-200 group-open:rotate-180"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M19 9l-7 7-7-7"
+                    />
+                  </svg>
+                </summary>
+                <div class="px-6 pb-6 pt-0">
+                  <p class="text-white/80 leading-relaxed">
+                    Yes—retainer continues for funnels/ops; ad spend is flexible. We can pause ads during slow seasons while maintaining your marketing infrastructure.
+                  </p>
+                </div>
+              </details>
+            </div>
+
+            <div class="card">
+              <details class="group">
+                <summary class="flex items-center justify-between p-6 cursor-pointer list-none">
+                  <h3 class="font-semibold text-white group-hover:text-primary transition-colors">
+                    Will you replace my current agency?
+                  </h3>
+                  <svg
+                    class="w-5 h-5 text-white/60 group-hover:text-primary transition-all duration-200 group-open:rotate-180"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M19 9l-7 7-7-7"
+                    />
+                  </svg>
+                </summary>
+                <div class="px-6 pb-6 pt-0">
+                  <p class="text-white/80 leading-relaxed">
+                    We can collaborate or fully take over. We work well with existing agencies or can replace them entirely depending on your needs and current situation.
+                  </p>
+                </div>
+              </details>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Plan Intake Section -->
+    <section class="section-padding" id="intake">
+      <div class="container-page">
+        <div class="max-w-4xl mx-auto">
+          <!-- Plan Intake Form - keeping existing form -->
+          <div id="plan-intake-form">
+            <!-- ZRM form will be embedded here -->
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Modern Booking Experience -->
+    <section class="section-padding bg-black/20" id="consultation-booking">
+      <div class="container-page">
+        <div class="max-w-4xl mx-auto text-center">
+          <h2 class="h2 mb-6">Ready to Dominate Your Market?</h2>
+          <p class="text-white/70 max-w-2xl mx-auto mb-8">
+            Book your free consultation and let's create your enterprise-level advertising strategy.
+          </p>
+
+          <div class="mb-8">
+            <ModernBookingModal
+              plan="scale"
+              triggerText="Book Free Consultation"
+              triggerClass="btn-primary"
+            />
+          </div>
+
+          <div class="flex flex-wrap justify-center gap-6 text-sm text-white/60">
+            <div class="flex items-center gap-2">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="12" r="10"/>
+                <path d="M9 12l2 2 4-4"/>
+              </svg>
+              No obligation
+            </div>
+            <div class="flex items-center gap-2">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="12" r="10"/>
+                <path d="M9 12l2 2 4-4"/>
+              </svg>
+              Enterprise strategy
+            </div>
+            <div class="flex items-center gap-2">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="12" r="10"/>
+                <path d="M9 12l2 2 4-4"/>
+              </svg>
+              Market domination
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- JSON-LD Schema -->
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org", 
+      "@type": "Product",
+      "name": "Scale & Dominate Plan",
+      "description": "Enterprise-level Google/Meta/TikTok advertising management, AI chatbots, advanced funnels, weekly creative content, and comprehensive reputation management.",
+      "brand": {
+        "@type": "Brand",
+        "name": "ZeroMotion"
+      },
+      "provider": {
+        "@type": "Organization",
+        "name": "ZeroMotion",
+        "url": "https://zeromotion.marketing", 
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Houma",
+          "addressRegion": "Louisiana",
+          "addressCountry": "US"
+        }
+      },
+      "offers": {
+        "@type": "Offer",
+        "priceCurrency": "USD",
+        "availability": "https://schema.org/InStock",
+        "validFrom": "2024-01-01",
+        "areaServed": {
+          "@type": "Place",
+          "name": "Houma, Louisiana"
+        },
+        "url": "https://zeromotion.marketing/plans/scale",
+        "seller": {
+          "@type": "Organization",
+          "name": "ZeroMotion"
+        }
+      },
+      "category": "Digital Marketing",
+      "serviceType": "Enterprise Marketing"
+    }
+  </script>
+
+  <script is:inline>
+    // Track scale plan page view
+    if (typeof window !== 'undefined') {
+      if (window.dataLayer) {
+        window.dataLayer.push({
+          event: 'view_pricing',
+          plan_type: 'scale',
+          page_title: 'Scale & Dominate Plan',
+          page_location: window.location.href
+        });
+      } else {
+        // Fallback CustomEvent for non-GTM scenarios
+        window.dispatchEvent(new CustomEvent('viewPricing', {
+          detail: {
+            plan_type: 'scale',
+            page_title: 'Scale & Dominate Plan',
+            page_location: window.location.href,
+            timestamp: Date.now()
+          }
+        }));
+      }
+    }
+  </script>
+</BaseLayout>

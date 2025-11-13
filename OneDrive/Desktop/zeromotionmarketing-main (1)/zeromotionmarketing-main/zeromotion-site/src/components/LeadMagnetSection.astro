@@ -1,0 +1,175 @@
+---
+// Lead Magnet Section - Free Funnel Audit
+const formBase = import.meta.env.PUBLIC_GHL_FORM_BASE || 'https://dashboard.zeromotionmarketing.com';
+const leadMagnetFormId = import.meta.env.PUBLIC_GHL_LEAD_MAGNET_FORM_ID || 'n9og5xkVVmjupqiLT2R6';
+---
+
+<section class="relative py-16 sm:py-20 overflow-hidden" id="lead-magnet" aria-labelledby="lead-magnet-title">
+  <!-- Background with subtle texture -->
+  <div class="absolute inset-0 bg-gradient-to-br from-purple-950/20 via-black/40 to-black/60 -z-10"></div>
+  
+  <div class="container-page relative">
+    <div class="max-w-4xl mx-auto">
+      <!-- Main Card -->
+      <div class="relative bg-gradient-to-br from-purple-900/10 to-black/40 rounded-2xl border border-purple-500/30 overflow-hidden backdrop-blur-sm">
+        <!-- Glow effect -->
+        <div class="absolute inset-0 bg-gradient-to-br from-purple-500/5 to-transparent pointer-events-none"></div>
+        
+        <!-- Content -->
+        <div class="relative p-8 sm:p-12 md:p-16">
+          <!-- Icon -->
+          <div class="flex justify-center mb-6">
+            <div class="w-16 h-16 rounded-2xl bg-purple-500/20 border border-purple-500/40 flex items-center justify-center">
+              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-purple-300">
+                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                <polyline points="14 2 14 8 20 8"/>
+                <line x1="16" y1="13" x2="8" y2="13"/>
+                <line x1="16" y1="17" x2="8" y2="17"/>
+                <polyline points="10 9 9 9 8 9"/>
+              </svg>
+            </div>
+          </div>
+          
+          <!-- Headline -->
+          <h2 id="lead-magnet-title" class="text-3xl sm:text-4xl md:text-5xl font-bold text-center mb-4 bg-gradient-to-r from-white via-purple-100 to-white bg-clip-text text-transparent">
+            Get Your Free Digital Marketing Funnel Audit
+          </h2>
+          
+          <!-- Sub-headline -->
+          <p class="text-lg sm:text-xl text-white/80 text-center max-w-2xl mx-auto mb-8">
+            Discover exactly where you're losing leads (and how to fix it)
+          </p>
+          
+          <!-- Benefits Grid -->
+          <div class="grid sm:grid-cols-3 gap-6 mb-10">
+            <div class="flex flex-col items-center text-center p-4 rounded-xl bg-black/20 border border-white/10">
+              <div class="w-12 h-12 rounded-full bg-purple-500/20 flex items-center justify-center mb-3">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-purple-300">
+                  <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+                  <polyline points="22 4 12 14.01 9 11.01"/>
+                </svg>
+              </div>
+              <h3 class="font-semibold text-white mb-2">Identify Conversion Leaks</h3>
+              <p class="text-sm text-white/70">Find exactly where prospects drop off</p>
+            </div>
+            
+            <div class="flex flex-col items-center text-center p-4 rounded-xl bg-black/20 border border-white/10">
+              <div class="w-12 h-12 rounded-full bg-purple-500/20 flex items-center justify-center mb-3">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-purple-300">
+                  <path d="M12 20v-6M6 20V10M18 20V4"/>
+                </svg>
+              </div>
+              <h3 class="font-semibold text-white mb-2">Personalized Recommendations</h3>
+              <p class="text-sm text-white/70">Custom strategies from our expert team</p>
+            </div>
+            
+            <div class="flex flex-col items-center text-center p-4 rounded-xl bg-black/20 border border-white/10">
+              <div class="w-12 h-12 rounded-full bg-purple-500/20 flex items-center justify-center mb-3">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-purple-300">
+                  <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+                  <circle cx="9" cy="7" r="4"/>
+                  <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
+                  <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+                </svg>
+              </div>
+              <h3 class="font-semibold text-white mb-2">Real Louisiana Results</h3>
+              <p class="text-sm text-white/70">See how we've helped local businesses</p>
+            </div>
+          </div>
+          
+          <!-- CTA Button -->
+          <div class="flex justify-center">
+            <button 
+              data-open-lead-modal
+              class="lead-magnet-cta group"
+              aria-label="Download free funnel audit checklist"
+            >
+              <span class="relative z-10 flex items-center gap-3">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                  <polyline points="7 10 12 15 17 10"/>
+                  <line x1="12" y1="15" x2="12" y2="3"/>
+                </svg>
+                <span class="font-semibold">Download Free Audit Checklist</span>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="transition-transform group-hover:translate-x-1">
+                  <path d="M5 12h14M12 5l7 7-7 7"/>
+                </svg>
+              </span>
+            </button>
+          </div>
+          
+          <!-- Trust badge -->
+          <p class="text-center text-white/60 text-sm mt-6">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="inline mr-2">
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+            </svg>
+            No spam. Your information is safe with us.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .lead-magnet-cta {
+    position: relative;
+    padding: 1rem 2rem;
+    background: linear-gradient(135deg, #8b5cf6 0%, #6E00FF 100%);
+    color: white;
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    border-radius: 12px;
+    font-size: 1.0625rem;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 
+      0 8px 32px rgba(139, 92, 246, 0.4),
+      0 4px 16px rgba(110, 0, 255, 0.3),
+      inset 0 1px 0 rgba(255, 255, 255, 0.2);
+    overflow: hidden;
+  }
+  
+  .lead-magnet-cta::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), transparent);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+  
+  .lead-magnet-cta:hover {
+    transform: translateY(-2px);
+    box-shadow: 
+      0 12px 40px rgba(139, 92, 246, 0.5),
+      0 6px 20px rgba(110, 0, 255, 0.4),
+      inset 0 1px 0 rgba(255, 255, 255, 0.3);
+    border-color: rgba(255, 255, 255, 0.3);
+  }
+  
+  .lead-magnet-cta:hover::before {
+    opacity: 1;
+  }
+  
+  .lead-magnet-cta:active {
+    transform: translateY(0);
+  }
+  
+  @media (prefers-reduced-motion: reduce) {
+    .lead-magnet-cta {
+      transition: none;
+    }
+    .lead-magnet-cta:hover {
+      transform: none;
+    }
+  }
+  
+  /* Mobile responsive */
+  @media (max-width: 640px) {
+    .lead-magnet-cta {
+      padding: 0.875rem 1.5rem;
+      font-size: 1rem;
+    }
+  }
+</style>
+

@@ -1,0 +1,1141 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import ModernBookingModal from "../../components/ModernBookingModal.astro";
+import TextureVideoSection from "../../components/sections/TextureVideoSection.astro";
+import DarkContentSection from "../../components/sections/DarkContentSection.astro";
+import SEOInternalLinks from "../../components/SEOInternalLinks.astro";
+import { getAlternatingTexture, getPreloadTextures } from "../../lib/textures.ts";
+
+// Get alternating textures for seamless flow
+const texture1 = getAlternatingTexture(0);
+const texture2 = getAlternatingTexture(1);
+const texture3 = getAlternatingTexture(2);
+const texture4 = getAlternatingTexture(3);
+
+// Preload critical textures for performance
+const preloadTextures = getPreloadTextures(2);
+
+// Hero video
+const HERO_VIDEO = "/photos/homepage_hero.mp4";
+
+// SEO Configuration for Custom AI Voice + Chat Agents Service Page
+const title = "Custom AI Voice + Chat Agents | 24/7 AI Answering & Lead Qualification | ZeroMotion CRM";
+const description = "24/7 AI agents that sound human, not robotic. Handle phone calls, answer questions, book appointments, and qualify leads automatically. Your brand voice, always available.";
+const keywords = "AI voice agents, AI chatbot, AI phone answering, 24/7 AI assistant, conversational AI, AI receptionist, AI lead qualification, custom AI agents, business phone automation";
+const canonical = "/services/ai-voice-chat-agents";
+const ogImage = "/og-webdesign.png";
+
+// AI Voice + Chat Agents Service Schema
+const aiVoiceChatAgentsSchema = [
+    {
+      "@context": "https://schema.org",
+      "@type": "Service",
+    "name": "Custom AI Voice + Chat Agents",
+    "description": "24/7 AI voice and chat agents that handle phone calls, answer questions, book appointments, and qualify leads with natural, human-sounding conversations.",
+      "provider": {
+        "@type": "Organization",
+      "name": "ZeroMotion Marketing",
+      "url": "https://zeromotion.marketing"
+    },
+    "serviceType": "AI Voice and Chat Agent Services",
+    "areaServed": [
+      {
+        "@type": "Country",
+        "name": "United States"
+      }
+    ]
+  }
+];
+---
+
+<BaseLayout {title} {description} {keywords} {canonical} {ogImage} schema={aiVoiceChatAgentsSchema}>
+  <!-- Preload critical texture videos for smooth experience -->
+  {preloadTextures.map(texture => (
+    <link rel="preload" as="video" href={texture} />
+  ))}
+  
+  <div class="ai-voice-chat-agents">
+    <!-- Hero Section -->
+  <section class="hero" data-hero>
+      <video src={HERO_VIDEO} autoplay muted loop playsinline
+        aria-label="AI voice and chat agents showcase video"
+      ></video>
+    <div class="container-page">
+        <h1 class="h1">Your Brand Voice, Always Available</h1>
+        <p class="sub centered-subtext">
+          24/7 AI agents that sound human, not robotic. Handle phone calls, answer questions, book appointments, and qualify leads automatically—without you lifting a finger.
+        </p>
+        <div class="ai-benefits-preview" style="display: flex; flex-wrap: wrap; gap: 24px; justify-content: center; margin: 32px 0; color: rgba(255,255,255,0.9);">
+          <div style="display: flex; align-items: center; gap: 8px;">
+            <span style="color: #8b5cf6; font-size: 1.2rem;">📞</span>
+            <span>AI voice agents that answer calls 24/7</span>
+          </div>
+          <div style="display: flex; align-items: center; gap: 8px;">
+            <span style="color: #8b5cf6; font-size: 1.2rem;">💬</span>
+            <span>Chat agents for website, SMS, and social media</span>
+          </div>
+          <div style="display: flex; align-items: center; gap: 8px;">
+            <span style="color: #8b5cf6; font-size: 1.2rem;">📅</span>
+            <span>Automatic appointment booking and calendar sync</span>
+      </div>
+          <div style="display: flex; align-items: center; gap: 8px;">
+            <span style="color: #8b5cf6; font-size: 1.2rem;">🎯</span>
+            <span>Lead qualification that filters out tire-kickers</span>
+    </div>
+        </div>
+        <div class="hero-buttons">
+          <a class="btn btn-primary hero-btn" href="#agent-types">
+            <span class="btn-text-main">See Agent Types</span>
+          </a>
+          <a class="btn-ghost hero-btn-ghost" href="#how-it-works">
+            <span class="btn-text-main">How It Works</span>
+          </a>
+        </div>
+        <div style="opacity:.7;margin-top:14px">
+          Natural conversations • Trained on your brand • Never takes a day off
+      </div>
+    </div>
+  </section>
+
+    <!-- Section 1: Agent Types Overview -->
+    <TextureVideoSection textureVideo={texture1}>
+      <div id="agent-types" class="ai-options-section">
+        <div class="ai-options-header">
+          <h2 class="h2" style="color: #8b5cf6; text-align: center; margin-bottom: 20px;">Two Types of AI Agents Working for You</h2>
+          <p class="sub centered-subtext" style="color: #e2e8f0;">Voice agents for phone calls, chat agents for everything else</p>
+        </div>
+
+        <div class="ai-options-grid">
+          <div class="ai-option-card starter-card">
+            <div class="ai-card-header">
+              <div class="ai-card-icon">📞</div>
+              <h3 class="h3">AI Voice Agents</h3>
+              <div class="ai-card-subtitle">Your 24/7 AI Receptionist</div>
+            </div>
+
+            <div class="ai-card-content">
+              <p class="ai-card-description">Handle incoming calls like a human receptionist—answer questions, book appointments, qualify leads, and route calls to the right person.</p>
+
+              <div class="ai-features-list">
+                <div class="ai-feature-item">
+                  <span class="ai-feature-icon">🎙️</span>
+                  <span>Natural, human-sounding conversations</span>
+                </div>
+                <div class="ai-feature-item">
+                  <span class="ai-feature-icon">📅</span>
+                  <span>Books appointments directly into your calendar</span>
+                </div>
+                <div class="ai-feature-item">
+                  <span class="ai-feature-icon">🔍</span>
+                  <span>Pre-qualifies leads before wasting your time</span>
+                </div>
+                <div class="ai-feature-item">
+                  <span class="ai-feature-icon">🔄</span>
+                  <span>Transfers important calls to you when needed</span>
+                </div>
+              </div>
+
+              <div class="ai-card-best-for">
+                <strong>Best for:</strong> Service businesses tired of missed calls turning into lost revenue. If you're in HVAC, legal, medical, home services—this is built for you.
+              </div>
+            </div>
+
+            <div class="ai-card-footer">
+              <a href="#how-it-works" class="btn-primary ai-card-btn">
+                <span class="btn-text-main">See How Voice Agents Work</span>
+                <span class="btn-arrow">»</span>
+              </a>
+            </div>
+          </div>
+
+
+          <div class="ai-option-card custom-card">
+            <div class="ai-card-header">
+              <div class="ai-card-icon">💬</div>
+              <h3 class="h3">AI Chat Agents</h3>
+              <div class="ai-card-subtitle">Website, SMS, and Social Media</div>
+            </div>
+
+            <div class="ai-card-content">
+              <p class="ai-card-description">Instant responses to website visitors, text messages, and social media DMs. Trained on your brand voice, available 24/7, never sleeps.</p>
+
+              <div class="ai-features-list">
+                <div class="ai-feature-item">
+                  <span class="ai-feature-icon">💻</span>
+                  <span>Live chat widget on your website</span>
+                </div>
+                <div class="ai-feature-item">
+                  <span class="ai-feature-icon">📱</span>
+                  <span>Responds to SMS and social media messages</span>
+                </div>
+                <div class="ai-feature-item">
+                  <span class="ai-feature-icon">🎨</span>
+                  <span>Trained to match your brand voice and tone</span>
+                </div>
+                <div class="ai-feature-item">
+                  <span class="ai-feature-icon">📈</span>
+                  <span>Captures lead info and syncs to ZeroMotion CRM</span>
+      </div>
+      </div>
+
+              <div class="ai-card-best-for">
+                <strong>Best for:</strong> E-commerce, service providers, and businesses that need instant response across multiple channels without hiring a full support team.
+      </div>
+    </div>
+
+            <div class="ai-card-footer">
+              <a href="#how-it-works" class="btn-primary ai-card-btn">
+                <span class="btn-text-main">See How Chat Agents Work</span>
+                <span class="btn-arrow">»</span>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </TextureVideoSection>
+
+    <!-- Section 2: How It Works -->
+    <section id="how-it-works" class="hero-video-section section">
+      <div class="custom-ai-section">
+        <div class="custom-ai-header centered-text-section">
+          <h2 class="h2 glow-text">AI Agents That Actually Sound Human</h2>
+          <p class="sub glow-text">
+            We train your AI agents on your brand voice, your FAQs, your services, and your tone. The result? Conversations that feel natural, not robotic. Your customers won't even know they're talking to AI—until you tell them.
+          </p>
+        </div>
+
+        <div class="custom-ai-examples">
+          <h3 class="h3" style="color: #8b5cf6; text-align: center; margin-bottom: 30px;">What Your AI Agents Can Do</h3>
+
+
+          <div class="grid md:grid-cols-2 gap-8 max-w-6xl mx-auto px-4">
+            <div class="ai-example-card card">
+              <div class="ai-example-icon" style="font-size: 2.5rem; color: #8b5cf6; margin-bottom: 20px;">📞</div>
+              <h4 class="h4" style="color: #ffffff; margin-bottom: 15px;">Answer Calls 24/7</h4>
+              <p style="color: #e2e8f0; line-height: 1.6; margin-bottom: 15px;">Your AI voice agent picks up every call, answers common questions, and provides information about your services—even at 2 AM on a Sunday.</p>
+              <div class="ai-example-features" style="font-size: 0.9rem; color: #a78bfa;">
+                <span>• Never miss a call</span>
+                <span>• Instant information</span>
+                <span>• Sounds natural</span>
+              </div>
+            </div>
+
+            <div class="ai-example-card card">
+              <div class="ai-example-icon" style="font-size: 2.5rem; color: #8b5cf6; margin-bottom: 20px;">📅</div>
+              <h4 class="h4" style="color: #ffffff; margin-bottom: 15px;">Book Appointments Automatically</h4>
+              <p style="color: #e2e8f0; line-height: 1.6; margin-bottom: 15px;">AI agents check your calendar in real-time and book appointments directly—no back-and-forth, no scheduling links, just done.</p>
+              <div class="ai-example-features" style="font-size: 0.9rem; color: #a78bfa;">
+                <span>• Calendar integration</span>
+                <span>• Instant booking</span>
+                <span>• Send confirmations</span>
+              </div>
+            </div>
+
+            <div class="ai-example-card card">
+              <div class="ai-example-icon" style="font-size: 2.5rem; color: #8b5cf6; margin-bottom: 20px;">🎯</div>
+              <h4 class="h4" style="color: #ffffff; margin-bottom: 15px;">Qualify Leads Instantly</h4>
+              <p style="color: #e2e8f0; line-height: 1.6; margin-bottom: 15px;">Your AI agents ask the right questions to filter out tire-kickers and route qualified leads directly to you or your sales team.</p>
+              <div class="ai-example-features" style="font-size: 0.9rem; color: #a78bfa;">
+                <span>• Smart questions</span>
+                <span>• Lead scoring</span>
+                <span>• Priority routing</span>
+              </div>
+            </div>
+
+            <div class="ai-example-card card">
+              <div class="ai-example-icon" style="font-size: 2.5rem; color: #8b5cf6; margin-bottom: 20px;">💬</div>
+              <h4 class="h4" style="color: #ffffff; margin-bottom: 15px;">Multi-Channel Support</h4>
+              <p style="color: #e2e8f0; line-height: 1.6; margin-bottom: 15px;">Chat agents respond to website visitors, SMS, Facebook Messenger, Instagram DMs—all from one AI brain trained on your brand.</p>
+              <div class="ai-example-features" style="font-size: 0.9rem; color: #a78bfa;">
+                <span>• Omnichannel coverage</span>
+                <span>• Consistent voice</span>
+                <span>• Instant response</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Hero Video Background -->
+      <video 
+        src={HERO_VIDEO}
+        autoplay 
+        muted 
+        loop 
+        playsinline
+        preload="auto"
+        class="hero-background-video stable-hero-video"
+        style="opacity: 0.8; filter: brightness(0.8) contrast(1.1) saturate(1.2); will-change: transform;"
+        onloadstart="this.style.visibility='visible'"
+        oncanplay="this.classList.add('loaded')"
+        width="1920"
+        height="1080"
+        aria-hidden="true"
+        role="img"
+        aria-label="Background video showing ZeroMotion's AI integration process"
+      ></video>
+      
+      <!-- Overlay gradient for text readability -->
+      <div class="hero-video-overlay"></div>
+  </section>
+
+    <!-- Section 3: Setup Process -->
+    <DarkContentSection background="rgba(139, 92, 246, 0.05)">
+      <div class="ai-process">
+        <h2 class="h2" style="color: #8b5cf6; text-align: center; margin-bottom: 40px;">How We Set Up Your AI Agents</h2>
+        <p class="sub" style="text-align: center; margin-bottom: 40px; color: #e2e8f0;">From setup to launch, we handle everything</p>
+
+        <div class="process-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 30px; justify-content: center;">
+          <div class="process-step card">
+            <div class="process-number">1</div>
+            <h3 class="h3" style="color: #ffffff; margin-bottom: 15px;">Train on Your Brand</h3>
+            <p style="color: #e2e8f0; line-height: 1.5;">We feed your AI agents everything about your business—services, FAQs, tone, and voice.</p>
+          </div>
+
+          <div class="process-step card">
+            <div class="process-number">2</div>
+            <h3 class="h3" style="color: #ffffff; margin-bottom: 15px;">Test & Refine</h3>
+            <p style="color: #e2e8f0; line-height: 1.5;">You test the agents, we adjust based on your feedback until conversations feel perfect.</p>
+    </div>
+
+          <div class="process-step card">
+            <div class="process-number">3</div>
+            <h3 class="h3" style="color: #ffffff; margin-bottom: 15px;">Launch & Monitor</h3>
+            <p style="color: #e2e8f0; line-height: 1.5;">Your AI agents go live. We monitor performance and make adjustments to improve over time.</p>
+    </div>
+          
+          <div class="process-step card">
+            <div class="process-number">4</div>
+            <h3 class="h3" style="color: #ffffff; margin-bottom: 15px;">Optimize & Scale</h3>
+            <p style="color: #e2e8f0; line-height: 1.5;">As your business grows, we add new capabilities and train your agents on new services.</p>
+      </div>
+    </div>
+      </div>
+    </DarkContentSection>
+
+    <!-- Section 4: Why Your Business Needs AI Agents -->
+    <TextureVideoSection textureVideo={texture3}>
+      <div class="ai-benefits-section">
+        <h2 class="h2" style="color: #8b5cf6; text-align: center; margin-bottom: 40px;">Why AI Agents Are a Game-Changer</h2>
+        <p class="sub centered-subtext" style="color: #e2e8f0;">AI voice and chat agents don't just save time—they transform how you capture and convert leads.</p>
+        
+        <div class="grid md:grid-cols-2 gap-12">
+          <div class="space-y-8">
+            <div class="flex items-start gap-4">
+              <div class="w-12 h-12 bg-purple-600 rounded-lg flex items-center justify-center flex-shrink-0">
+                <span class="text-xl">🎙️</span>
+              </div>
+              <div>
+                <h4 class="text-xl font-bold text-purple-400 mb-2">Natural Conversations</h4>
+                <p class="text-gray-300">AI agents that sound human, not robotic. Trained on your brand voice, they handle conversations the way you would.</p>
+              </div>
+            </div>
+
+            <div class="flex items-start gap-4">
+              <div class="w-12 h-12 bg-purple-600 rounded-lg flex items-center justify-center flex-shrink-0">
+                <span class="text-xl">💰</span>
+              </div>
+              <div>
+                <h4 class="text-xl font-bold text-purple-400 mb-2">Stop Losing Revenue</h4>
+                <p class="text-gray-300">Every missed call is a lost opportunity. AI agents answer 24/7, so you never lose another lead to voicemail.</p>
+              </div>
+      </div>
+    </div>
+
+          <div class="space-y-8">
+            <div class="flex items-start gap-4">
+              <div class="w-12 h-12 bg-purple-600 rounded-lg flex items-center justify-center flex-shrink-0">
+                <span class="text-xl">⚡</span>
+              </div>
+              <div>
+                <h4 class="text-xl font-bold text-purple-400 mb-2">Instant Response Time</h4>
+                <p class="text-gray-300">No more waiting. AI agents respond to calls, texts, and messages instantly—even when you're asleep or busy with clients.</p>
+      </div>
+    </div>
+
+            <div class="flex items-start gap-4">
+              <div class="w-12 h-12 bg-purple-600 rounded-lg flex items-center justify-center flex-shrink-0">
+                <span class="text-xl">📈</span>
+              </div>
+              <div>
+                <h4 class="text-xl font-bold text-purple-400 mb-2">Scales With You</h4>
+                <p class="text-gray-300">Whether you get 10 calls a day or 1,000, AI agents handle it all without hiring more staff or expanding your team.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </TextureVideoSection>
+
+    <!-- Section 5: Final CTA -->
+    <DarkContentSection>
+      <div id="consultation-booking" style="max-width:800px;margin:0 auto;text-align:center">
+        <h2 class="h2" style="margin-bottom:12px">Ready to Never Miss Another Lead?</h2>
+        <p class="sub" style="margin-bottom:32px">
+          Let's talk about how AI voice and chat agents can transform your lead capture and customer service—without the robotic experience.
+        </p>
+
+        <div class="cta-buttons">
+          <ModernBookingModal
+            plan="ai-voice-chat-agents"
+            triggerText="Book AI Agent Demo"
+            triggerClass="btn-primary cta-btn"
+          />
+          <a
+            href="/pricing"
+            class="btn-ghost cta-btn cta-btn-ghost"
+            onclick="window.dataLayer&&dataLayer.push({event:'cta_click',label:'See All Pricing'})"
+          >
+            <span class="btn-text-main">See All Pricing</span>
+          </a>
+        </div>
+
+        <div style="display:flex;gap:16px;justify-content:center;flex-wrap:wrap;margin-bottom:24px">
+          <div style="display:flex;align-items:center;gap:8px;color:rgba(255,255,255,0.7);font-size:14px">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="12" r="10"/>
+              <path d="M9 12l2 2 4-4"/>
+            </svg>
+            No obligation
+          </div>
+          <div style="display:flex;align-items:center;gap:8px;color:rgba(255,255,255,0.7);font-size:14px">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="12" r="10"/>
+              <path d="M9 12l2 2 4-4"/>
+            </svg>
+            30-minute call
+          </div>
+          <div style="display:flex;align-items:center;gap:8px;color:rgba(255,255,255,0.7);font-size:14px">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="12" r="10"/>
+              <path d="M9 12l2 2 4-4"/>
+            </svg>
+            Custom AI strategy
+          </div>
+        </div>
+      </div>
+    </DarkContentSection>
+
+    <style>
+      /* Hero Video Section Styling */
+      .hero-video-section {
+        position: relative;
+        overflow: hidden;
+        background: var(--zm-bg);
+      }
+      
+      .hero-background-video {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        z-index: 0;
+        pointer-events: none;
+        visibility: hidden;
+        background: transparent;
+        transform: translateZ(0);
+        -webkit-transform: translateZ(0);
+        backface-visibility: hidden;
+        -webkit-backface-visibility: hidden;
+        perspective: 1000px;
+        -webkit-perspective: 1000px;
+        image-rendering: optimizeQuality;
+        transition: opacity 0.4s ease-in-out;
+        object-position: center center;
+        image-rendering: -webkit-optimize-contrast;
+        image-rendering: optimize-contrast;
+      }
+      
+      .hero-background-video.loaded {
+        visibility: visible;
+      }
+      
+      .hero-background-video:not(.loaded) {
+        opacity: 0 !important;
+      }
+      
+      .hero-background-video.loaded {
+        opacity: 0.8 !important;
+      }
+      
+      .hero-video-overlay {
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(135deg, rgba(0, 0, 0, 0.4), rgba(139, 92, 246, 0.1));
+        z-index: 0;
+        pointer-events: none;
+      }
+      
+      /* Ensure content is above video */
+      .hero-video-section .custom-ai-section {
+        position: relative;
+        z-index: 1;
+        padding: var(--zm-gap-xl) 0;
+      }
+      
+      /* Enhance text readability over video */
+      .hero-video-section h1,
+      .hero-video-section h2,
+      .hero-video-section h3,
+      .hero-video-section h4,
+      .hero-video-section h5,
+      .hero-video-section h6 {
+        text-shadow: 0 2px 8px rgba(0, 0, 0, 0.7);
+      }
+      
+      .hero-video-section p,
+      .hero-video-section li,
+      .hero-video-section span {
+        text-shadow: 0 1px 4px rgba(0, 0, 0, 0.5);
+      }
+      
+      /* AI Example Cards */
+      .ai-example-card {
+        text-align: center;
+        position: relative;
+        border: 2px solid rgba(139, 92, 246, 0.3);
+        transition: all 0.3s ease;
+      }
+      
+      .ai-example-card:hover {
+        border-color: rgba(139, 92, 246, 0.8);
+        box-shadow: 0 15px 30px rgba(139, 92, 246, 0.2);
+        transform: translateY(-2px);
+      }
+      
+      .ai-example-features {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        justify-content: center;
+      }
+      
+      .ai-example-features span {
+        background: rgba(139, 92, 246, 0.1);
+        padding: 4px 8px;
+        border-radius: 8px;
+        border: 1px solid rgba(139, 92, 246, 0.3);
+      }
+      
+      /* Process Step Styling */
+      .process-number {
+        width: 40px;
+        height: 40px;
+        background: linear-gradient(135deg, #8b5cf6, #a855f7);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: bold;
+        color: white;
+        margin-bottom: 20px;
+        font-size: 1.2rem;
+      }
+      
+      /* Centered Text Section with Glow */
+      .centered-text-section {
+        max-width: 900px;
+        margin: 0 auto;
+        text-align: center;
+        padding: 0 2rem;
+      }
+      
+      .glow-text {
+        text-shadow: 
+          0 0 10px rgba(255, 255, 255, 0.1),
+          0 0 20px rgba(255, 255, 255, 0.05),
+          0 0 30px rgba(255, 255, 255, 0.03);
+      }
+      
+      .centered-text-section h2.glow-text {
+        text-shadow: 
+          0 2px 4px rgba(0, 0, 0, 0.8),
+          0 0 15px rgba(255, 255, 255, 0.1),
+          0 0 30px rgba(255, 255, 255, 0.05);
+      }
+      
+      .centered-text-section p.glow-text {
+        text-shadow: 
+          0 1px 2px rgba(0, 0, 0, 0.6),
+          0 0 10px rgba(255, 255, 255, 0.08),
+          0 0 20px rgba(255, 255, 255, 0.04);
+        line-height: 1.7;
+        font-size: 1.1rem;
+        color: #e2e8f0;
+        margin: 1.5rem auto 0;
+        max-width: 800px;
+      }
+      
+      /* Perfect Subtext Centering */
+      .centered-subtext {
+        text-align: center;
+        margin: 0 auto 50px auto;
+        max-width: 700px;
+        display: block;
+        padding: 0 2rem;
+        line-height: 1.6;
+        font-size: 1.1rem;
+      }
+
+      /* AI Options Section Styling */
+      .ai-options-section {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 2rem;
+      }
+      
+      .ai-options-header {
+        text-align: center;
+        margin-bottom: 4rem;
+      }
+      
+      .ai-options-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+        gap: 3rem;
+        align-items: start;
+        justify-content: center;
+      }
+      
+      .ai-option-card {
+        background: linear-gradient(145deg, rgba(0, 0, 0, 0.9), rgba(139, 92, 246, 0.05));
+        border: 2px solid rgba(139, 92, 246, 0.3);
+        border-radius: 24px;
+        padding: 0;
+        overflow: hidden;
+        position: relative;
+        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        box-shadow: 
+          0 10px 40px rgba(0, 0, 0, 0.4),
+          0 1px 0 rgba(255, 255, 255, 0.05) inset;
+      }
+      
+      .ai-option-card:hover {
+        border-color: rgba(139, 92, 246, 0.8);
+        box-shadow: 
+          0 20px 60px rgba(139, 92, 246, 0.3),
+          0 10px 40px rgba(0, 0, 0, 0.6),
+          0 1px 0 rgba(255, 255, 255, 0.1) inset;
+        transform: translateY(-8px) scale(1.02);
+        background: linear-gradient(145deg, rgba(0, 0, 0, 0.95), rgba(139, 92, 246, 0.08));
+      }
+      
+      .ai-option-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 4px;
+        background: linear-gradient(90deg, 
+          transparent 0%,
+          rgba(139, 92, 246, 0.8) 20%,
+          rgba(168, 85, 247, 1) 50%,
+          rgba(139, 92, 246, 0.8) 80%,
+          transparent 100%
+        );
+        opacity: 0;
+        transition: opacity 0.4s ease;
+      }
+      
+      .ai-option-card:hover::before {
+        opacity: 1;
+      }
+      
+      .ai-card-header {
+        padding: 2.5rem 2.5rem 1.5rem 2.5rem;
+        text-align: center;
+        background: linear-gradient(135deg, rgba(139, 92, 246, 0.1), transparent);
+        border-bottom: 1px solid rgba(139, 92, 246, 0.2);
+      }
+      
+      .ai-card-icon {
+        font-size: 3.5rem;
+        margin-bottom: 1rem;
+        display: block;
+        filter: drop-shadow(0 4px 8px rgba(139, 92, 246, 0.4));
+        transition: transform 0.3s ease;
+      }
+      
+      .ai-option-card:hover .ai-card-icon {
+        transform: scale(1.1) rotate(5deg);
+      }
+      
+      .ai-card-header h3 {
+        color: #ffffff;
+        margin-bottom: 0.5rem;
+        font-size: 1.8rem;
+        font-weight: 700;
+        text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8);
+      }
+      
+      .ai-card-subtitle {
+        color: #10b981;
+        font-size: 1.1rem;
+        font-weight: 600;
+        margin-bottom: 0;
+      }
+      
+      .ai-card-content {
+        padding: 2rem 2.5rem;
+      }
+      
+      .ai-card-description {
+        color: #e2e8f0;
+        font-size: 1.1rem;
+        line-height: 1.6;
+        margin-bottom: 2rem;
+        text-align: center;
+      }
+      
+      .ai-features-list {
+        margin-bottom: 2rem;
+      }
+      
+      .ai-feature-item {
+        display: flex;
+        align-items: flex-start;
+        gap: 1rem;
+        margin-bottom: 1rem;
+        padding: 0.75rem;
+        background: rgba(139, 92, 246, 0.05);
+        border-radius: 12px;
+        border: 1px solid rgba(139, 92, 246, 0.1);
+        transition: all 0.3s ease;
+      }
+      
+      .ai-feature-item:hover {
+        background: rgba(139, 92, 246, 0.1);
+        border-color: rgba(139, 92, 246, 0.3);
+        transform: translateX(8px);
+      }
+      
+      .ai-feature-icon {
+        font-size: 1.2rem;
+        flex-shrink: 0;
+        filter: drop-shadow(0 2px 4px rgba(139, 92, 246, 0.4));
+      }
+      
+      .ai-feature-item span:last-child {
+        color: #f1f5f9;
+        font-size: 0.95rem;
+        line-height: 1.5;
+      }
+      
+      .ai-card-best-for {
+        background: linear-gradient(135deg, rgba(139, 92, 246, 0.1), rgba(168, 85, 247, 0.05));
+        border: 1px solid rgba(139, 92, 246, 0.3);
+        border-radius: 16px;
+        padding: 1.5rem;
+        color: #e2e8f0;
+        font-size: 0.95rem;
+        line-height: 1.6;
+        text-align: center;
+      }
+      
+      .ai-card-best-for strong {
+        color: #a78bfa;
+      }
+      
+      .ai-card-footer {
+        padding: 1.5rem 2.5rem 2.5rem 2.5rem;
+        text-align: center;
+      }
+      
+      .ai-card-btn {
+        width: 100%;
+        padding: 1rem 1.5rem;
+        font-size: 1.05rem;
+        font-weight: 600;
+        border-radius: 12px;
+        background: linear-gradient(135deg, #8b5cf6, #a855f7);
+        border: none;
+        color: white;
+        text-decoration: none;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 15px rgba(139, 92, 246, 0.4);
+        position: relative;
+        overflow: hidden;
+        white-space: nowrap;
+        text-align: center;
+        min-height: 3.5rem;
+      }
+      
+      .ai-card-btn::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+        transition: left 0.6s ease;
+      }
+      
+      .ai-card-btn:hover::before {
+        left: 100%;
+      }
+      
+      .ai-card-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 25px rgba(139, 92, 246, 0.6);
+        background: linear-gradient(135deg, #9333ea, #c084fc);
+      }
+      
+      /* Special styling for starter vs custom cards */
+      .starter-card {
+        border-color: rgba(16, 185, 129, 0.3);
+      }
+      
+      .starter-card:hover {
+        border-color: rgba(16, 185, 129, 0.8);
+        box-shadow: 
+          0 20px 60px rgba(16, 185, 129, 0.2),
+          0 10px 40px rgba(0, 0, 0, 0.6),
+          0 1px 0 rgba(255, 255, 255, 0.1) inset;
+      }
+      
+      .starter-card::before {
+        background: linear-gradient(90deg, 
+          transparent 0%,
+          rgba(16, 185, 129, 0.8) 20%,
+          rgba(34, 197, 94, 1) 50%,
+          rgba(16, 185, 129, 0.8) 80%,
+          transparent 100%
+        );
+      }
+      
+      .custom-card {
+        border-color: rgba(139, 92, 246, 0.3);
+      }
+      
+      .custom-card:hover {
+        border-color: rgba(139, 92, 246, 0.8);
+      }
+      
+      /* Button Text Components */
+      .btn-text-main {
+        display: inline-block;
+        line-height: 1.2;
+        letter-spacing: 0.025em;
+      }
+      
+      .btn-arrow {
+        display: inline-block;
+        font-size: 1.2em;
+        font-weight: 700;
+        transition: transform 0.3s ease;
+        margin-left: 0.25rem;
+      }
+      
+      .ai-card-btn:hover .btn-arrow {
+        transform: translateX(3px);
+      }
+      
+      /* Hero Button Styling */
+      .hero-buttons {
+        display: flex;
+        gap: 1rem;
+        justify-content: center;
+        margin-top: 1.5rem;
+        flex-wrap: wrap;
+      }
+      
+      .hero-btn {
+        padding: 0.875rem 2rem;
+        font-size: 1.1rem;
+        font-weight: 600;
+        border-radius: 8px;
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.3s ease;
+        white-space: nowrap;
+        min-height: 3rem;
+        position: relative;
+        overflow: hidden;
+      }
+      
+      .hero-btn-ghost {
+        padding: 0.875rem 2rem;
+        font-size: 1.1rem;
+        font-weight: 600;
+        border-radius: 8px;
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.3s ease;
+        white-space: nowrap;
+        min-height: 3rem;
+        background: transparent;
+        border: 2px solid rgba(255, 255, 255, 0.2);
+        color: rgba(255, 255, 255, 0.9);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+      }
+      
+      .hero-btn-ghost:hover {
+        background: rgba(255, 255, 255, 0.1);
+        border-color: rgba(255, 255, 255, 0.4);
+        color: white;
+        transform: translateY(-2px);
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+      }
+      
+      /* CTA Section Button Styling */
+      .cta-buttons {
+        display: flex;
+        gap: 1rem;
+        justify-content: center;
+        flex-wrap: wrap;
+        margin-bottom: 1.5rem;
+      }
+      
+      .cta-btn {
+        padding: 1rem 2rem;
+        font-size: 1.1rem;
+        font-weight: 600;
+        border-radius: 8px;
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.3s ease;
+        white-space: nowrap;
+        min-height: 3.5rem;
+        position: relative;
+        overflow: hidden;
+      }
+      
+      .cta-btn-ghost {
+        background: transparent;
+        border: 2px solid rgba(139, 92, 246, 0.3);
+        color: rgba(255, 255, 255, 0.9);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+      }
+      
+      .cta-btn-ghost:hover {
+        background: rgba(139, 92, 246, 0.1);
+        border-color: rgba(139, 92, 246, 0.6);
+        color: white;
+        transform: translateY(-2px);
+        box-shadow: 0 8px 25px rgba(139, 92, 246, 0.3);
+      }
+
+      /* Mobile optimizations */
+      @media (max-width: 768px) {
+        .hero-background-video {
+          transform: translate3d(0, 0, 0);
+          -webkit-transform: translate3d(0, 0, 0);
+        }
+        
+        .ai-example-features {
+          flex-direction: column;
+          align-items: center;
+        }
+        
+        .ai-options-section {
+          padding: 0 1rem;
+        }
+        
+        .ai-options-grid {
+          grid-template-columns: 1fr;
+          gap: 2rem;
+        }
+        
+        .ai-option-card {
+          margin: 0 auto;
+          max-width: 500px;
+        }
+        
+        .ai-card-header {
+          padding: 2rem 1.5rem 1rem 1.5rem;
+        }
+        
+        .ai-card-content {
+          padding: 1.5rem;
+        }
+        
+        .ai-card-footer {
+          padding: 1rem 1.5rem 2rem 1.5rem;
+        }
+        
+        .ai-card-icon {
+          font-size: 3rem;
+        }
+        
+        .ai-card-header h3 {
+          font-size: 1.6rem;
+        }
+        
+        .ai-feature-item:hover {
+          transform: none;
+        }
+        
+        /* Mobile Subtext Optimizations */
+        .centered-subtext {
+          padding: 0 1rem;
+          font-size: 1rem;
+          max-width: 600px;
+          margin-bottom: 2.5rem;
+        }
+        
+        /* Mobile Button Optimizations */
+        .hero-buttons {
+          gap: 0.75rem;
+        }
+        
+        .hero-btn,
+        .hero-btn-ghost {
+          padding: 0.75rem 1.5rem;
+          font-size: 1rem;
+          min-height: 2.75rem;
+        }
+        
+        .ai-card-btn {
+          padding: 0.875rem 1rem;
+          font-size: 1rem;
+          min-height: 3rem;
+        }
+        
+        .cta-buttons {
+          gap: 0.75rem;
+        }
+        
+        .cta-btn {
+          padding: 0.875rem 1.5rem;
+          font-size: 1rem;
+          min-height: 3rem;
+        }
+      }
+      
+      @media (max-width: 480px) {
+        .ai-options-header {
+          margin-bottom: 2rem;
+        }
+        
+        .ai-card-header {
+          padding: 1.5rem 1rem 0.5rem 1rem;
+        }
+        
+        .ai-card-content {
+          padding: 1rem;
+        }
+        
+        .ai-card-footer {
+          padding: 0.5rem 1rem 1.5rem 1rem;
+        }
+        
+        .ai-feature-item {
+          padding: 0.5rem;
+          margin-bottom: 0.75rem;
+        }
+        
+        .ai-card-best-for {
+          padding: 1rem;
+          font-size: 0.9rem;
+        }
+        
+        /* Extra Small Screen Button Optimizations */
+        .hero-buttons {
+          flex-direction: column;
+          align-items: center;
+          gap: 0.5rem;
+        }
+        
+        .hero-btn,
+        .hero-btn-ghost {
+          width: 100%;
+          max-width: 280px;
+          padding: 0.75rem 1rem;
+          font-size: 0.95rem;
+          min-height: 2.5rem;
+        }
+        
+        .ai-card-btn {
+          padding: 0.75rem 0.75rem;
+          font-size: 0.95rem;
+          min-height: 2.75rem;
+        }
+        
+        .btn-text-main {
+          font-size: 0.95rem;
+          line-height: 1.3;
+        }
+        
+        .btn-arrow {
+          font-size: 1.1em;
+        }
+        
+        .cta-buttons {
+          flex-direction: column;
+          align-items: center;
+          gap: 0.5rem;
+        }
+        
+        .cta-btn {
+          width: 100%;
+          max-width: 300px;
+          padding: 0.75rem 1rem;
+          font-size: 0.95rem;
+          min-height: 2.75rem;
+        }
+        
+        /* Extra Small Screen Subtext */
+        .centered-subtext {
+          padding: 0 0.75rem;
+          font-size: 0.95rem;
+          max-width: 500px;
+          margin-bottom: 2rem;
+        }
+      }
+    </style>
+
+    <script is:inline>
+      window.dataLayer = window.dataLayer || [];
+      
+      // Track AI integration interactions
+      document.addEventListener('click', function(e) {
+        const target = e.target.closest('[data-event]');
+        if (target) {
+          const event = target.getAttribute('data-event');
+          const question = target.getAttribute('data-question');
+          
+          window.dataLayer.push({
+            event: 'ai_integration_interaction',
+            action: event,
+            question: question || 'general',
+            timestamp: Date.now()
+          });
+        }
+      });
+      
+      // Track scroll depth for engagement
+      let maxScroll = 0;
+      window.addEventListener('scroll', function() {
+        const scrollPercent = Math.round((window.scrollY / (document.body.scrollHeight - window.innerHeight)) * 100);
+        if (scrollPercent > maxScroll) {
+          maxScroll = scrollPercent;
+          if (maxScroll >= 25 && maxScroll < 50) {
+            window.dataLayer.push({ event: 'ai_integration_scroll_25' });
+          } else if (maxScroll >= 50 && maxScroll < 75) {
+            window.dataLayer.push({ event: 'ai_integration_scroll_50' });
+          } else if (maxScroll >= 75) {
+            window.dataLayer.push({ event: 'ai_integration_scroll_75' });
+          }
+        }
+      });
+    </script>
+  </div>
+</BaseLayout>

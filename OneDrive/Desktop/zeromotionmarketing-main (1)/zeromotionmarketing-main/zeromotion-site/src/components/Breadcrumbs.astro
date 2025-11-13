@@ -1,0 +1,123 @@
+---
+export interface BreadcrumbItem {
+  name: string;
+  href: string;
+}
+
+interface Props {
+  items: BreadcrumbItem[];
+  current: string;
+}
+
+const { items, current } = Astro.props;
+
+// Generate JSON-LD BreadcrumbList schema
+const breadcrumbSchema = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": "https://zeromotion.marketing/"
+    },
+    ...items.map((item, index) => ({
+      "@type": "ListItem", 
+      "position": index + 2,
+      "name": item.name,
+      "item": `https://zeromotion.marketing${item.href}`
+    })),
+    {
+      "@type": "ListItem",
+      "position": items.length + 2,
+      "name": current,
+      "item": `https://zeromotion.marketing${Astro.url.pathname}`
+    }
+  ]
+};
+---
+
+<nav aria-label="Breadcrumb" class="breadcrumb-nav">
+  <ol class="breadcrumb-list" itemscope itemtype="https://schema.org/BreadcrumbList">
+    <li class="breadcrumb-item" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+      <a href="/" class="breadcrumb-link" itemprop="item">
+        <span itemprop="name">Home</span>
+      </a>
+      <meta itemprop="position" content="1" />
+    </li>
+    
+    {items.map((item, index) => (
+      <li class="breadcrumb-item" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+        <span class="breadcrumb-separator" aria-hidden="true">›</span>
+        <a href={item.href} class="breadcrumb-link" itemprop="item">
+          <span itemprop="name">{item.name}</span>
+        </a>
+        <meta itemprop="position" content={(index + 2).toString()} />
+      </li>
+    ))}
+    
+    <li class="breadcrumb-item breadcrumb-current" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+      <span class="breadcrumb-separator" aria-hidden="true">›</span>
+      <span class="breadcrumb-current-text" itemprop="name">{current}</span>
+      <meta itemprop="position" content={(items.length + 2).toString()} />
+    </li>
+  </ol>
+</nav>
+
+<!-- JSON-LD BreadcrumbList Schema -->
+<script type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
+
+<style>
+  .breadcrumb-nav {
+    padding: 12px 0;
+    margin-bottom: 24px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    position: relative;
+    z-index: 10;
+  }
+  
+  .breadcrumb-list {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    font-size: 14px;
+  }
+  
+  .breadcrumb-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  
+  .breadcrumb-link {
+    color: rgba(255, 255, 255, 0.7);
+    text-decoration: none;
+    transition: color 0.2s ease;
+  }
+  
+  .breadcrumb-link:hover {
+    color: #8b5cf6;
+    text-decoration: underline;
+  }
+  
+  .breadcrumb-separator {
+    color: rgba(255, 255, 255, 0.4);
+    font-size: 12px;
+  }
+  
+  .breadcrumb-current-text {
+    color: rgba(255, 255, 255, 0.9);
+    font-weight: 500;
+  }
+  
+  @media (max-width: 640px) {
+    .breadcrumb-list {
+      font-size: 13px;
+    }
+  }
+</style>

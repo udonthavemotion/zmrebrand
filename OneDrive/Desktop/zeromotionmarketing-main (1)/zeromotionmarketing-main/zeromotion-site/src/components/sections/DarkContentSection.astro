@@ -1,0 +1,65 @@
+---
+interface Props {
+  className?: string;
+  background?: string;
+  sectionPadding?: boolean;
+}
+
+const { 
+  className = '', 
+  background = 'var(--zm-bg)',
+  sectionPadding = true 
+} = Astro.props;
+
+const sectionClass = sectionPadding ? 'section' : '';
+---
+
+<section 
+  class={`dark-content-section ${sectionClass} ${className}`}
+  style={`background: ${background}`}
+>
+  <div class="container-page">
+    <slot />
+  </div>
+</section>
+
+<style>
+.dark-content-section {
+  position: relative;
+  background: var(--zm-bg);
+  padding: var(--zm-gap-xl) 0;
+}
+
+/* Remove section padding when used without sectionPadding */
+.dark-content-section:not(.section) {
+  padding: 0;
+}
+
+/* Enhanced readability in dark sections */
+.dark-content-section h1,
+.dark-content-section h2,
+.dark-content-section h3,
+.dark-content-section h4,
+.dark-content-section h5,
+.dark-content-section h6 {
+  color: var(--zm-text);
+}
+
+.dark-content-section p,
+.dark-content-section li {
+  color: var(--zm-text-muted);
+}
+
+/* Ensure cards look great in dark sections */
+.dark-content-section .card {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+.dark-content-section .card:hover {
+  background: rgba(255, 255, 255, 0.05);
+  border-color: rgba(139, 92, 246, 0.5);
+}
+</style>

@@ -1,0 +1,633 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import PlanCard from "../components/pricing/PlanCard.astro";
+import ComparisonTable from "../components/pricing/ComparisonTable.astro";
+import FAQBlock from "../components/pricing/FAQBlock.astro";
+import BackgroundSectionVideo from "../components/BackgroundSectionVideo.astro";
+import SocialProofStrip from "../components/SocialProofStrip.astro";
+import ModernBookingModal from "../components/ModernBookingModal.astro";
+import { pricingTiers } from "../data/packages.ts";
+import { getAlternatingTexture } from "../lib/textures.ts";
+
+// Multiple high-quality videos for different sections
+const HERO_VIDEO = "/pictures/web design page/webpage.mp4";
+const SECTION_VIDEO_1 = "/assets/textures/9461-219710531_small.mp4"; // Subtle motion - high quality
+const SECTION_VIDEO_2 = "/photos/homepage_hero.mp4"; // Homepage hero - used for Compare All Features and Get My Plan sections
+const SECTION_VIDEO_3 = "/assets/textures/36471-410610193_small.mp4"; // Geometric flow - beautiful
+
+// Video preloading for optimal quality
+const preloadVideos = [HERO_VIDEO, SECTION_VIDEO_1, SECTION_VIDEO_2, SECTION_VIDEO_3];
+
+// SEO Configuration for Pricing Page
+const title = "Custom Pricing Plans | Digital Marketing & Web Design | ZeroMotion | Houma, LA";
+const description = "Choose from our flexible pricing plans for AI-powered websites, marketing automation, and digital advertising. Request a custom quote tailored to your business needs. Serving Houma, Thibodaux, and Louisiana businesses.";
+const keywords = "digital marketing pricing Houma LA, web design cost Thibodaux Louisiana, marketing automation pricing, ZRM CRM setup cost Louisiana, affordable web design Terrebonne Parish";
+const canonical = "/pricing";
+const ogImage = "/og-webdesign.png";
+---
+
+<BaseLayout {title} {description} {keywords} {canonical} {ogImage}>
+  <!-- Ultra-high quality video preloading -->
+  <link slot="head" rel="preload" href={HERO_VIDEO} as="video" type="video/mp4" crossorigin="anonymous">
+  <link slot="head" rel="preload" href={SECTION_VIDEO_1} as="video" type="video/mp4" crossorigin="anonymous">
+  <link slot="head" rel="preload" href={SECTION_VIDEO_2} as="video" type="video/mp4" crossorigin="anonymous">
+  <link slot="head" rel="preload" href={SECTION_VIDEO_3} as="video" type="video/mp4" crossorigin="anonymous">
+  
+  <!-- Video quality optimization hints -->
+  <link slot="head" rel="dns-prefetch" href="//zeromotion.marketing">
+  <meta slot="head" name="video-quality" content="ultra-high">
+  <meta slot="head" name="video-preload" content="auto">
+  
+  <!-- Enhanced viewport for video quality -->
+  <meta slot="head" name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=no">
+  
+  <!-- Color profile optimization -->
+  <meta slot="head" name="color-scheme" content="dark">
+  <meta slot="head" name="theme-color" content="#000000">
+  <main>
+    <!-- Hero Section -->
+    <section
+      id="pricing-hero"
+      class="relative isolate overflow-hidden bg-black min-h-[70svh] sm:min-h-[78svh] grid place-items-center"
+      aria-labelledby="pricing-title"
+    >
+      <video
+        class="pointer-events-none absolute inset-0 -z-10 h-full w-full object-cover ultra-quality-video stable-crm-video"
+        style="filter: brightness(0.9) contrast(1.25) saturate(1.35) hue-rotate(0deg) blur(0px); will-change: transform; opacity: 0.8;"
+        autoplay
+        muted
+        loop
+        playsinline
+        preload="auto"
+        crossorigin="anonymous"
+        disablepictureinpicture
+        x-webkit-airplay="deny"
+        width="1920"
+        height="1080"
+        aria-hidden="true"
+        role="img"
+        aria-label="Background video showing high-quality web design interfaces representing ZeroMotion's professional pricing approach"
+        onloadstart="this.style.visibility='visible'; this.style.imageRendering='optimizeQuality';"
+        oncanplay="this.classList.add('loaded'); this.style.transform='translateZ(0)';"
+        onloadeddata="this.style.filter='brightness(0.9) contrast(1.25) saturate(1.35) hue-rotate(0deg) blur(0px)';"
+      >
+        <source src={HERO_VIDEO} type="video/mp4" />
+        <track kind="descriptions" src="/videos/pricing-background-description.vtt" srclang="en" label="Background video description">
+      </video>
+      <div
+        class="pointer-events-none absolute inset-0 -z-10 bg-gradient-to-b from-black/80 via-black/20 to-black/60"
+      >
+      </div>
+      <div class="relative container-page text-center">
+        <h1 id="pricing-title" class="h1 mb-6">Pick the plan that grows with you</h1>
+        <p class="text-white/85 max-w-2xl mx-auto text-lg">
+          Simple plans. Clear outcomes. We set it up, you get more booked business—without learning a new "tool."
+        </p>
+        <div class="mt-8 flex flex-col sm:flex-row gap-4 justify-center">
+          <button
+            type="button"
+            class="btn-primary btn-lg"
+            onclick="openLeadModal('pricing-hero'); window.dataLayer&&dataLayer.push({event:'cta_click',label:'Get My Quote'})"
+          >
+            <span class="btn-text-main">Get My Quote</span>
+          </button>
+          <button
+            type="button"
+            class="btn-ghost btn-lg"
+            onclick="openStrategistModal('pricing-hero'); window.dataLayer&&dataLayer.push({event:'cta_click',label:'Talk to Strategist'})"
+          >
+            <span class="btn-text-main">Talk to a Strategist</span>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- NEW: Social Proof Strip -->
+    <SocialProofStrip />
+
+    <!-- Pricing Cards Section with dedicated high-quality video -->
+    <BackgroundSectionVideo
+      src={SECTION_VIDEO_2}
+      opacity={0.4}
+      brightness={1.1}
+      contrast={1.15}
+    >
+      <section class="section-padding relative" id="plans">
+        <div class="container-page relative z-10">
+          <div class="text-center mb-16 reveal">
+            <h2 class="h2 mb-4">Plan Selector</h2>
+            <p class="text-white/70 max-w-2xl mx-auto">
+              Choose the perfect solution for every stage of your business journey.
+            </p>
+          </div>
+
+          <div class="grid md:grid-cols-3 gap-8 mb-16">
+            {pricingTiers.map((tier) => {
+              // Assign workflow images based on plan type
+              const getWorkflowImage = (tierId: string) => {
+                switch(tierId) {
+                  case 'starter':
+                    return '/assets/zeromotion_workflow_1_lead_capture.png';
+                  case 'growth':
+                    return '/assets/zeromotion_workflow_3_conversion.png';
+                  case 'scale':
+                    return '/assets/zeromotion_workflow_4_results.png';
+                  default:
+                    return '/assets/zeromotion_workflow_1_lead_capture.png';
+                }
+              };
+
+              return (
+                <PlanCard
+                  name={tier.name}
+                  tagline={tier.tagline}
+                  priceRange={tier.priceRange}
+                  description={tier.description}
+                  features={tier.included}
+                  highlight={tier.popular ? "Most Popular" : undefined}
+                  ctaText={tier.ctaText}
+                  ctaHref={tier.ctaHref}
+                  popular={tier.popular}
+                  workflowImage={getWorkflowImage(tier.id)}
+                />
+              );
+            })}
+          </div>
+
+          <!-- Trust Strip Under Cards -->
+          <div class="text-center reveal mt-12 px-4">
+            <div class="max-w-4xl mx-auto bg-white/5 border border-white/10 rounded-2xl p-8 backdrop-blur-sm">
+              <p class="text-white/90 text-lg font-semibold mb-4">
+                All plans include: secure hosting, your branding everywhere, friendly support, and the ability to add locations anytime.
+              </p>
+              <p class="text-white/60 text-sm">
+                Usage: texting, email, and calling are billed at carrier cost—pay only for what you use.
+              </p>
+            </div>
+          </div>
+          
+          <div class="text-center reveal mt-8">
+            <p class="text-white/70 mb-6">
+              Need something custom? We create tailored solutions for unique business needs.
+            </p>
+            <button
+              type="button"
+              class="btn-ghost btn-lg"
+              onclick="openStrategistModal('custom-solution'); window.dataLayer&&dataLayer.push({event:'cta_click',label:'Custom Solution'})"
+            >
+              <span class="btn-text-main">Discuss Custom Solution</span>
+            </button>
+          </div>
+        </div>
+      </section>
+    </BackgroundSectionVideo>
+
+    <!-- Comparison Table Section with hero video -->
+    <BackgroundSectionVideo
+      src={SECTION_VIDEO_2}
+      opacity={0.8}
+      brightness={0.8}
+      contrast={1.1}
+    >
+      <section class="section-padding bg-black/20" id="comparison">
+        <div class="container-page">
+          <div class="text-center mb-12 reveal">
+            <h2 class="h2 mb-4">Compare all features—without the tech talk</h2>
+            <p class="text-white/70 max-w-2xl mx-auto">
+              What each plan includes (in plain English)
+            </p>
+          </div>
+
+          <ComparisonTable />
+        </div>
+      </section>
+    </BackgroundSectionVideo>
+
+    <!-- FAQ Section with beautiful geometric video -->
+    <BackgroundSectionVideo
+      src={SECTION_VIDEO_3}
+      opacity={0.45}
+      brightness={1.05}
+      contrast={1.18}
+    >
+      <FAQBlock />
+      
+      <!-- Micro "Why Us" Bullets -->
+      <section class="pb-16">
+        <div class="container-page">
+          <div class="max-w-5xl mx-auto">
+            <div class="grid md:grid-cols-2 gap-6 reveal">
+              <div class="flex items-start gap-4 p-6 bg-white/5 border border-white/10 rounded-xl backdrop-blur-sm">
+                <span class="text-3xl flex-shrink-0">🛠️</span>
+                <div>
+                  <p class="text-white/90 font-medium">Real setup, not just software. We build it for you.</p>
+                </div>
+              </div>
+              <div class="flex items-start gap-4 p-6 bg-white/5 border border-white/10 rounded-xl backdrop-blur-sm">
+                <span class="text-3xl flex-shrink-0">📅</span>
+                <div>
+                  <p class="text-white/90 font-medium">Fewer no-shows. Smart reminders and reschedules.</p>
+                </div>
+              </div>
+              <div class="flex items-start gap-4 p-6 bg-white/5 border border-white/10 rounded-xl backdrop-blur-sm">
+                <span class="text-3xl flex-shrink-0">⭐</span>
+                <div>
+                  <p class="text-white/90 font-medium">More 5-stars. Reviews request themselves.</p>
+                </div>
+              </div>
+              <div class="flex items-start gap-4 p-6 bg-white/5 border border-white/10 rounded-xl backdrop-blur-sm">
+                <span class="text-3xl flex-shrink-0">📊</span>
+                <div>
+                  <p class="text-white/90 font-medium">Clear numbers. Leads, bookings, and ROI on one page.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </BackgroundSectionVideo>
+
+    <!-- Final CTA Section with hero video -->
+    <BackgroundSectionVideo
+      src={SECTION_VIDEO_2}
+      opacity={0.8}
+      brightness={0.8}
+      contrast={1.1}
+    >
+      <section class="section-padding" id="get-started">
+        <div class="container-page">
+          <div class="text-center max-w-3xl mx-auto reveal">
+            <h2 class="h2 mb-6">Get My Plan</h2>
+            <p class="text-white/80 text-lg mb-8">
+              Ready to dominate your market? Choose your plan and let's get started today.
+            </p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+              <button
+                type="button"
+                class="btn-primary btn-lg"
+                onclick="openLeadModal('growth-plan'); window.dataLayer&&dataLayer.push({event:'cta_click',label:'Get Growth Plan'})"
+              >
+                <span class="btn-text-main">Get Growth Plan</span>
+              </button>
+              <button
+                type="button"
+                class="btn-ghost btn-lg"
+                onclick="openStrategistModal('pricing-cta'); window.dataLayer&&dataLayer.push({event:'cta_click',label:'Talk to Strategist CTA'})"
+              >
+                <span class="btn-text-main">Talk to a Strategist</span>
+              </button>
+            </div>
+            <p class="text-white/50 text-sm mt-6">
+              Free consultation • No obligation • Local expertise
+            </p>
+          </div>
+        </div>
+      </section>
+    </BackgroundSectionVideo>
+  </main>
+
+  <!-- JSON-LD Schema -->
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "ProductCollection",
+      "name": "ZeroMotion Marketing Plans",
+      "description": "Comprehensive digital marketing and web design plans for Louisiana businesses - from starter websites to enterprise-level advertising management",
+      "brand": {
+        "@type": "Brand",
+        "name": "ZeroMotion"
+      },
+      "provider": {
+        "@type": "Organization",
+        "name": "ZeroMotion",
+        "url": "https://zeromotion.marketing",
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Houma",
+          "addressRegion": "LA",
+          "addressCountry": "US"
+        }
+      },
+      "hasPart": [
+        {
+          "@type": "Product",
+          "name": "Starter Website",
+          "description": "Professional website launch with hosting, basic analytics, and GBP connection",
+          "offers": {
+            "@type": "Offer",
+            "priceSpecification": {
+              "@type": "PriceSpecification",
+              "priceCurrency": "USD",
+              "valueAddedTaxIncluded": "false"
+            },
+            "availability": "https://schema.org/InStock",
+            "validFrom": "2024-01-01",
+            "seller": {
+              "@type": "Organization",
+              "name": "ZeroMotion"
+            }
+          },
+          "category": "Web Design",
+          "serviceType": "Website Development"
+        },
+        {
+          "@type": "Product", 
+          "name": "Growth Marketing",
+          "description": "Complete marketing automation with funnels, ZRM CRM integration, and content management",
+          "offers": {
+            "@type": "Offer",
+            "priceSpecification": {
+              "@type": "PriceSpecification",
+              "priceCurrency": "USD",
+              "valueAddedTaxIncluded": "false"
+            },
+            "availability": "https://schema.org/InStock",
+            "validFrom": "2024-01-01",
+            "seller": {
+              "@type": "Organization",
+              "name": "ZeroMotion"
+            }
+          },
+          "category": "Digital Marketing",
+          "serviceType": "Marketing Automation"
+        },
+        {
+          "@type": "Product",
+          "name": "Scale & Dominate", 
+          "description": "Enterprise-level advertising, AI chatbots, and comprehensive marketing management",
+          "offers": {
+            "@type": "Offer",
+            "priceSpecification": {
+              "@type": "PriceSpecification",
+              "priceCurrency": "USD",
+              "valueAddedTaxIncluded": "false"
+            },
+            "availability": "https://schema.org/InStock",
+            "validFrom": "2024-01-01",
+            "seller": {
+              "@type": "Organization",
+              "name": "ZeroMotion"
+            }
+          },
+          "category": "Digital Marketing",
+          "serviceType": "Enterprise Marketing"
+        }
+      ]
+    }
+  </script>
+
+  <script is:inline>
+    // Ultra-high quality video optimization
+    document.addEventListener('DOMContentLoaded', function() {
+      // Enhanced video quality settings
+      const videos = document.querySelectorAll('.ultra-quality-video, .ultra-quality-texture');
+      
+      videos.forEach(video => {
+        // Force maximum quality settings
+        video.setAttribute('playsinline', 'true');
+        video.setAttribute('webkit-playsinline', 'true');
+        video.setAttribute('x5-playsinline', 'true');
+        
+        // Enhanced loading for quality
+        video.addEventListener('loadstart', function() {
+          this.style.imageRendering = 'optimizeQuality';
+          this.style.visibility = 'visible';
+        });
+        
+        video.addEventListener('canplay', function() {
+          this.classList.add('loaded');
+          this.style.transform = 'translateZ(0)';
+          
+          // Apply quality filters after load
+          if (this.classList.contains('ultra-quality-video')) {
+            this.style.filter = 'brightness(0.9) contrast(1.25) saturate(1.35) hue-rotate(0deg) blur(0px)';
+          }
+        });
+        
+        video.addEventListener('loadeddata', function() {
+          // Ensure quality is maintained after data load
+          this.style.imageRendering = 'optimizeQuality';
+          
+          // Force hardware acceleration
+          this.style.transform = 'translateZ(0) translate3d(0, 0, 0)';
+        });
+        
+        // Quality maintenance on play
+        video.addEventListener('play', function() {
+          this.style.imageRendering = 'optimizeQuality';
+        });
+        
+        // Handle quality degradation prevention
+        video.addEventListener('waiting', function() {
+          // Maintain quality during buffering
+          this.style.imageRendering = 'optimizeQuality';
+        });
+      });
+      
+      // Preload critical videos for instant quality
+      const preloadVideos = [
+        '/pictures/web design page/webpage.mp4',
+        '/assets/textures/9461-219710531_small.mp4',
+        '/photos/homepage_hero.mp4',
+        '/assets/textures/36471-410610193_small.mp4'
+      ];
+      
+      preloadVideos.forEach(src => {
+        const link = document.createElement('link');
+        link.rel = 'preload';
+        link.as = 'video';
+        link.type = 'video/mp4';
+        link.href = src;
+        link.crossOrigin = 'anonymous';
+        document.head.appendChild(link);
+      });
+      
+      // Enhanced performance monitoring for video quality
+      if ('IntersectionObserver' in window) {
+        const videoObserver = new IntersectionObserver((entries) => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              const video = entry.target;
+              // Ensure maximum quality when in viewport
+              video.style.imageRendering = 'optimizeQuality';
+              video.style.transform = 'translateZ(0) translate3d(0, 0, 0)';
+            }
+          });
+        }, {
+          threshold: 0.1,
+          rootMargin: '50px'
+        });
+        
+        videos.forEach(video => {
+          videoObserver.observe(video);
+        });
+      }
+    });
+
+    // Track pricing page view
+    if (typeof window !== 'undefined') {
+      if (window.dataLayer) {
+        window.dataLayer.push({
+          event: 'view_pricing',
+          page_title: 'Pricing',
+          page_location: window.location.href
+        });
+      } else {
+        // Fallback CustomEvent for non-GTM scenarios
+        window.dispatchEvent(new CustomEvent('viewPricing', {
+          detail: {
+            page_title: 'Pricing',
+            page_location: window.location.href,
+            timestamp: Date.now()
+          }
+        }));
+      }
+    }
+  </script>
+
+  <!-- Booking Modal for Free Consultation -->
+  <ModernBookingModal />
+</BaseLayout>
+
+<style>
+  /* Ultra-high quality video rendering for pricing page */
+  .ultra-quality-video {
+    /* Advanced hardware acceleration */
+    transform: translateZ(0) translate3d(0, 0, 0);
+    -webkit-transform: translateZ(0) translate3d(0, 0, 0);
+    transform-style: preserve-3d;
+    -webkit-transform-style: preserve-3d;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    perspective: 1000px;
+    -webkit-perspective: 1000px;
+    
+    /* Maximum quality rendering */
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: -moz-crisp-edges;
+    image-rendering: optimize-contrast;
+    image-rendering: crisp-edges;
+    image-rendering: pixelated;
+    image-rendering: high-quality;
+    
+    /* Enhanced video quality settings */
+    object-position: center center;
+    object-fit: cover;
+    
+    /* Smooth transitions and performance */
+    will-change: transform, filter, opacity;
+    transition: opacity 0.5s cubic-bezier(0.4, 0, 0.2, 1), 
+                filter 0.3s ease-out,
+                transform 0.2s ease-out;
+                
+    /* Anti-aliasing and smoothing */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    
+    /* Prevent compression artifacts */
+    image-orientation: from-image;
+    
+    /* Enhanced color rendering */
+    color-rendering: optimizeQuality;
+    shape-rendering: geometricPrecision;
+    text-rendering: geometricPrecision;
+  }
+  
+  .stable-crm-video {
+    visibility: hidden; /* Hide until loaded to prevent flicker */
+    background: transparent;
+    
+    /* Enhanced loading transition */
+    transition: opacity 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+                visibility 0.1s ease-in;
+  }
+  
+  .stable-crm-video.loaded {
+    visibility: visible;
+    
+    /* Enhanced quality when loaded */
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: optimize-contrast;
+    filter: brightness(0.9) contrast(1.25) saturate(1.35) hue-rotate(0deg) blur(0px) !important;
+  }
+  
+  /* Prevent video flickering during load */
+  .stable-crm-video:not(.loaded) {
+    opacity: 0 !important;
+    filter: brightness(0.5) contrast(0.8) saturate(0.8) blur(2px);
+  }
+  
+  .stable-crm-video.loaded {
+    opacity: 0.8 !important;
+  }
+  
+  /* High-quality mobile optimizations */
+  @media (max-width: 768px) {
+    .ultra-quality-video {
+      /* Optimized mobile rendering */
+      transform: translate3d(0, 0, 0) translateZ(0);
+      -webkit-transform: translate3d(0, 0, 0) translateZ(0);
+      
+      /* Mobile-specific quality settings */
+      image-rendering: -webkit-optimize-contrast;
+      image-rendering: optimize-contrast;
+      
+      /* Enhanced mobile performance */
+      will-change: transform;
+      transition: opacity 0.4s ease-out, filter 0.2s ease-out;
+    }
+    
+    .stable-crm-video.loaded {
+      /* Slightly reduced opacity on mobile for better performance */
+      opacity: 0.75 !important;
+      filter: brightness(0.85) contrast(1.2) saturate(1.3) !important;
+    }
+  }
+  
+  /* High-resolution displays */
+  @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+    .ultra-quality-video {
+      /* Enhanced quality for retina displays */
+      image-rendering: -webkit-optimize-contrast;
+      image-rendering: optimize-contrast;
+      filter: brightness(0.92) contrast(1.3) saturate(1.4) hue-rotate(0deg) blur(0px);
+    }
+  }
+  
+  /* 4K and ultra-high resolution displays */
+  @media (min-width: 2560px) {
+    .ultra-quality-video {
+      /* Maximum quality for 4K displays */
+      image-rendering: -webkit-optimize-contrast;
+      image-rendering: optimize-contrast;
+      filter: brightness(0.95) contrast(1.35) saturate(1.45) hue-rotate(0deg) blur(0px);
+      opacity: 0.85;
+    }
+  }
+  
+  /* Reduced motion support with quality preservation */
+  @media (prefers-reduced-motion: reduce) {
+    .ultra-quality-video {
+      /* Maintain quality but reduce transitions */
+      transition: opacity 0.2s ease;
+      will-change: opacity;
+    }
+    
+    .stable-crm-video {
+      transition: opacity 0.2s ease;
+    }
+  }
+  
+  /* Enhanced color gamut support */
+  @media (color-gamut: p3) {
+    .ultra-quality-video {
+      filter: brightness(0.92) contrast(1.28) saturate(1.38) hue-rotate(0deg) blur(0px);
+    }
+  }
+  
+  @media (color-gamut: rec2020) {
+    .ultra-quality-video {
+      filter: brightness(0.94) contrast(1.32) saturate(1.42) hue-rotate(0deg) blur(0px);
+    }
+  }
+</style>

@@ -1,0 +1,106 @@
+---
+export interface Props {
+  name: string;
+  price: string;
+  priceSub?: string;
+  features: string[];
+  note?: string;
+  highlight?: string;
+}
+const { name, price, priceSub, features, note, highlight } = Astro.props as Props;
+
+// Map plan names to their URLs
+const getPlanUrl = (planName: string) => {
+  switch (planName.toLowerCase()) {
+    case 'starter website':
+      return '/plans/starter';
+    case 'growth marketing':
+      return '/plans/growth';
+    case 'scale & dominate':
+      return '/plans/scale';
+    default:
+      return '#consultation-booking';
+  }
+};
+
+const planUrl = getPlanUrl(name);
+---
+
+<div
+  class="premium-pricing-card flex flex-col relative"
+  style="overflow: visible; min-height: 500px;"
+>
+  {
+    highlight && (
+      <span
+        class="highlight-badge"
+        style="position: absolute; top: -14px; right: 25px; background: linear-gradient(135deg, #f59e0b, #d97706); color: white; padding: 8px 16px; border-radius: 20px; font-weight: bold; font-size: 12px; text-transform: uppercase; letter-spacing: 0.8px; z-index: 20; box-shadow: 0 6px 20px rgba(245, 158, 11, 0.4);"
+      >
+        {highlight}
+      </span>
+    )
+  }
+  <div class="premium-system-badge">INTEGRATED SYSTEM</div>
+  
+  <div class="card-header" style="text-align: center; margin-bottom: 25px;">
+    <div class="logo-container" style="margin-bottom: 20px;">
+      <img 
+        src="/assets/zeromotion-logo-metallic.png" 
+        alt="ZeroMotion Logo" 
+        width="140" 
+        height="105"
+        style="object-fit: contain; opacity: 0.8;"
+      />
+    </div>
+    <h3 class="h3" style="color: #8b5cf6; margin-bottom: 15px; font-weight: 700;">{name}</h3>
+    <div class="pricing-display" style="margin-bottom: 20px;">
+      <div style="font-size: 2.2rem; font-weight: bold; color: #ffffff; line-height: 1;">{price}</div>
+      {priceSub && <div style="color: #e2e8f0; opacity: 0.8; font-size: 1rem; margin-top: 5px;">{priceSub}</div>}
+    </div>
+  </div>
+  
+  <div class="card-content" style="flex-grow: 1; display: flex; flex-direction: column;">
+    {note && (
+      <div class="note-section" style="background: rgba(0, 0, 0, 0.25); padding: 20px; border-radius: 12px; margin-bottom: 25px;">
+        <p style="color: #e2e8f0; line-height: 1.6; font-size: 0.95rem; margin: 0;">{note}</p>
+      </div>
+    )}
+    
+    <div class="features-section" style="margin-bottom: 25px; flex-grow: 1;">
+      <ul style="list-style: none; padding: 0; margin: 0; display: grid; gap: 10px;">
+        {features.map((feature) => (
+          <li style="display: flex; align-items: flex-start; padding: 8px 0;">
+            <span style="color: #8b5cf6; font-size: 1.1rem; margin-right: 12px; min-width: 20px; margin-top: 2px;">✓</span>
+            <span style="color: #e2e8f0; font-size: 0.9rem; line-height: 1.4;">{feature.replace('✓ ', '')}</span>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </div>
+  
+  <div class="card-footer" style="margin-top: auto; padding-top: 20px;">
+    <a
+      class="premium-cta-button"
+      style="
+        display: block;
+        background: linear-gradient(135deg, #8b5cf6, #a855f7);
+        color: white;
+        text-decoration: none;
+        padding: 16px 24px;
+        border-radius: 12px;
+        font-weight: 600;
+        font-size: 1rem;
+        text-align: center;
+        box-shadow: 0 8px 25px rgba(139, 92, 246, 0.4);
+        transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        border: none;
+        cursor: pointer;
+      "
+      href={planUrl}
+      data-cta={`pricing_start_${name.toLowerCase().replace(/\s+/g, '_')}`}
+      onclick={`if (window.dataLayer) window.dataLayer.push({event:'select_plan',plan:'${name}',source:'ad_campaigns'})`}
+    >
+      Get Started
+    </a>
+  </div>
+</div>

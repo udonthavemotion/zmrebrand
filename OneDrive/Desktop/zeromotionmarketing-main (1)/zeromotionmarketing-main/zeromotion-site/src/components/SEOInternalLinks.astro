@@ -1,0 +1,106 @@
+---
+// Strategic internal linking component for SEO
+interface Props {
+  currentPage?: string;
+  context?: 'service' | 'pricing' | 'general';
+}
+
+const { currentPage = '', context = 'general' } = Astro.props;
+
+// Define strategic internal links based on context
+const getContextualLinks = (context: string, currentPage: string) => {
+  const baseLinks = [
+    {
+      href: '/services/web-design',
+      text: 'Professional Web Design Services',
+      description: 'Custom website design and development for Louisiana businesses'
+    },
+    {
+      href: '/services/brand-identity', 
+      text: 'Brand Identity & Logo Design',
+      description: 'Professional branding services for Houma and Thibodaux businesses'
+    },
+    {
+      href: '/services/ai-integration',
+      text: 'AI Marketing Automation',
+      description: 'Advanced AI-powered marketing automation and lead generation'
+    },
+    {
+      href: '/services/crm',
+      text: 'ZRM CRM Setup',
+      description: 'Complete CRM automation and lead management systems'
+    },
+    {
+      href: '/pricing',
+      text: 'View Our Pricing Plans',
+      description: 'Transparent pricing for digital marketing and web design services'
+    }
+  ];
+
+  // Filter out current page
+  return baseLinks.filter(link => link.href !== currentPage);
+};
+
+const contextualLinks = getContextualLinks(context, currentPage);
+---
+
+{contextualLinks.length > 0 && (
+  <aside class="seo-internal-links" aria-labelledby="related-services">
+    <h3 id="related-services" class="h4 mb-4">Related Services</h3>
+    <nav class="internal-links-nav">
+      <ul class="internal-links-list">
+        {contextualLinks.slice(0, 4).map(link => (
+          <li class="internal-link-item">
+            <a href={link.href} class="internal-link" title={link.description}>
+              {link.text}
+            </a>
+          </li>
+        ))}
+      </ul>
+    </nav>
+  </aside>
+)}
+
+<style>
+  .seo-internal-links {
+    background: rgba(139, 92, 246, 0.05);
+    border: 1px solid rgba(139, 92, 246, 0.2);
+    border-radius: 12px;
+    padding: 24px;
+    margin: 32px 0;
+  }
+  
+  .internal-links-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    gap: 12px;
+  }
+  
+  .internal-link {
+    color: #8b5cf6;
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.2s ease;
+    display: block;
+    padding: 8px 0;
+    border-bottom: 1px solid rgba(139, 92, 246, 0.1);
+  }
+  
+  .internal-link:hover {
+    color: #a855f7;
+    text-decoration: underline;
+  }
+  
+  .internal-link:last-child {
+    border-bottom: none;
+  }
+  
+  @media (min-width: 768px) {
+    .internal-links-list {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px 24px;
+    }
+  }
+</style>

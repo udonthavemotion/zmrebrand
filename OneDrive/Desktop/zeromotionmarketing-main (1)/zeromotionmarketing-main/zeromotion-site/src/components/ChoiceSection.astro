@@ -1,0 +1,410 @@
+---
+// Choice Section Component for Homepage
+---
+
+<section class="section-padding bg-black/20 relative isolate" aria-labelledby="choice-title">
+  <!-- Background Video Layer -->
+  <div class="absolute inset-0 -z-10 overflow-hidden">
+    <video
+      class="absolute inset-0 w-full h-full object-cover"
+      autoplay
+      muted
+      loop
+      playsinline
+      preload="none"
+      poster="/assets/implementation/55555.png"
+      aria-hidden="true"
+      style="opacity: 0.15; filter: brightness(0.6) contrast(1.2) saturate(1.1);"
+    >
+      <source src="/photos/homepage_hero.mp4" type="video/mp4" />
+    </video>
+    <div class="absolute inset-0 bg-gradient-radial from-black/60 via-black/40 to-black/70"></div>
+  </div>
+
+  <div class="container-page relative">
+    <div class="text-center mb-16">
+      <h2 id="choice-title" class="h2 mb-4">Start Your Growth Journey</h2>
+      <p class="text-white/70 max-w-2xl mx-auto">
+        Comprehensive marketing systems designed for Louisiana businesses. From lead capture to enterprise automation - all in one powerful platform.
+      </p>
+    </div>
+
+    <!-- Pure Text Elements with Bouncing Animations -->
+    <div class="text-center space-y-8">
+      <!-- Main Heading -->
+      <a 
+        href="/pricing"
+        class="block group focus:outline-none focus-visible:ring-2 focus-visible:ring-[#6E00FF] rounded-lg"
+        onclick="window.dataLayer&&dataLayer.push({event:'cta_click',label:'Explore Marketing Plans'})"
+      >
+        <h3 class="main-cta-heading bouncing-main-heading">
+          Explore Our Marketing Plans
+        </h3>
+      </a>
+      
+      <!-- Description Text -->
+      <p class="description-text bouncing-description max-w-2xl mx-auto">
+        From starter packages to complete enterprise systems - find the perfect solution to grow your Louisiana business with AI-powered automation.
+      </p>
+      
+      <!-- Feature Grid -->
+      <div class="features-grid bouncing-features">
+        <a 
+          href="/pricing#lead-capture" 
+          class="feature-item group focus:outline-none focus-visible:ring-2 focus-visible:ring-[#6E00FF] rounded"
+        >
+          <span class="feature-text">✓ Lead Capture</span>
+        </a>
+        <a 
+          href="/pricing#automation" 
+          class="feature-item group focus:outline-none focus-visible:ring-2 focus-visible:ring-[#6E00FF] rounded"
+        >
+          <span class="feature-text">✓ Automation</span>
+        </a>
+        <a 
+          href="/pricing#ai-integration" 
+          class="feature-item group focus:outline-none focus-visible:ring-2 focus-visible:ring-[#6E00FF] rounded"
+        >
+          <span class="feature-text">✓ AI Integration</span>
+        </a>
+        <a 
+          href="/pricing#analytics" 
+          class="feature-item group focus:outline-none focus-visible:ring-2 focus-visible:ring-[#6E00FF] rounded"
+        >
+          <span class="feature-text">✓ Analytics</span>
+        </a>
+      </div>
+      
+      <!-- Call to Action -->
+      <a 
+        href="/pricing"
+        class="inline-flex items-center justify-center gap-3 group focus:outline-none focus-visible:ring-2 focus-visible:ring-[#6E00FF] rounded-lg px-4 py-2"
+        onclick="window.dataLayer&&dataLayer.push({event:'cta_click',label:'View All Plans'})"
+      >
+        <span class="cta-text bouncing-cta-text">View All Plans & Pricing</span>
+        <svg class="cta-arrow bouncing-cta-arrow" viewBox="0 0 24 24" fill="none">
+          <path
+            d="M8 5l8 7-8 7"
+            stroke="currentColor"
+            stroke-width="1.8"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
+        </svg>
+      </a>
+    </div>
+
+    <div class="text-center mt-8">
+      <p class="text-white/60 text-sm">
+        All plans include local Louisiana expertise, AI-powered execution, and transparent pricing
+      </p>
+    </div>
+  </div>
+</section>
+
+<style>
+/* Text Readability Enhancements with White Glow - Clean Transparency */
+.h2 {
+  text-shadow: 
+    0 0 8px rgba(255, 255, 255, 0.8),
+    0 0 16px rgba(255, 255, 255, 0.4),
+    0 2px 4px rgba(0, 0, 0, 0.8),
+    0 4px 8px rgba(0, 0, 0, 0.6),
+    0 1px 3px rgba(0, 0, 0, 1);
+  color: rgba(255, 255, 255, 1);
+}
+
+.text-center.mb-16 {
+  /* Clean, no background containers */
+}
+
+.text-white\/70 {
+  text-shadow: 
+    0 0 6px rgba(255, 255, 255, 0.6),
+    0 0 12px rgba(255, 255, 255, 0.3),
+    0 1px 3px rgba(0, 0, 0, 0.9),
+    0 2px 6px rgba(0, 0, 0, 0.7);
+  color: rgba(255, 255, 255, 0.95) !important;
+}
+
+/* Modern Text-Only Marketing Plans Section */
+
+/* Main Heading Styles */
+.main-cta-heading {
+  font-size: 2.5rem;
+  font-weight: 700;
+  line-height: 1.2;
+  color: rgba(255, 255, 255, 1);
+  text-shadow: 
+    0 0 12px rgba(255, 255, 255, 0.9),
+    0 0 24px rgba(255, 255, 255, 0.5),
+    0 2px 4px rgba(0, 0, 0, 0.8),
+    0 4px 8px rgba(0, 0, 0, 0.6);
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.main-cta-heading:hover {
+  color: rgba(139, 92, 246, 1);
+  text-shadow: 
+    0 0 16px rgba(139, 92, 246, 1),
+    0 0 32px rgba(139, 92, 246, 0.6),
+    0 0 8px rgba(255, 255, 255, 0.8),
+    0 2px 4px rgba(0, 0, 0, 0.8);
+  transform: scale(1.02);
+}
+
+/* Description Text */
+.description-text {
+  font-size: 1.125rem;
+  line-height: 1.7;
+  color: rgba(255, 255, 255, 0.95);
+  text-shadow: 
+    0 0 8px rgba(255, 255, 255, 0.7),
+    0 0 16px rgba(255, 255, 255, 0.4),
+    0 1px 3px rgba(0, 0, 0, 0.9),
+    0 2px 6px rgba(0, 0, 0, 0.7);
+  font-weight: 400;
+}
+
+/* Features Grid */
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.5rem;
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+.feature-item {
+  display: block;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.feature-text {
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: rgba(139, 92, 246, 0.9);
+  text-shadow: 
+    0 0 6px rgba(139, 92, 246, 0.6),
+    0 0 12px rgba(139, 92, 246, 0.3),
+    0 0 4px rgba(255, 255, 255, 0.4),
+    0 1px 3px rgba(0, 0, 0, 0.8);
+  transition: all 0.3s ease;
+}
+
+.feature-item:hover .feature-text {
+  color: rgba(139, 92, 246, 1);
+  text-shadow: 
+    0 0 10px rgba(139, 92, 246, 0.9),
+    0 0 20px rgba(139, 92, 246, 0.5),
+    0 0 6px rgba(255, 255, 255, 0.6),
+    0 1px 3px rgba(0, 0, 0, 0.8);
+  transform: scale(1.05);
+}
+
+/* Call to Action Text */
+.cta-text {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: rgba(139, 92, 246, 0.9);
+  text-shadow: 
+    0 0 8px rgba(139, 92, 246, 0.7),
+    0 0 16px rgba(139, 92, 246, 0.4),
+    0 0 4px rgba(255, 255, 255, 0.5),
+    0 1px 3px rgba(0, 0, 0, 0.8);
+  transition: all 0.3s ease;
+}
+
+.cta-arrow {
+  width: 1.25rem;
+  height: 1.25rem;
+  color: rgba(139, 92, 246, 0.8);
+  transition: all 0.3s ease;
+  filter: drop-shadow(0 0 4px rgba(139, 92, 246, 0.5));
+}
+
+/* Hover Effects for CTA */
+.group:hover .cta-text {
+  color: rgba(139, 92, 246, 1);
+  text-shadow: 
+    0 0 12px rgba(139, 92, 246, 0.9),
+    0 0 24px rgba(139, 92, 246, 0.6),
+    0 0 6px rgba(255, 255, 255, 0.7),
+    0 1px 3px rgba(0, 0, 0, 0.8);
+}
+
+.group:hover .cta-arrow {
+  color: rgba(139, 92, 246, 1);
+  transform: translateX(4px);
+  filter: drop-shadow(0 0 8px rgba(139, 92, 246, 0.8));
+}
+
+/* Sophisticated Bouncing Animations */
+.bouncing-main-heading {
+  animation: elegant-main-bounce 3s ease-in-out infinite;
+}
+
+.bouncing-description {
+  animation: subtle-float 4s ease-in-out infinite;
+  animation-delay: 0.5s;
+}
+
+.bouncing-features {
+  animation: gentle-pulse 3.5s ease-in-out infinite;
+  animation-delay: 1s;
+}
+
+.bouncing-cta-text {
+  animation: cta-bounce 2.5s ease-in-out infinite;
+  animation-delay: 1.5s;
+}
+
+.bouncing-cta-arrow {
+  animation: arrow-dance 2.5s ease-in-out infinite;
+  animation-delay: 1.5s;
+}
+
+/* Keyframe Animations */
+@keyframes elegant-main-bounce {
+  0%, 20%, 50%, 80%, 100% {
+    transform: translateY(0) scale(1);
+  }
+  40% {
+    transform: translateY(-6px) scale(1.01);
+  }
+  60% {
+    transform: translateY(-3px) scale(1.005);
+  }
+}
+
+@keyframes subtle-float {
+  0%, 100% {
+    transform: translateY(0);
+    opacity: 0.95;
+  }
+  50% {
+    transform: translateY(-3px);
+    opacity: 1;
+  }
+}
+
+@keyframes gentle-pulse {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 0.9;
+  }
+  50% {
+    transform: scale(1.02);
+    opacity: 1;
+  }
+}
+
+@keyframes cta-bounce {
+  0%, 20%, 50%, 80%, 100% {
+    transform: translateY(0);
+  }
+  40% {
+    transform: translateY(-4px);
+  }
+  60% {
+    transform: translateY(-2px);
+  }
+}
+
+@keyframes arrow-dance {
+  0%, 100% {
+    transform: translateX(0) scale(1);
+    opacity: 0.8;
+  }
+  25% {
+    transform: translateX(2px) scale(1.05);
+    opacity: 1;
+  }
+  50% {
+    transform: translateX(-1px) scale(1.1);
+    opacity: 0.9;
+  }
+  75% {
+    transform: translateX(1px) scale(1.05);
+    opacity: 1;
+  }
+}
+
+/* Mobile Responsive Styles */
+@media (max-width: 768px) {
+  .main-cta-heading {
+    font-size: 2rem;
+    text-shadow: 
+      0 0 10px rgba(255, 255, 255, 0.95),
+      0 0 20px rgba(255, 255, 255, 0.6),
+      0 2px 6px rgba(0, 0, 0, 0.9),
+      0 4px 12px rgba(0, 0, 0, 0.8);
+  }
+  
+  .description-text {
+    font-size: 1rem;
+    text-shadow: 
+      0 0 8px rgba(255, 255, 255, 0.8),
+      0 0 16px rgba(255, 255, 255, 0.5),
+      0 1px 4px rgba(0, 0, 0, 0.95),
+      0 2px 8px rgba(0, 0, 0, 0.8);
+  }
+  
+  .features-grid {
+    gap: 1rem;
+    max-width: 300px;
+  }
+  
+  .feature-text {
+    font-size: 0.875rem;
+  }
+  
+  .cta-text {
+    font-size: 1rem;
+  }
+}
+
+/* Small Mobile Adjustments */
+@media (max-width: 480px) {
+  .main-cta-heading {
+    font-size: 1.75rem;
+  }
+  
+  .features-grid {
+    grid-template-columns: 1fr;
+    gap: 0.75rem;
+    max-width: 250px;
+  }
+}
+
+/* Reduced Motion Support */
+@media (prefers-reduced-motion: reduce) {
+  .bouncing-main-heading,
+  .bouncing-description,
+  .bouncing-features,
+  .bouncing-cta-text,
+  .bouncing-cta-arrow {
+    animation: none;
+  }
+  
+  .main-cta-heading:hover {
+    transform: none;
+  }
+  
+  .feature-item:hover .feature-text {
+    transform: none;
+  }
+  
+  .group:hover .cta-arrow {
+    transform: none;
+  }
+}
+
+/* Gradient Radial Utility */
+.bg-gradient-radial {
+  background: radial-gradient(var(--tw-gradient-stops));
+}
+</style>

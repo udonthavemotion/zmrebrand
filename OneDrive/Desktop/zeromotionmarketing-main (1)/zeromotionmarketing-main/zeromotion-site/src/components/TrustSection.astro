@@ -1,0 +1,199 @@
+---
+// Trust & Social Proof Section with client logos and results
+---
+
+<section class="relative py-16 sm:py-20 overflow-hidden" id="trust" aria-labelledby="trust-title">
+  <div class="container-page relative">
+    <!-- Results Stats -->
+    <div class="mb-16 text-center">
+      <h2 id="trust-title" class="text-3xl sm:text-4xl font-bold mb-4">Trusted by Louisiana Businesses</h2>
+      <p class="text-white/70 max-w-2xl mx-auto mb-12">
+        Real results for real businesses across Houma, Thibodaux, and Terrebonne Parish
+      </p>
+      
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-8 max-w-4xl mx-auto">
+        <div class="p-6 rounded-xl bg-gradient-to-br from-purple-900/20 to-black/40 border border-purple-500/30 backdrop-blur-sm">
+          <div class="text-4xl sm:text-5xl font-bold bg-gradient-to-r from-purple-400 to-purple-200 bg-clip-text text-transparent mb-2">
+            3X
+          </div>
+          <div class="text-white font-semibold mb-1">Average Lead Increase</div>
+          <div class="text-white/60 text-sm">Houma Businesses</div>
+        </div>
+        
+        <div class="p-6 rounded-xl bg-gradient-to-br from-purple-900/20 to-black/40 border border-purple-500/30 backdrop-blur-sm">
+          <div class="text-4xl sm:text-5xl font-bold bg-gradient-to-r from-purple-400 to-purple-200 bg-clip-text text-transparent mb-2">
+            90%
+          </div>
+          <div class="text-white font-semibold mb-1">Client Retention Rate</div>
+          <div class="text-white/60 text-sm">Year over Year</div>
+        </div>
+        
+        <div class="p-6 rounded-xl bg-gradient-to-br from-purple-900/20 to-black/40 border border-purple-500/30 backdrop-blur-sm">
+          <div class="text-4xl sm:text-5xl font-bold bg-gradient-to-r from-purple-400 to-purple-200 bg-clip-text text-transparent mb-2">
+            30+
+          </div>
+          <div class="text-white font-semibold mb-1">Louisiana Businesses Served</div>
+          <div class="text-white/60 text-sm">Across Terrebonne Parish</div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Client Logos -->
+    <div class="mb-16">
+      <h3 class="text-2xl font-semibold text-center mb-8 text-white/90">Proud to Work With</h3>
+      <div class="client-logo-container">
+        <div class="client-logo-wrapper" aria-label="Bris Clothing - Louisiana streetwear brand">
+          <img src="/assets/implementation/brisclothing.png" alt="Bris Clothing - Louisiana streetwear brand" class="client-logo" loading="lazy" width="512" height="512" />
+        </div>
+        <div class="client-logo-wrapper" aria-label="Godspeed Bulldogs - Louisiana breeder">
+          <img src="/assets/implementation/godspeedbulldogs.png" alt="Godspeed Bulldogs - Louisiana breeder" class="client-logo" loading="lazy" width="500" height="500" />
+        </div>
+        <div class="client-logo-wrapper" aria-label="Southside Mobile - Louisiana mobile services">
+          <img src="/assets/implementation/southsidemobile.png" alt="Southside Mobile - Louisiana mobile services" class="client-logo" loading="lazy" width="512" height="512" />
+        </div>
+        <div class="client-logo-wrapper" aria-label="Cursed Ink - Louisiana tattoo studio">
+          <img src="/assets/implementation/cursed ink.png" alt="Cursed Ink - Louisiana tattoo studio" class="client-logo" loading="lazy" width="512" height="512" />
+        </div>
+        <div class="client-logo-wrapper" aria-label="Party On Wheels - Louisiana party rental service">
+          <img src="/assets/implementation/pow.png" alt="Party On Wheels - Louisiana party rental service" class="client-logo" loading="lazy" width="512" height="512" />
+        </div>
+      </div>
+    </div>
+    <!-- Client Testimonial -->
+    <div class="mt-16 max-w-4xl mx-auto px-4 sm:px-0">
+      <div class="p-6 sm:p-8 rounded-2xl bg-gradient-to-br from-purple-900/10 to-black/40 border border-purple-500/30 backdrop-blur-sm">
+        <div class="flex items-start gap-3 sm:gap-4">
+          <div class="flex-shrink-0 w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-purple-500/20 border border-purple-500/30 flex items-center justify-center">
+            <svg class="w-5 h-5 sm:w-6 sm:h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-purple-300">
+              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+              <circle cx="12" cy="7" r="4"/>
+            </svg>
+          </div>
+          <div class="flex-1">
+            <blockquote class="text-white/90 italic mb-3 sm:mb-4 text-base sm:text-lg leading-relaxed">
+              "ZeroMotion built our BriscClothing launch site and wired a clean password-gated flow so approved members got instant access. The follow-up emails they set up kept everyone warm while we queued the drop. Launch day felt calm, and the momentum we carried in translated into real sales."
+            </blockquote>
+            <div>
+              <div class="font-semibold text-white">Khalil Briscoe</div>
+              <div class="text-white/60 text-sm">Founder, BriscClothing</div>
+              <div class="text-purple-400 text-sm font-medium mt-1">100+ email & SMS leads captured pre-launch</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  /* Client Logo Container - Single row layout */
+  .client-logo-container {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: center;
+    align-items: center;
+    gap: 3rem;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 2rem;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+
+  .client-logo-container::-webkit-scrollbar {
+    display: none;
+  }
+
+  .client-logo-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    background: transparent;
+    border: none;
+    transition: all 0.3s ease;
+    min-height: 80px;
+    border-radius: 8px;
+    filter: drop-shadow(0 0 10px rgba(139, 92, 246, 0.4)) drop-shadow(0 0 20px rgba(139, 92, 246, 0.25));
+  }
+
+  .client-logo-wrapper:hover,
+  .client-logo-wrapper:active,
+  .client-logo-wrapper:focus {
+    transform: translateY(-2px);
+    filter: drop-shadow(0 0 20px rgba(139, 92, 246, 0.6)) drop-shadow(0 0 40px rgba(139, 92, 246, 0.4));
+  }
+
+  .client-logo {
+    width: auto;
+    height: 60px;
+    max-width: 180px;
+    object-fit: contain;
+    filter: brightness(0.9) contrast(1.1);
+    opacity: 0.8;
+    transition: all 0.3s ease;
+    pointer-events: none;
+  }
+
+  .client-logo-wrapper:hover .client-logo,
+  .client-logo-wrapper:active .client-logo,
+  .client-logo-wrapper:focus .client-logo {
+    filter: brightness(1.1) contrast(1.2) saturate(1.1);
+    opacity: 1;
+  }
+  
+  /* Mobile: Single row with horizontal scroll */
+  @media (max-width: 768px) {
+    .client-logo-container {
+      gap: 2rem;
+      padding: 0 1rem;
+      justify-content: flex-start;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .client-logo-wrapper {
+      flex-shrink: 0;
+      min-height: 70px;
+      width: auto;
+    }
+
+    .client-logo {
+      height: 50px;
+      max-width: 140px;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .client-logo-container {
+      gap: 1.5rem;
+      padding: 0 0.75rem;
+    }
+
+    .client-logo-wrapper {
+      min-height: 60px;
+    }
+
+    .client-logo {
+      height: 45px;
+      max-width: 120px;
+    }
+  }
+  
+  /* Respect reduced motion */
+  @media (prefers-reduced-motion: reduce) {
+    .client-logo-wrapper {
+      transition: none;
+    }
+    .client-logo-wrapper:hover {
+      transform: none;
+    }
+    .client-logo {
+      transition: none;
+    }
+  }
+</style>
+
