@@ -16,78 +16,82 @@ export type PricingTier = {
 export const pricingTiers: PricingTier[] = [
   {
     id: "starter",
-    name: "Starter Website",
-    tagline: "Get online fast and start capturing leads",
+    name: "Automation Starter",
+    tagline: "Never miss a lead again with basic automation",
     priceRange: "Custom Quote",
-    description: "Best for: new or single-location businesses. Result: Look legit, get found, and make it easy to contact you.",
+    description: "Best for: new or single-location businesses ready to automate lead capture. Result: Save 5-10 hours/week on manual follow-ups, capture every lead automatically.",
     features: [
-      "Custom 1–3 page website with booking + contact",
-      "Your brand, your domain, SSL, fast hosting",
-      "Google Business Profile connected",
-      "Basic analytics and monthly check-ins"
+      "Missed Call Text-Back — instant SMS to every missed caller",
+      "Basic GHL CRM setup with lead capture forms",
+      "Automation platform (website) with booking integration",
+      "Google Business Profile connection for local visibility",
+      "Monthly automation performance reports"
     ],
     included: [
-      "Custom 1–3 page website with booking + contact",
-      "Your brand, your domain, SSL, fast hosting",
-      "Google Business Profile connected",
-      "Basic analytics and monthly check-ins"
+      "Missed Call Text-Back — instant SMS to every missed caller",
+      "Basic GHL CRM setup with lead capture forms",
+      "Automation platform (website) with booking integration",
+      "Google Business Profile connection for local visibility",
+      "Monthly automation performance reports"
     ],
-    ctaText: "See details",
+    ctaText: "Start Automating",
     ctaHref: "/pricing",
     formId: "starter-plan-form"
   },
   {
     id: "growth",
-    name: "Growth Marketing",
-    tagline: "Automations that quietly bring you more bookings—day and night",
+    name: "Automation Pro",
+    tagline: "Full automation suite — AI agents + smart workflows",
     priceRange: "Custom Quote",
-    description: "Best for: busy owners who want more show-ups and 5-star reviews. Result: More booked calls from the same traffic—fewer no-shows.",
+    description: "Best for: busy owners ready to scale with AI. Result: Increase bookings by 30-40%, reduce no-shows by 50%, save 15+ hours/week on repetitive tasks.",
     features: [
-      "High-converting funnel for one offer (page → form → calendar)",
-      "Smart text follow-ups, reminders, and 'we missed you' saves",
-      "Review + referral requests on autopilot",
-      "Weekly posts + quick edits to keep things fresh",
-      "Monthly reporting you can actually understand"
+      "Custom AI Voice Agent — handles calls, books appointments, qualifies leads 24/7",
+      "ZeroMotion Automations — smart text follow-ups, reminders, review requests",
+      "Advanced lead conversion funnels with automated nurture sequences",
+      "CRM pipeline automation with multi-channel tracking",
+      "Bi-weekly optimization calls to improve conversion rates"
     ],
     included: [
-      "High-converting funnel for one offer (page → form → calendar)",
-      "Smart text follow-ups, reminders, and 'we missed you' saves",
-      "Review + referral requests on autopilot",
-      "Weekly posts + quick edits to keep things fresh",
-      "Monthly reporting you can actually understand"
+      "Custom AI Voice Agent — handles calls, books appointments, qualifies leads 24/7",
+      "ZeroMotion Automations — smart text follow-ups, reminders, review requests",
+      "Advanced lead conversion funnels with automated nurture sequences",
+      "CRM pipeline automation with multi-channel tracking",
+      "Bi-weekly optimization calls to improve conversion rates"
     ],
     popular: true,
-    ctaText: "See details",
+    ctaText: "Book Strategy Call",
     ctaHref: "/pricing",
     formId: "growth-plan-form"
   },
   {
     id: "scale",
-    name: "Scale & Dominate",
-    tagline: "Full-stack growth: ads, funnels, content, and constant tuning",
+    name: "Automation Enterprise",
+    tagline: "Enterprise-level automation + AI agents + paid ad integration",
     priceRange: "Custom Quote",
-    description: "Best for: brands ready to scale with ads and a tight conversion engine. Result: Predictable pipeline, lower cost per lead, better ROI.",
+    description: "Best for: multi-location businesses or brands running paid ads. Result: Predictable lead flow, 50%+ lower cost per acquisition, full automation of sales + service workflows.",
     features: [
-      "Google/Meta ads managed for you",
-      "Advanced funnels + A/B testing to lift conversion",
-      "Weekly creative/content support",
-      "Reputation management + faster response times",
-      "Bi-weekly strategy with a simple revenue dashboard"
+      "AI Voice + Chat Agents across multiple channels (phone, SMS, web chat)",
+      "Advanced ZeroMotion CRM with multi-location pipeline management",
+      "Google/Meta ad integration with automated lead routing and follow-up",
+      "A/B testing automation for funnels and messaging optimization",
+      "Weekly strategy sessions with real-time revenue dashboard access",
+      "Custom integrations (calendaring, payment processing, inventory systems)"
     ],
     included: [
-      "Google/Meta ads managed for you",
-      "Advanced funnels + A/B testing to lift conversion",
-      "Weekly creative/content support",
-      "Reputation management + faster response times",
-      "Bi-weekly strategy with a simple revenue dashboard"
+      "AI Voice + Chat Agents across multiple channels (phone, SMS, web chat)",
+      "Advanced ZeroMotion CRM with multi-location pipeline management",
+      "Google/Meta ad integration with automated lead routing and follow-up",
+      "A/B testing automation for funnels and messaging optimization",
+      "Weekly strategy sessions with real-time revenue dashboard access",
+      "Custom integrations (calendaring, payment processing, inventory systems)"
     ],
     addOns: [
-      "Additional custom integrations",
-      "Advanced reporting dashboards",
-      "Multi-location management",
-      "White-label solutions"
+      "White-label automation solutions for agencies",
+      "Additional AI agent customization and training",
+      "Advanced multi-location reputation management automation",
+      "Custom API development for enterprise integrations"
     ],
-    ctaText: "See details",
+    ctaText: "See Demo",
     ctaHref: "/pricing",
     formId: "scale-plan-form"
   }

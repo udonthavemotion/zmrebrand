@@ -4,7 +4,10 @@
       "Bash(npm install:*)",
       "Bash(gemini)",
       "Bash(npm run dev:*)",
-      "Bash(wc:*)"
+      "Bash(wc:*)",
+      "Bash(npm run build:*)",
+      "Bash(cd:*)",
+      "mcp__ide__getDiagnostics"
     ],
     "deny": [],
     "ask": []

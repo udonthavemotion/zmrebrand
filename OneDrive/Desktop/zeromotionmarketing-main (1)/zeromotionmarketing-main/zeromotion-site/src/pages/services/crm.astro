@@ -19,15 +19,15 @@ const HERO_VIDEO = "/pictures/web design page/webpage.mp4";
 const cacheVersion = Date.now();
 
 // Page metadata
-const pageTitle = "CRM Automation Services | ZeroMotion Marketing | Louisiana's Advanced Business Platform";
-const pageDescription = "Louisiana's most advanced CRM automation platform. AI-powered lead management, instant follow-up, and business automation for growing companies.";
-const pageKeywords = "CRM automation Louisiana, business automation, lead management, sales automation, Louisiana CRM, business software, AI automation";
+const pageTitle = "Automation Operating System | ZeroMotion Marketing | Louisiana's Business Automation Platform";
+const pageDescription = "Louisiana's automation operating system powered by ZeroMotion CRM. The foundation technology that connects missed call text-back, AI agents, and complete business automation.";
+const pageKeywords = "business automation platform Louisiana, automation operating system, ZeroMotion CRM platform, AI automation, automated workflows, business automation technology";
 
-// Structured data for CRM service
+// Structured data for automation platform
 const structuredData = {
   "@context": "https://schema.org",
   "@type": "Service",
-  "name": "CRM Automation Services",
+  "name": "Automation Operating System - Business Automation Platform",
   "description": pageDescription,
   "provider": {
     "@type": "Organization",
@@ -40,7 +40,7 @@ const structuredData = {
     }
   },
   "areaServed": "Louisiana",
-  "serviceType": "CRM Automation and Business Process Management"
+  "serviceType": "Business Automation Platform Technology"
 };
 ---
 
@@ -85,54 +85,54 @@ const structuredData = {
     <!-- Content -->
     <div class="relative z-10 container mx-auto px-6 text-center">
       <h1 class="h1 mb-6 max-w-5xl mx-auto">
-        A Modern CRM That <span class="text-purple-400">Automates Your Growth</span>
+        Your Business's <span class="text-purple-400">Automation Operating System</span>
       </h1>
       <p class="text-xl md:text-2xl text-gray-300 mb-8 max-w-4xl mx-auto">
-        Built on ZeroMotion CRM, enhanced with AI, and engineered for modern businesses. Stop losing leads to slow follow-up—automate your way to market leadership.
+        Powered by ZeroMotion CRM + AI. The foundation technology that connects missed call text-back, AI voice agents, and complete automation—so your business runs on autopilot.
       </p>
-      
+
       <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
-                 <ModernBookingModal 
+                 <ModernBookingModal
            plan="crm"
-           triggerText="Book One-on-One CRM Demo"
+           triggerText="See the Automation Platform"
          />
-        <a href="#features" class="btn-ghost" data-event="crm_features_scroll">See CRM Features</a>
+        <a href="#ecosystem" class="btn-ghost" data-event="automation_ecosystem_scroll">See How It All Connects</a>
       </div>
-      
+
       <p class="text-sm text-purple-300 mt-6">
-        AI-powered • Built for real operators
+        Zero Motion = Zero Manual Effort • Maximum Conversion
       </p>
     </div>
   </section>
 
-  <!-- CRM Superiority Section -->
+  <!-- Automation Foundation Section -->
   <TextureVideoSection textureVideo={texture1}>
     <div class="crm-superiority-section">
       <div class="grid md:grid-cols-2 gap-12 items-center">
         <div>
-          <h2 class="h2 mb-6">More Than CRM—It's Your Competitive Advantage</h2>
-          <p class="sub mb-8">While competitors manually chase leads, you dominate with automation</p>
-          
+          <h2 class="h2 mb-6">The Automation Brain That Runs Your Business</h2>
+          <p class="sub mb-8">ZeroMotion CRM is the nervous system connecting all your automation services</p>
+
           <ul class="space-y-4 text-lg">
             <li class="flex items-start gap-3">
               <span class="text-purple-400 text-xl">🚀</span>
-              <span><strong>Instant Lead Response</strong> — AI responds within 60 seconds, 24/7</span>
+              <span><strong>Missed Call Capture</strong> — Instantly captures missed calls and routes to AI text-back</span>
             </li>
             <li class="flex items-start gap-3">
               <span class="text-purple-400 text-xl">⚡</span>
-              <span><strong>Pipeline Automation</strong> — Leads automatically sorted, scored, and nurtured</span>
+              <span><strong>AI Agent Integration</strong> — Powers voice and chat agents with real-time customer data</span>
             </li>
             <li class="flex items-start gap-3">
               <span class="text-purple-400 text-xl">🎯</span>
-              <span><strong>Smart Booking</strong> — Calendars, payments, and follow-ups run themselves</span>
+              <span><strong>Workflow Automation</strong> — Triggers multi-channel sequences automatically</span>
             </li>
             <li class="flex items-start gap-3">
               <span class="text-purple-400 text-xl">🔒</span>
-              <span><strong>Industry-Focused</strong> — Built for growing businesses across all sectors</span>
+              <span><strong>Unified Dashboard</strong> — Monitor all automation services from one control center</span>
             </li>
             <li class="flex items-start gap-3">
               <span class="text-purple-400 text-xl">📊</span>
-              <span><strong>Real-Time Insights</strong> — Know your ROI, not just your vanity metrics</span>
+              <span><strong>Automation Analytics</strong> — Track ROI across all connected services</span>
             </li>
           </ul>
         </div>
@@ -159,67 +159,182 @@ const structuredData = {
     </div>
   </TextureVideoSection>
 
-  <!-- CRM Implementation Hierarchy -->
+  <!-- Automation Ecosystem Workflow -->
+  <section class="hero-video-section section" id="ecosystem">
+    <div class="ecosystem-workflow-section">
+      <h2 class="h2 mb-6 text-center" style="color: #8b5cf6;">How the Automation Operating System Connects Everything</h2>
+      <p class="sub mb-12 text-center" style="color: #e2e8f0;">CRM is the central nervous system that powers your complete automation ecosystem</p>
+
+      <div class="workflow-diagram">
+        <div class="grid md:grid-cols-4 gap-8 mb-12">
+          <!-- Step 1: Lead Enters -->
+          <div class="workflow-step card">
+            <div class="workflow-number">1</div>
+            <div class="workflow-icon">📞</div>
+            <h4 class="text-lg font-bold text-purple-400 mb-2">Lead Enters</h4>
+            <p class="text-gray-300 text-sm">Customer calls, fills form, or messages</p>
+          </div>
+
+          <!-- Step 2: CRM Captures -->
+          <div class="workflow-step card highlighted-step">
+            <div class="workflow-number">2</div>
+            <div class="workflow-icon">🧠</div>
+            <h4 class="text-lg font-bold text-purple-400 mb-2">CRM Brain Activates</h4>
+            <p class="text-gray-300 text-sm">Instantly captures and routes to automation</p>
+          </div>
+
+          <!-- Step 3: Automation Triggers -->
+          <div class="workflow-step card">
+            <div class="workflow-number">3</div>
+            <div class="workflow-icon">⚡</div>
+            <h4 class="text-lg font-bold text-purple-400 mb-2">Services Engage</h4>
+            <p class="text-gray-300 text-sm">AI agents + missed call text-back activate</p>
+          </div>
+
+          <!-- Step 4: Conversion -->
+          <div class="workflow-step card">
+            <div class="workflow-number">4</div>
+            <div class="workflow-icon">🎯</div>
+            <h4 class="text-lg font-bold text-purple-400 mb-2">Auto Conversion</h4>
+            <p class="text-gray-300 text-sm">Lead → Customer, automatically</p>
+          </div>
+        </div>
+
+        <!-- Service Integration Grid -->
+        <div class="grid md:grid-cols-3 gap-8">
+          <div class="service-integration-card card">
+            <div class="integration-icon mb-4">
+              <span class="text-4xl">📲</span>
+            </div>
+            <h4 class="text-xl font-bold text-purple-400 mb-3">Missed Call Text-Back</h4>
+            <p class="text-gray-300 mb-4">CRM detects missed calls instantly and triggers automated SMS response within seconds. No lead left behind.</p>
+            <div class="integration-tech">
+              <span class="tech-badge">CRM Trigger</span>
+              <span class="tech-badge">AI SMS</span>
+            </div>
+          </div>
+
+          <div class="service-integration-card card">
+            <div class="integration-icon mb-4">
+              <span class="text-4xl">🤖</span>
+            </div>
+            <h4 class="text-xl font-bold text-purple-400 mb-3">AI Voice + Chat Agents</h4>
+            <p class="text-gray-300 mb-4">CRM feeds real-time customer data to AI agents for personalized conversations and intelligent routing.</p>
+            <div class="integration-tech">
+              <span class="tech-badge">CRM Data</span>
+              <span class="tech-badge">AI Context</span>
+            </div>
+          </div>
+
+          <div class="service-integration-card card">
+            <div class="integration-icon mb-4">
+              <span class="text-4xl">🔄</span>
+            </div>
+            <h4 class="text-xl font-bold text-purple-400 mb-3">ZeroMotion Automations</h4>
+            <p class="text-gray-300 mb-4">CRM powers multi-channel workflows, email sequences, and automated nurture campaigns that convert leads.</p>
+            <div class="integration-tech">
+              <span class="tech-badge">CRM Workflows</span>
+              <span class="tech-badge">Auto Sequences</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="ecosystem-cta text-center mt-12">
+          <p class="text-xl text-purple-300 mb-6">
+            Without CRM as your foundation, these services can't communicate. With it, they work as one unified automation machine.
+          </p>
+          <ModernBookingModal
+            plan="crm"
+            triggerText="See the Ecosystem in Action"
+          />
+        </div>
+      </div>
+    </div>
+
+    <!-- Hero Video Background -->
+    <video
+      src="/photos/homepage_hero.mp4"
+      autoplay
+      muted
+      loop
+      playsinline
+      preload="auto"
+      class="hero-background-video stable-hero-video"
+      style="opacity: 0.8; filter: brightness(0.8) contrast(1.1) saturate(1.2); will-change: transform;"
+      onloadstart="this.style.visibility='visible'"
+      oncanplay="this.classList.add('loaded')"
+      width="1920"
+      height="1080"
+      aria-hidden="true"
+      role="img"
+      aria-label="Background video showing ZeroMotion's automation ecosystem"
+    ></video>
+
+    <!-- Overlay gradient for text readability -->
+    <div class="hero-video-overlay"></div>
+  </section>
+
+  <!-- Automation Transformation Timeline -->
   <section class="hero-video-section section">
     <div class="implementation-hierarchy">
-      <h2 class="h2" style="color: #8b5cf6; text-align: center; margin-bottom: 20px;">CRM Implementation That Scales With Your Business</h2>
-      <p class="sub" style="text-align: center; margin-bottom: 50px; color: #e2e8f0;">From setup to market domination in strategic phases</p>
-      
+      <h2 class="h2" style="color: #8b5cf6; text-align: center; margin-bottom: 20px;">Your 6-Week Automation Transformation</h2>
+      <p class="sub" style="text-align: center; margin-bottom: 50px; color: #e2e8f0;">From manual chaos to complete automation in strategic phases</p>
+
       <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
         <div class="card text-center">
           <div class="w-24 h-24 mx-auto mb-6 relative">
-            <img 
-              src={`/assets/implementation/week1-2-foundation-v2.png?v=${cacheVersion}`} 
-              alt="Foundation setup phase - ZeroMotion agency dashboard" 
+            <img
+              src={`/assets/implementation/week1-2-foundation-v2.png?v=${cacheVersion}`}
+              alt="Foundation setup phase - ZeroMotion agency dashboard"
               class="w-full h-full object-contain"
               loading="lazy"
             />
           </div>
           <h3 class="h3 mb-3 text-purple-400">Week 1-2</h3>
-          <h4 class="text-lg font-bold mb-2">Foundation Setup</h4>
-          <p class="text-gray-300 text-sm">CRM configuration, lead capture forms, and basic automation workflows.</p>
+          <h4 class="text-lg font-bold mb-2">Automation Foundation</h4>
+          <p class="text-gray-300 text-sm">Deploy CRM operating system, connect lead capture, and activate basic automations.</p>
         </div>
-        
+
         <div class="card text-center">
           <div class="w-24 h-24 mx-auto mb-6 relative">
-            <img 
-              src={`/assets/implementation/week3-4-automation-v2.png?v=${cacheVersion}`} 
-              alt="Automation implementation phase - ZeroMotion opportunities pipeline dashboard" 
+            <img
+              src={`/assets/implementation/week3-4-automation-v2.png?v=${cacheVersion}`}
+              alt="AI integration phase - ZeroMotion opportunities pipeline dashboard"
               class="w-full h-full object-contain"
               loading="lazy"
             />
           </div>
           <h3 class="h3 mb-3 text-purple-400">Week 3-4</h3>
-          <h4 class="text-lg font-bold mb-2">Automation Implementation</h4>
-          <p class="text-gray-300 text-sm">Advanced pipelines, email sequences, and AI-powered lead scoring.</p>
+          <h4 class="text-lg font-bold mb-2">AI Integration</h4>
+          <p class="text-gray-300 text-sm">Integrate AI voice agents, missed call text-back, and intelligent routing.</p>
         </div>
-        
+
         <div class="card text-center">
           <div class="w-24 h-24 mx-auto mb-6 relative">
-            <img 
-              src={`/assets/implementation/week5-6-communication-v2.png?v=${cacheVersion}`} 
-              alt="Communication hub phase - ZeroMotion agency communication dashboard" 
+            <img
+              src={`/assets/implementation/week5-6-communication-v2.png?v=${cacheVersion}`}
+              alt="Full automation phase - ZeroMotion agency communication dashboard"
               class="w-full h-full object-contain"
               loading="lazy"
             />
           </div>
           <h3 class="h3 mb-3 text-purple-400">Week 5-6</h3>
-          <h4 class="text-lg font-bold mb-2">Communication Hub</h4>
-          <p class="text-gray-300 text-sm">SMS automation, appointment booking, and integrated payment processing.</p>
+          <h4 class="text-lg font-bold mb-2">Complete Automation</h4>
+          <p class="text-gray-300 text-sm">Multi-channel workflows, payment processing, and ecosystem integration.</p>
         </div>
-        
+
         <div class="card text-center">
           <div class="w-24 h-24 mx-auto mb-6 relative">
-            <img 
-              src={`/assets/implementation/week7-full-operation-v2.png?v=${cacheVersion}`} 
-              alt="Full operation phase - ZeroMotion digital presence dashboard with mobile and tablet views" 
+            <img
+              src={`/assets/implementation/week7-full-operation-v2.png?v=${cacheVersion}`}
+              alt="Optimization phase - ZeroMotion digital presence dashboard with mobile and tablet views"
               class="w-full h-full object-contain"
               loading="lazy"
             />
           </div>
           <h3 class="h3 mb-3 text-purple-400">Week 7+</h3>
-          <h4 class="text-lg font-bold mb-2">Full Operation</h4>
-          <p class="text-gray-300 text-sm">Complete automation, analytics integration, and ongoing optimization.</p>
+          <h4 class="text-lg font-bold mb-2">Growth Optimization</h4>
+          <p class="text-gray-300 text-sm">AI tuning, analytics refinement, and scaling automation for growth.</p>
         </div>
       </div>
     </div>
@@ -263,56 +378,56 @@ const structuredData = {
         </div>
         
         <div class="order-1 md:order-2">
-          <h2 class="h2 mb-6">CRM Features That Drive Business Growth</h2>
-          <p class="sub mb-8">Six core capabilities that transform how you capture and convert leads</p>
-          
+          <h2 class="h2 mb-6">Automation Capabilities Powered by CRM</h2>
+          <p class="sub mb-8">Six core technologies that enable your complete automation ecosystem</p>
+
           <div class="grid md:grid-cols-2 lg:grid-cols-2 gap-6">
             <div class="space-y-4">
               <div class="w-12 h-12 bg-purple-600 rounded-lg flex items-center justify-center">
                 <span class="text-xl">📝</span>
               </div>
-              <h4 class="text-xl font-bold text-purple-400">Lead Capture</h4>
-              <p class="text-gray-300">Smart forms that integrate with everything—websites, social media, and offline touchpoints.</p>
+              <h4 class="text-xl font-bold text-purple-400">Instant Missed Call Capture</h4>
+              <p class="text-gray-300">Automatically detects missed calls and routes to AI text-back within 60 seconds—24/7 lead response.</p>
             </div>
-            
+
             <div class="space-y-4">
               <div class="w-12 h-12 bg-purple-600 rounded-lg flex items-center justify-center">
                 <span class="text-xl">🔄</span>
               </div>
-              <h4 class="text-xl font-bold text-purple-400">Auto Follow-up</h4>
-              <p class="text-gray-300">SMS and email sequences that convert prospects into customers automatically.</p>
+              <h4 class="text-xl font-bold text-purple-400">AI-Powered Multi-Channel Nurture</h4>
+              <p class="text-gray-300">Automated SMS, email, and voice sequences that convert prospects into customers intelligently.</p>
             </div>
-            
+
             <div class="space-y-4">
               <div class="w-12 h-12 bg-purple-600 rounded-lg flex items-center justify-center">
                 <span class="text-xl">📊</span>
               </div>
-              <h4 class="text-xl font-bold text-purple-400">Pipeline Tracking</h4>
-              <p class="text-gray-300">Visual sales pipeline with deal progression and revenue forecasting.</p>
+              <h4 class="text-xl font-bold text-purple-400">Automated Deal Progression</h4>
+              <p class="text-gray-300">AI scoring and automated pipeline movement—leads advance automatically based on behavior.</p>
             </div>
-            
+
             <div class="space-y-4">
               <div class="w-12 h-12 bg-purple-600 rounded-lg flex items-center justify-center">
                 <span class="text-xl">💳</span>
               </div>
-              <h4 class="text-xl font-bold text-purple-400">Payment Processing</h4>
-              <p class="text-gray-300">Stripe integration for instant transactions and automated billing cycles.</p>
+              <h4 class="text-xl font-bold text-purple-400">Integrated Payment Automation</h4>
+              <p class="text-gray-300">Stripe integration triggers automated receipts, invoicing, and revenue tracking workflows.</p>
             </div>
-            
+
             <div class="space-y-4">
               <div class="w-12 h-12 bg-purple-600 rounded-lg flex items-center justify-center">
                 <span class="text-xl">📅</span>
               </div>
-              <h4 class="text-xl font-bold text-purple-400">Calendar Booking</h4>
-              <p class="text-gray-300">Automated appointment scheduling with confirmation and reminder workflows.</p>
+              <h4 class="text-xl font-bold text-purple-400">Smart Booking with AI Conflict Resolution</h4>
+              <p class="text-gray-300">Automated appointment scheduling with AI-powered time optimization and reminder sequences.</p>
             </div>
-            
+
             <div class="space-y-4">
               <div class="w-12 h-12 bg-purple-600 rounded-lg flex items-center justify-center">
                 <span class="text-xl">💬</span>
               </div>
-              <h4 class="text-xl font-bold text-purple-400">SMS Automation</h4>
-              <p class="text-gray-300">Compliant messaging workflows that nurture leads into sales.</p>
+              <h4 class="text-xl font-bold text-purple-400">Communication Automation Hub</h4>
+              <p class="text-gray-300">Central control for all automated messaging—SMS, email, voice, and chat in one platform.</p>
             </div>
           </div>
         </div>
@@ -342,58 +457,58 @@ const structuredData = {
     <div class="hero-video-overlay"></div>
   </section>
 
-  <!-- Integration Superiority Comparison -->
+  <!-- Automation Platform Comparison -->
   <section class="hero-video-section section">
     <div class="comparison-section">
-      <h2 class="h2" style="color: #8b5cf6; text-align: center; margin-bottom: 20px;">Why ZeroMotion CRM Dominates the Competition</h2>
-      <p class="sub" style="text-align: center; margin-bottom: 40px; color: #e2e8f0;">See the difference between manual processes, generic CRM, and ZeroMotion automation</p>
+      <h2 class="h2" style="color: #8b5cf6; text-align: center; margin-bottom: 20px;">Why the Automation Operating System Dominates</h2>
+      <p class="sub" style="text-align: center; margin-bottom: 40px; color: #e2e8f0;">See the difference between manual work, generic tools, and complete automation platform</p>
       
       <div class="table-container" style="overflow-x: auto; -webkit-overflow-scrolling: touch; margin: 0 -1rem;">
         <table class="comparison-table" style="width: 100%; border-collapse: collapse; background: rgba(0, 0, 0, 0.4); border-radius: 15px; overflow: hidden; margin: 0 1rem;">
           <thead>
             <tr>
-              <th style="background: linear-gradient(45deg, #8b5cf6, #a855f7); color: white; padding: 20px; text-align: left; font-weight: bold;">Features</th>
-              <th style="background: linear-gradient(45deg, #ef4444, #dc2626); color: white; padding: 20px; text-align: center; font-weight: bold;">Manual Processes</th>
-              <th style="background: linear-gradient(45deg, #f59e0b, #d97706); color: white; padding: 20px; text-align: center; font-weight: bold;">Generic CRM</th>
-              <th style="background: linear-gradient(45deg, #10b981, #059669); color: white; padding: 20px; text-align: center; font-weight: bold;">ZeroMotion CRM</th>
+              <th style="background: linear-gradient(45deg, #8b5cf6, #a855f7); color: white; padding: 20px; text-align: left; font-weight: bold;">Capability</th>
+              <th style="background: linear-gradient(45deg, #ef4444, #dc2626); color: white; padding: 20px; text-align: center; font-weight: bold;">Manual Work</th>
+              <th style="background: linear-gradient(45deg, #f59e0b, #d97706); color: white; padding: 20px; text-align: center; font-weight: bold;">Disconnected Tools</th>
+              <th style="background: linear-gradient(45deg, #10b981, #059669); color: white; padding: 20px; text-align: center; font-weight: bold;">Automation Platform</th>
             </tr>
           </thead>
           <tbody>
             <tr>
-              <td class="feature-name" style="padding: 16px; font-weight: bold; color: #ffffff; border-bottom: 1px solid rgba(139, 92, 246, 0.2);">Lead Response Time</td>
-              <td data-label="Manual Processes" style="padding: 16px; text-align: center; color: #fca5a5; border-bottom: 1px solid rgba(139, 92, 246, 0.2);">Hours to Days</td>
-              <td data-label="Generic CRM" style="padding: 16px; text-align: center; color: #fde68a; border-bottom: 1px solid rgba(139, 92, 246, 0.2);">Basic Notifications</td>
-              <td data-label="ZeroMotion CRM" style="padding: 16px; text-align: center; color: #86efac; border-bottom: 1px solid rgba(139, 92, 246, 0.2);">60 Seconds (AI-Powered)</td>
+              <td class="feature-name" style="padding: 16px; font-weight: bold; color: #ffffff; border-bottom: 1px solid rgba(139, 92, 246, 0.2);">Missed Call Response</td>
+              <td data-label="Manual Work" style="padding: 16px; text-align: center; color: #fca5a5; border-bottom: 1px solid rgba(139, 92, 246, 0.2);">Hours/Never</td>
+              <td data-label="Disconnected Tools" style="padding: 16px; text-align: center; color: #fde68a; border-bottom: 1px solid rgba(139, 92, 246, 0.2);">Manual SMS</td>
+              <td data-label="Automation Platform" style="padding: 16px; text-align: center; color: #86efac; border-bottom: 1px solid rgba(139, 92, 246, 0.2);">Auto AI Text-Back (60s)</td>
             </tr>
             <tr>
-              <td class="feature-name" style="padding: 16px; font-weight: bold; color: #ffffff; border-bottom: 1px solid rgba(139, 92, 246, 0.2);">Follow-up Automation</td>
-              <td data-label="Manual Processes" style="padding: 16px; text-align: center; color: #fca5a5; border-bottom: 1px solid rgba(139, 92, 246, 0.2);">Manual Emails/Calls</td>
-              <td data-label="Generic CRM" style="padding: 16px; text-align: center; color: #fde68a; border-bottom: 1px solid rgba(139, 92, 246, 0.2);">Basic Sequences</td>
-              <td data-label="ZeroMotion CRM" style="padding: 16px; text-align: center; color: #86efac; border-bottom: 1px solid rgba(139, 92, 246, 0.2);">Advanced Multi-Channel</td>
+              <td class="feature-name" style="padding: 16px; font-weight: bold; color: #ffffff; border-bottom: 1px solid rgba(139, 92, 246, 0.2);">AI Agent Integration</td>
+              <td data-label="Manual Work" style="padding: 16px; text-align: center; color: #fca5a5; border-bottom: 1px solid rgba(139, 92, 246, 0.2);">None</td>
+              <td data-label="Disconnected Tools" style="padding: 16px; text-align: center; color: #fde68a; border-bottom: 1px solid rgba(139, 92, 246, 0.2);">Separate Systems</td>
+              <td data-label="Automation Platform" style="padding: 16px; text-align: center; color: #86efac; border-bottom: 1px solid rgba(139, 92, 246, 0.2);">Unified AI + CRM Data</td>
             </tr>
             <tr>
-              <td class="feature-name" style="padding: 16px; font-weight: bold; color: #ffffff; border-bottom: 1px solid rgba(139, 92, 246, 0.2);">Business Integration</td>
-              <td data-label="Manual Processes" style="padding: 16px; text-align: center; color: #fca5a5; border-bottom: 1px solid rgba(139, 92, 246, 0.2);">None</td>
-              <td data-label="Generic CRM" style="padding: 16px; text-align: center; color: #fde68a; border-bottom: 1px solid rgba(139, 92, 246, 0.2);">Generic Templates</td>
-              <td data-label="ZeroMotion CRM" style="padding: 16px; text-align: center; color: #86efac; border-bottom: 1px solid rgba(139, 92, 246, 0.2);">Industry-Focused Setup</td>
+              <td class="feature-name" style="padding: 16px; font-weight: bold; color: #ffffff; border-bottom: 1px solid rgba(139, 92, 246, 0.2);">Workflow Automation</td>
+              <td data-label="Manual Work" style="padding: 16px; text-align: center; color: #fca5a5; border-bottom: 1px solid rgba(139, 92, 246, 0.2);">All Manual</td>
+              <td data-label="Disconnected Tools" style="padding: 16px; text-align: center; color: #fde68a; border-bottom: 1px solid rgba(139, 92, 246, 0.2);">Limited Automation</td>
+              <td data-label="Automation Platform" style="padding: 16px; text-align: center; color: #86efac; border-bottom: 1px solid rgba(139, 92, 246, 0.2);">Complete Ecosystem</td>
             </tr>
             <tr>
-              <td class="feature-name" style="padding: 16px; font-weight: bold; color: #ffffff; border-bottom: 1px solid rgba(139, 92, 246, 0.2);">AI Enhancement</td>
-              <td data-label="Manual Processes" style="padding: 16px; text-align: center; color: #fca5a5; border-bottom: 1px solid rgba(139, 92, 246, 0.2);">None</td>
-              <td data-label="Generic CRM" style="padding: 16px; text-align: center; color: #fde68a; border-bottom: 1px solid rgba(139, 92, 246, 0.2);">Basic Automation</td>
-              <td data-label="ZeroMotion CRM" style="padding: 16px; text-align: center; color: #86efac; border-bottom: 1px solid rgba(139, 92, 246, 0.2);">Predictive Analytics</td>
+              <td class="feature-name" style="padding: 16px; font-weight: bold; color: #ffffff; border-bottom: 1px solid rgba(139, 92, 246, 0.2);">Service Integration</td>
+              <td data-label="Manual Work" style="padding: 16px; text-align: center; color: #fca5a5; border-bottom: 1px solid rgba(139, 92, 246, 0.2);">None</td>
+              <td data-label="Disconnected Tools" style="padding: 16px; text-align: center; color: #fde68a; border-bottom: 1px solid rgba(139, 92, 246, 0.2);">Manual Data Transfer</td>
+              <td data-label="Automation Platform" style="padding: 16px; text-align: center; color: #86efac; border-bottom: 1px solid rgba(139, 92, 246, 0.2);">All Services Connected</td>
             </tr>
             <tr>
-              <td class="feature-name" style="padding: 16px; font-weight: bold; color: #ffffff; border-bottom: 1px solid rgba(139, 92, 246, 0.2);">Business Growth Impact</td>
-              <td data-label="Manual Processes" style="padding: 16px; text-align: center; color: #fca5a5; border-bottom: 1px solid rgba(139, 92, 246, 0.2);">Limited</td>
-              <td data-label="Generic CRM" style="padding: 16px; text-align: center; color: #fde68a; border-bottom: 1px solid rgba(139, 92, 246, 0.2);">Moderate Improvement</td>
-              <td data-label="ZeroMotion CRM" style="padding: 16px; text-align: center; color: #86efac; border-bottom: 1px solid rgba(139, 92, 246, 0.2);">Explosive Growth</td>
+              <td class="feature-name" style="padding: 16px; font-weight: bold; color: #ffffff; border-bottom: 1px solid rgba(139, 92, 246, 0.2);">Time Saved</td>
+              <td data-label="Manual Work" style="padding: 16px; text-align: center; color: #fca5a5; border-bottom: 1px solid rgba(139, 92, 246, 0.2);">0 Hours</td>
+              <td data-label="Disconnected Tools" style="padding: 16px; text-align: center; color: #fde68a; border-bottom: 1px solid rgba(139, 92, 246, 0.2);">5 Hours/Week</td>
+              <td data-label="Automation Platform" style="padding: 16px; text-align: center; color: #86efac; border-bottom: 1px solid rgba(139, 92, 246, 0.2);">15+ Hours/Week</td>
             </tr>
             <tr class="result-row" style="background: rgba(139, 92, 246, 0.15); font-weight: bold; font-size: 1.1rem;">
               <td class="feature-name" style="padding: 16px; font-weight: bold; color: #8b5cf6;">Result</td>
-              <td data-label="Manual Processes" style="padding: 16px; text-align: center; font-weight: bold; color: #ef4444;">Loses Deals</td>
-              <td data-label="Generic CRM" style="padding: 16px; text-align: center; font-weight: bold; color: #f59e0b;">Manages Contacts</td>
-              <td data-label="ZeroMotion CRM" style="padding: 16px; text-align: center; font-weight: bold; color: #10b981;">Dominates Market</td>
+              <td data-label="Manual Work" style="padding: 16px; text-align: center; font-weight: bold; color: #ef4444;">Overwhelmed & Losing</td>
+              <td data-label="Disconnected Tools" style="padding: 16px; text-align: center; font-weight: bold; color: #f59e0b;">Fragmented Progress</td>
+              <td data-label="Automation Platform" style="padding: 16px; text-align: center; font-weight: bold; color: #10b981;">Zero Motion Success</td>
             </tr>
           </tbody>
         </table>
@@ -430,75 +545,75 @@ const structuredData = {
     <div class="hero-video-overlay"></div>
   </section>
 
-  <!-- Pricing & Plans Integration -->
+  <!-- Automation Platform Access -->
   <TextureVideoSection textureVideo={texture3}>
     <div class="pricing-integration-section">
-      <h2 class="h2 mb-6 text-center">CRM Integration Across All Growth Stages</h2>
-      <p class="sub mb-12 text-center">How our automation platform enhances your business at every level</p>
-      
+      <h2 class="h2 mb-6 text-center">Automation Operating System Included in All Plans</h2>
+      <p class="sub mb-12 text-center">The foundation technology is built into every automation tier</p>
+
       <div class="grid md:grid-cols-3 gap-8">
         <div class="card pkg system-card">
-          <h3 class="h3 text-purple-400 mb-4">Starter CRM</h3>
+          <h3 class="h3 text-purple-400 mb-4">Starter Platform</h3>
           <div class="price mb-4">Custom Quote • Entry Level</div>
           <p class="text-sm text-gray-400 mb-6">Perfect for new businesses</p>
-          
+
           <ul class="space-y-3 mb-8">
-            <li>✓ Basic CRM setup & lead capture</li>
-            <li>✓ Auto-SMS responses</li>
-            <li>✓ Simple email sequences</li>
-            <li>✓ Contact management</li>
-            <li>✓ Basic reporting</li>
+            <li>✓ Automation operating system</li>
+            <li>✓ Missed call text-back integration</li>
+            <li>✓ Basic AI workflows</li>
+            <li>✓ Unified dashboard access</li>
+            <li>✓ Foundation automation setup</li>
           </ul>
-          
+
           <a
             href="/pricing"
             class="btn-primary"
-            data-event="crm_starter_plan_view"
+            data-event="automation_starter_plan_view"
           >
             View Pricing
           </a>
         </div>
-        
+
         <div class="card pkg system-card popular-card" style="border-color: rgba(139, 92, 246, 0.8); box-shadow: 0 15px 30px rgba(139, 92, 246, 0.2);">
           <span class="badge" style="position: absolute; top: -15px; left: 50%; transform: translateX(-50%); background: linear-gradient(45deg, #8b5cf6, #a855f7); color: white; padding: 8px 20px; border-radius: 20px; font-weight: bold; font-size: 14px; white-space: nowrap;">Most Popular for Growing Businesses</span>
-          <h3 class="h3 text-purple-400 mb-4">Growth CRM</h3>
+          <h3 class="h3 text-purple-400 mb-4">Growth Platform</h3>
           <div class="price mb-4">Custom Quote • Most Popular</div>
           <p class="text-sm text-gray-400 mb-6">For expanding operations</p>
-          
+
           <ul class="space-y-3 mb-8">
-            <li>✓ Advanced automation & funnels</li>
-            <li>✓ Multi-channel campaigns</li>
-            <li>✓ Pipeline management</li>
-            <li>✓ Advanced reporting & analytics</li>
-            <li>✓ Team collaboration tools</li>
+            <li>✓ Full automation ecosystem</li>
+            <li>✓ AI voice + chat agents</li>
+            <li>✓ Advanced workflow automation</li>
+            <li>✓ Complete service integration</li>
+            <li>✓ Multi-channel automation</li>
           </ul>
-          
+
           <a
             href="/pricing"
             class="btn-primary"
-            data-event="crm_growth_plan_view"
+            data-event="automation_growth_plan_view"
           >
             View Pricing
           </a>
         </div>
-        
+
         <div class="card pkg system-card">
-          <h3 class="h3 text-purple-400 mb-4">Scale CRM</h3>
+          <h3 class="h3 text-purple-400 mb-4">Scale Platform</h3>
           <div class="price mb-4">Custom Quote • Enterprise</div>
-          <p class="text-sm text-gray-400 mb-6">Enterprise solutions for market leaders</p>
-          
+          <p class="text-sm text-gray-400 mb-6">Enterprise automation for market leaders</p>
+
           <ul class="space-y-3 mb-8">
-            <li>✓ Enterprise CRM & AI chatbots</li>
-            <li>✓ Predictive analytics</li>
-            <li>✓ Custom integrations</li>
-            <li>✓ Multi-location management</li>
-            <li>✓ Dedicated success manager</li>
+            <li>✓ Enterprise automation platform</li>
+            <li>✓ Custom AI development</li>
+            <li>✓ Predictive automation analytics</li>
+            <li>✓ Multi-location automation</li>
+            <li>✓ Dedicated automation strategist</li>
           </ul>
-          
+
           <a
             href="/pricing"
             class="btn-primary"
-            data-event="crm_scale_plan_view"
+            data-event="automation_scale_plan_view"
           >
             View Pricing
           </a>
@@ -564,8 +679,8 @@ const structuredData = {
   <!-- FAQ & Objection Handling -->
   <TextureVideoSection textureVideo={texture4}>
     <div class="faq-section">
-      <h2 class="h2 mb-6" id="features">CRM Questions? We Have Business-Focused Answers</h2>
-      <p class="sub mb-8">Everything growing businesses ask about professional CRM automation</p>
+      <h2 class="h2 mb-6" id="features">Automation Platform Questions? We Have Answers</h2>
+      <p class="sub mb-8">Everything growing businesses ask about the automation operating system</p>
       
       <div class="faq-grid">
         <div class="faq-card card" onclick="window.dataLayer&&dataLayer.push({event:'crm_faq_click', question:'data-security'})" data-event="crm_faq_click" data-question="data-security">
@@ -583,8 +698,8 @@ const structuredData = {
             <span>🔄</span>
           </div>
           <div class="faq-content">
-            <strong class="faq-question">What if I already have a CRM system?</strong>
-            <p class="faq-answer">We specialize in seamless migrations and integrations. Most businesses see immediate improvements in lead response time and conversion rates. We'll audit your current system and create a migration plan that protects your data while upgrading your capabilities.</p>
+            <strong class="faq-question">What if I already have a CRM or other tools?</strong>
+            <p class="faq-answer">We specialize in seamless migrations to our automation platform. Most businesses see immediate improvements from having all services connected. We'll audit your current systems and create a migration plan that protects your data while enabling complete automation.</p>
           </div>
         </div>
         
@@ -664,31 +779,31 @@ const structuredData = {
   <!-- Final Conversion CTA Section -->
   <DarkContentSection background="rgba(139, 92, 246, 0.1)">
     <div class="final-cta-section text-center max-w-4xl mx-auto">
-      <h2 class="h2" style="color: #8b5cf6; margin-bottom: 20px;">Ready to Automate Your Way to Market Leadership?</h2>
-      <p class="sub" style="margin-bottom: 40px; color: #e2e8f0;">Stop losing deals to manual processes. Get advanced business automation platform.</p>
-      
+      <h2 class="h2" style="color: #8b5cf6; margin-bottom: 20px;">Ready for Complete Business Automation?</h2>
+      <p class="sub" style="margin-bottom: 40px; color: #e2e8f0;">Stop losing deals to disconnected tools. Get the automation operating system.</p>
+
       <p class="text-xl text-gray-300 mb-8">
-        While your competitors manually chase leads and lose deals to slow follow-up, 
-        you'll dominate with AI-powered automation that converts prospects into customers 
-        around the clock. Built for growing businesses by automation experts.
+        While your competitors struggle with disconnected tools and manual work,
+        you'll dominate with a unified automation platform where CRM, AI agents, missed call text-back,
+        and workflows operate as one intelligent system. Zero Motion = Zero Manual Effort.
       </p>
-      
+
       <div class="flex flex-col sm:flex-row gap-4 justify-center items-center mb-8">
-         <ModernBookingModal 
+         <ModernBookingModal
            plan="crm"
-           triggerText="Book One-on-One CRM Demo"
+           triggerText="See the Automation Platform"
          />
-        <a href="/pricing" class="btn-ghost" data-event="crm_systems_view">See Complete Systems</a>
+        <a href="/pricing" class="btn-ghost" data-event="automation_platform_view">See Complete Platform</a>
       </div>
-      
+
       <div class="flex justify-center items-center gap-8 text-sm text-purple-300">
         <span>No obligation</span>
         <span>•</span>
-        <span>30-minute demo</span>
+        <span>30-minute platform demo</span>
         <span>•</span>
-        <span>Custom business setup</span>
+        <span>Custom automation strategy</span>
       </div>
-      
+
       <div class="mt-12 p-6 bg-gradient-to-r from-purple-900/30 to-transparent rounded-lg border border-purple-500/30">
         <h4 class="text-lg font-bold text-purple-400 mb-3">What Happens Next?</h4>
         <div class="grid md:grid-cols-3 gap-6 text-sm">
@@ -696,19 +811,19 @@ const structuredData = {
             <div class="w-8 h-8 bg-purple-600 rounded-full flex items-center justify-center mx-auto mb-2">
               <span class="font-bold">1</span>
             </div>
-            <p class="text-gray-300">30-minute discovery call to understand your business and current processes</p>
+            <p class="text-gray-300">30-minute discovery call to understand your automation needs and current gaps</p>
           </div>
           <div class="text-center">
             <div class="w-8 h-8 bg-purple-600 rounded-full flex items-center justify-center mx-auto mb-2">
               <span class="font-bold">2</span>
             </div>
-            <p class="text-gray-300">Custom CRM demo tailored to your business and industry</p>
+            <p class="text-gray-300">Live platform demo showing how all automation services connect and work together</p>
           </div>
           <div class="text-center">
             <div class="w-8 h-8 bg-purple-600 rounded-full flex items-center justify-center mx-auto mb-2">
               <span class="font-bold">3</span>
             </div>
-            <p class="text-gray-300">Implementation roadmap and timeline for your automation transformation</p>
+            <p class="text-gray-300">6-week transformation roadmap from manual chaos to complete automation</p>
           </div>
         </div>
       </div>
@@ -1189,6 +1304,127 @@ const structuredData = {
       margin: 1rem 0.5rem;
       padding: 2rem 1rem;
       border-radius: 24px;
+    }
+  }
+
+  /* Ecosystem Workflow Section Styling */
+  .ecosystem-workflow-section {
+    position: relative;
+    z-index: 1;
+    padding: var(--zm-gap-xl) 0;
+  }
+
+  .workflow-diagram {
+    position: relative;
+  }
+
+  .workflow-step {
+    position: relative;
+    padding: 2rem 1.5rem;
+    text-align: center;
+    background: rgba(0, 0, 0, 0.6);
+    border: 2px solid rgba(139, 92, 246, 0.3);
+    border-radius: 20px;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+  }
+
+  .workflow-step:hover {
+    transform: translateY(-4px);
+    border-color: rgba(139, 92, 246, 0.6);
+    box-shadow: 0 15px 40px rgba(139, 92, 246, 0.3);
+  }
+
+  .workflow-step.highlighted-step {
+    background: rgba(139, 92, 246, 0.15);
+    border-color: rgba(139, 92, 246, 0.6);
+    box-shadow: 0 10px 30px rgba(139, 92, 246, 0.2);
+  }
+
+  .workflow-number {
+    position: absolute;
+    top: -12px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 28px;
+    height: 28px;
+    background: linear-gradient(135deg, #8b5cf6, #a855f7);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 14px;
+    color: white;
+    box-shadow: 0 4px 12px rgba(139, 92, 246, 0.4);
+  }
+
+  .workflow-icon {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3));
+  }
+
+  .service-integration-card {
+    position: relative;
+    padding: 2rem;
+    background: rgba(0, 0, 0, 0.7);
+    border: 2px solid rgba(139, 92, 246, 0.3);
+    border-radius: 20px;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+  }
+
+  .service-integration-card:hover {
+    background: rgba(139, 92, 246, 0.1);
+    border-color: rgba(139, 92, 246, 0.5);
+    transform: translateY(-4px);
+    box-shadow: 0 15px 40px rgba(139, 92, 246, 0.3);
+  }
+
+  .integration-icon {
+    text-align: center;
+    filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3));
+  }
+
+  .integration-tech {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-top: 1rem;
+  }
+
+  .tech-badge {
+    display: inline-block;
+    padding: 6px 12px;
+    background: rgba(139, 92, 246, 0.2);
+    border: 1px solid rgba(139, 92, 246, 0.4);
+    border-radius: 12px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: #c4b5fd;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  .ecosystem-cta {
+    margin-top: 3rem;
+  }
+
+  /* Mobile Workflow Adjustments */
+  @media (max-width: 768px) {
+    .workflow-step {
+      padding: 1.5rem 1rem;
+    }
+
+    .workflow-icon {
+      font-size: 2.5rem;
+    }
+
+    .service-integration-card {
+      padding: 1.5rem;
     }
   }
 </style>
