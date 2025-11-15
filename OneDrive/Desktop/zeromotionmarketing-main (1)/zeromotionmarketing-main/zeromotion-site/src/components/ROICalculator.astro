@@ -1,0 +1,975 @@
+---
+/**
+ * ROI Calculator Component
+ *
+ * A comprehensive, interactive ROI calculator for ZeroMotion CRM service pages.
+ * Calculates potential revenue loss and recovery based on user inputs.
+ *
+ * Features:
+ * - Real-time calculation updates
+ * - Smooth animations and transitions
+ * - Mobile-responsive design
+ * - Accessible (WCAG AA compliant)
+ * - Customizable title and subtitle per page
+ *
+ * Props:
+ * @param {string} title - Calculator heading
+ * @param {string} subtitle - Calculator description
+ */
+
+interface Props {
+  title?: string;
+  subtitle?: string;
+}
+
+const {
+  title = "Calculate Your ROI",
+  subtitle = "See how much revenue you're losing—and what ZeroMotion CRM could recover."
+} = Astro.props;
+---
+
+<section class="roi-calculator-section" aria-label="ROI Calculator">
+  <div class="container-page max-w-5xl mx-auto">
+    <div class="roi-calculator-wrapper">
+      <!-- Header -->
+      <div class="calculator-header">
+        <h2 class="h2 calculator-title">{title}</h2>
+        <p class="calculator-subtitle">{subtitle}</p>
+      </div>
+
+      <!-- Calculator Card -->
+      <div class="calculator-card">
+        <!-- Input Section -->
+        <div class="calculator-inputs">
+          <div class="input-group">
+            <label for="missed-calls" class="input-label">
+              <span class="label-icon">📞</span>
+              <span class="label-text">Missed Calls Per Week</span>
+            </label>
+            <div class="input-control">
+              <input
+                type="range"
+                id="missed-calls"
+                class="input-slider"
+                min="0"
+                max="50"
+                value="10"
+                step="1"
+                aria-label="Number of missed calls per week"
+                aria-valuemin="0"
+                aria-valuemax="50"
+                aria-valuenow="10"
+              />
+              <div class="input-value-display">
+                <span id="missed-calls-value" class="value-number">10</span>
+                <span class="value-label">calls/week</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="input-group">
+            <label for="average-profit" class="input-label">
+              <span class="label-icon">💰</span>
+              <span class="label-text">Average Profit Per Customer</span>
+            </label>
+            <div class="input-control">
+              <input
+                type="range"
+                id="average-profit"
+                class="input-slider"
+                min="50"
+                max="2000"
+                value="500"
+                step="50"
+                aria-label="Average profit per customer in dollars"
+                aria-valuemin="50"
+                aria-valuemax="2000"
+                aria-valuenow="500"
+              />
+              <div class="input-value-display">
+                <span class="value-currency">$</span>
+                <span id="average-profit-value" class="value-number">500</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="input-group">
+            <label for="conversion-rate" class="input-label">
+              <span class="label-icon">📊</span>
+              <span class="label-text">Expected Conversion Rate</span>
+            </label>
+            <div class="input-control">
+              <input
+                type="range"
+                id="conversion-rate"
+                class="input-slider"
+                min="10"
+                max="100"
+                value="50"
+                step="5"
+                aria-label="Expected conversion rate as percentage"
+                aria-valuemin="10"
+                aria-valuemax="100"
+                aria-valuenow="50"
+              />
+              <div class="input-value-display">
+                <span id="conversion-rate-value" class="value-number">50</span>
+                <span class="value-label">%</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Reset Button -->
+          <button type="button" class="btn-reset" id="reset-calculator" aria-label="Reset calculator to default values">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+              <path d="M1 4v6h6M23 20v-6h-6"/>
+              <path d="M20.49 9A9 9 0 0 0 5.64 5.64L1 10m22 4l-4.64 4.36A9 9 0 0 1 3.51 15"/>
+            </svg>
+            <span>Reset Calculator</span>
+          </button>
+        </div>
+
+        <!-- Results Section -->
+        <div class="calculator-results" role="region" aria-label="Calculation results" aria-live="polite">
+          <h3 class="results-heading">Your Numbers:</h3>
+
+          <div class="results-grid">
+            <!-- Lost Revenue Card -->
+            <div class="result-card result-card-warning">
+              <div class="result-icon result-icon-warning">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                  <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/>
+                  <line x1="12" y1="9" x2="12" y2="13"/>
+                  <line x1="12" y1="17" x2="12.01" y2="17"/>
+                </svg>
+              </div>
+              <div class="result-content">
+                <div class="result-label">Lost Monthly Revenue</div>
+                <div id="lost-revenue" class="result-value result-value-warning">$0</div>
+                <div class="result-description">Revenue walking out the door every month</div>
+              </div>
+            </div>
+
+            <!-- Recovered Revenue Card -->
+            <div class="result-card result-card-success">
+              <div class="result-icon result-icon-success">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                  <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+                  <polyline points="22 4 12 14.01 9 11.01"/>
+                </svg>
+              </div>
+              <div class="result-content">
+                <div class="result-label">Potential Recovery</div>
+                <div id="recovered-revenue" class="result-value result-value-success">$0</div>
+                <div class="result-description">What you could save with ZeroMotion CRM</div>
+              </div>
+            </div>
+
+            <!-- Annual Impact Card -->
+            <div class="result-card result-card-info">
+              <div class="result-icon result-icon-info">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                  <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
+                </svg>
+              </div>
+              <div class="result-content">
+                <div class="result-label">Annual Impact</div>
+                <div id="annual-impact" class="result-value result-value-info">$0</div>
+                <div class="result-description">Yearly revenue potential with automation</div>
+              </div>
+            </div>
+
+            <!-- Leads Captured Card -->
+            <div class="result-card result-card-primary">
+              <div class="result-icon result-icon-primary">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                  <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+                  <circle cx="9" cy="7" r="4"/>
+                  <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
+                  <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+                </svg>
+              </div>
+              <div class="result-content">
+                <div class="result-label">Leads Captured Monthly</div>
+                <div id="leads-captured" class="result-value result-value-primary">0</div>
+                <div class="result-description">New customers you'd capture each month</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- CTA Button -->
+          <div class="calculator-cta">
+            <button
+              type="button"
+              class="btn-primary btn-lg calculator-cta-button"
+              onclick="openStrategistModal('roi-calculator'); window.dataLayer&&dataLayer.push({event:'cta_click',location:'roi-calculator',action:'book_consultation'})"
+            >
+              <span class="btn-text-main">Book Your Free Consultation</span>
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="btn-icon" aria-hidden="true">
+                <line x1="5" y1="12" x2="19" y2="12"/>
+                <polyline points="12 5 19 12 12 19"/>
+              </svg>
+            </button>
+            <p class="calculator-cta-note">
+              See exactly how ZeroMotion CRM can recover these leads for your business
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Disclaimer -->
+      <p class="calculator-disclaimer">
+        * Calculations are estimates based on industry averages. Actual results may vary based on your specific business, market, and implementation.
+      </p>
+    </div>
+  </div>
+</section>
+
+<style>
+  .roi-calculator-section {
+    padding: 4rem 1.5rem;
+    background: linear-gradient(135deg, rgba(139, 92, 246, 0.03) 0%, rgba(0, 0, 0, 0) 100%);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .roi-calculator-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: radial-gradient(circle at 20% 50%, rgba(139, 92, 246, 0.05) 0%, transparent 50%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .roi-calculator-wrapper {
+    position: relative;
+    z-index: 1;
+  }
+
+  /* Header */
+  .calculator-header {
+    text-align: center;
+    margin-bottom: 3rem;
+  }
+
+  .calculator-title {
+    color: #ffffff;
+    margin-bottom: 1rem;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+  }
+
+  .calculator-subtitle {
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 1.125rem;
+    line-height: 1.6;
+    max-width: 600px;
+    margin: 0 auto;
+  }
+
+  /* Calculator Card */
+  .calculator-card {
+    background: linear-gradient(145deg, rgba(0, 0, 0, 0.4), rgba(139, 92, 246, 0.1));
+    border: 1px solid rgba(139, 92, 246, 0.3);
+    border-radius: 24px;
+    padding: 2.5rem;
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    box-shadow:
+      0 20px 60px rgba(0, 0, 0, 0.5),
+      0 0 0 1px rgba(255, 255, 255, 0.05) inset;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .calculator-card:hover {
+    border-color: rgba(139, 92, 246, 0.5);
+    box-shadow:
+      0 30px 80px rgba(0, 0, 0, 0.6),
+      0 0 40px rgba(139, 92, 246, 0.1),
+      0 0 0 1px rgba(255, 255, 255, 0.08) inset;
+  }
+
+  /* Input Section */
+  .calculator-inputs {
+    margin-bottom: 3rem;
+    display: grid;
+    gap: 2rem;
+  }
+
+  .input-group {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .input-label {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-size: 1rem;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.95);
+    cursor: pointer;
+  }
+
+  .label-icon {
+    font-size: 1.5rem;
+    filter: drop-shadow(0 2px 4px rgba(139, 92, 246, 0.4));
+  }
+
+  .label-text {
+    flex: 1;
+  }
+
+  .input-control {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+  }
+
+  /* Slider Styling */
+  .input-slider {
+    flex: 1;
+    height: 8px;
+    -webkit-appearance: none;
+    appearance: none;
+    background: linear-gradient(90deg, rgba(139, 92, 246, 0.2) 0%, rgba(139, 92, 246, 0.1) 100%);
+    border-radius: 10px;
+    outline: none;
+    transition: all 0.3s ease;
+    cursor: pointer;
+  }
+
+  .input-slider:hover {
+    background: linear-gradient(90deg, rgba(139, 92, 246, 0.3) 0%, rgba(139, 92, 246, 0.15) 100%);
+  }
+
+  .input-slider:focus {
+    box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.3);
+  }
+
+  .input-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 24px;
+    height: 24px;
+    background: linear-gradient(135deg, #8b5cf6, #a855f7);
+    border-radius: 50%;
+    cursor: pointer;
+    box-shadow:
+      0 4px 12px rgba(139, 92, 246, 0.6),
+      0 0 0 3px rgba(0, 0, 0, 0.3),
+      0 0 0 4px rgba(139, 92, 246, 0.3);
+    transition: all 0.2s ease;
+  }
+
+  .input-slider::-webkit-slider-thumb:hover {
+    transform: scale(1.15);
+    box-shadow:
+      0 6px 16px rgba(139, 92, 246, 0.8),
+      0 0 0 3px rgba(0, 0, 0, 0.3),
+      0 0 0 5px rgba(139, 92, 246, 0.5);
+  }
+
+  .input-slider::-webkit-slider-thumb:active {
+    transform: scale(1.05);
+  }
+
+  .input-slider::-moz-range-thumb {
+    width: 24px;
+    height: 24px;
+    background: linear-gradient(135deg, #8b5cf6, #a855f7);
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    box-shadow:
+      0 4px 12px rgba(139, 92, 246, 0.6),
+      0 0 0 3px rgba(0, 0, 0, 0.3),
+      0 0 0 4px rgba(139, 92, 246, 0.3);
+    transition: all 0.2s ease;
+  }
+
+  .input-slider::-moz-range-thumb:hover {
+    transform: scale(1.15);
+    box-shadow:
+      0 6px 16px rgba(139, 92, 246, 0.8),
+      0 0 0 3px rgba(0, 0, 0, 0.3),
+      0 0 0 5px rgba(139, 92, 246, 0.5);
+  }
+
+  /* Input Value Display */
+  .input-value-display {
+    display: flex;
+    align-items: baseline;
+    gap: 0.25rem;
+    min-width: 120px;
+    justify-content: flex-end;
+    padding: 0.5rem 1rem;
+    background: rgba(139, 92, 246, 0.1);
+    border: 1px solid rgba(139, 92, 246, 0.3);
+    border-radius: 12px;
+    transition: all 0.3s ease;
+  }
+
+  .input-value-display.value-changed {
+    background: rgba(139, 92, 246, 0.2);
+    border-color: rgba(139, 92, 246, 0.5);
+    box-shadow: 0 0 20px rgba(139, 92, 246, 0.3);
+  }
+
+  .value-currency {
+    color: #8b5cf6;
+    font-size: 1rem;
+    font-weight: 600;
+  }
+
+  .value-number {
+    color: #ffffff;
+    font-size: 1.5rem;
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+    transition: all 0.3s ease;
+  }
+
+  .value-label {
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 0.875rem;
+    font-weight: 500;
+  }
+
+  /* Reset Button */
+  .btn-reset {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.25rem;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 0.875rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-top: 1rem;
+  }
+
+  .btn-reset:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.2);
+    color: rgba(255, 255, 255, 0.9);
+    transform: translateY(-1px);
+  }
+
+  .btn-reset:active {
+    transform: translateY(0);
+  }
+
+  .btn-reset svg {
+    transition: transform 0.3s ease;
+  }
+
+  .btn-reset:hover svg {
+    transform: rotate(180deg);
+  }
+
+  /* Results Section */
+  .calculator-results {
+    border-top: 1px solid rgba(139, 92, 246, 0.2);
+    padding-top: 2.5rem;
+  }
+
+  .results-heading {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #ffffff;
+    margin-bottom: 1.5rem;
+    text-align: center;
+  }
+
+  .results-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 2.5rem;
+  }
+
+  /* Result Cards */
+  .result-card {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    padding: 1.5rem;
+    background: rgba(0, 0, 0, 0.3);
+    border: 2px solid;
+    border-radius: 16px;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .result-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+    transition: left 0.6s ease;
+  }
+
+  .result-card:hover::before {
+    left: 100%;
+  }
+
+  .result-card:hover {
+    transform: translateY(-4px);
+  }
+
+  .result-card-warning {
+    border-color: rgba(239, 68, 68, 0.5);
+    background: linear-gradient(135deg, rgba(239, 68, 68, 0.05), rgba(239, 68, 68, 0.02));
+  }
+
+  .result-card-warning:hover {
+    border-color: rgba(239, 68, 68, 0.7);
+    box-shadow: 0 8px 30px rgba(239, 68, 68, 0.2);
+  }
+
+  .result-card-success {
+    border-color: rgba(34, 197, 94, 0.5);
+    background: linear-gradient(135deg, rgba(34, 197, 94, 0.05), rgba(34, 197, 94, 0.02));
+  }
+
+  .result-card-success:hover {
+    border-color: rgba(34, 197, 94, 0.7);
+    box-shadow: 0 8px 30px rgba(34, 197, 94, 0.2);
+  }
+
+  .result-card-info {
+    border-color: rgba(59, 130, 246, 0.5);
+    background: linear-gradient(135deg, rgba(59, 130, 246, 0.05), rgba(59, 130, 246, 0.02));
+  }
+
+  .result-card-info:hover {
+    border-color: rgba(59, 130, 246, 0.7);
+    box-shadow: 0 8px 30px rgba(59, 130, 246, 0.2);
+  }
+
+  .result-card-primary {
+    border-color: rgba(139, 92, 246, 0.5);
+    background: linear-gradient(135deg, rgba(139, 92, 246, 0.05), rgba(139, 92, 246, 0.02));
+  }
+
+  .result-card-primary:hover {
+    border-color: rgba(139, 92, 246, 0.7);
+    box-shadow: 0 8px 30px rgba(139, 92, 246, 0.2);
+  }
+
+  .result-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .result-icon-warning {
+    background: rgba(239, 68, 68, 0.2);
+    color: #ef4444;
+  }
+
+  .result-icon-success {
+    background: rgba(34, 197, 94, 0.2);
+    color: #22c55e;
+  }
+
+  .result-icon-info {
+    background: rgba(59, 130, 246, 0.2);
+    color: #3b82f6;
+  }
+
+  .result-icon-primary {
+    background: rgba(139, 92, 246, 0.2);
+    color: #8b5cf6;
+  }
+
+  .result-content {
+    flex: 1;
+  }
+
+  .result-label {
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: rgba(255, 255, 255, 0.7);
+    margin-bottom: 0.5rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .result-value {
+    font-size: 2rem;
+    font-weight: 800;
+    font-variant-numeric: tabular-nums;
+    margin-bottom: 0.5rem;
+    transition: all 0.3s ease;
+  }
+
+  .result-value-warning {
+    color: #ef4444;
+  }
+
+  .result-value-success {
+    color: #22c55e;
+  }
+
+  .result-value-info {
+    color: #3b82f6;
+  }
+
+  .result-value-primary {
+    color: #8b5cf6;
+  }
+
+  .result-description {
+    font-size: 0.875rem;
+    color: rgba(255, 255, 255, 0.6);
+    line-height: 1.4;
+  }
+
+  /* CTA Section */
+  .calculator-cta {
+    text-align: center;
+  }
+
+  .calculator-cta-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 1rem;
+  }
+
+  .btn-icon {
+    transition: transform 0.3s ease;
+  }
+
+  .calculator-cta-button:hover .btn-icon {
+    transform: translateX(4px);
+  }
+
+  .calculator-cta-note {
+    font-size: 0.875rem;
+    color: rgba(255, 255, 255, 0.6);
+    margin: 0;
+  }
+
+  /* Disclaimer */
+  .calculator-disclaimer {
+    margin-top: 2rem;
+    font-size: 0.75rem;
+    color: rgba(255, 255, 255, 0.5);
+    text-align: center;
+    font-style: italic;
+  }
+
+  /* Responsive Design */
+  @media (max-width: 1024px) {
+    .results-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 768px) {
+    .roi-calculator-section {
+      padding: 3rem 1rem;
+    }
+
+    .calculator-card {
+      padding: 1.5rem;
+    }
+
+    .calculator-header {
+      margin-bottom: 2rem;
+    }
+
+    .calculator-title {
+      font-size: 1.75rem;
+    }
+
+    .calculator-subtitle {
+      font-size: 1rem;
+    }
+
+    .calculator-inputs {
+      gap: 1.5rem;
+      margin-bottom: 2rem;
+    }
+
+    .input-control {
+      flex-direction: column;
+      align-items: stretch;
+      gap: 0.75rem;
+    }
+
+    .input-value-display {
+      justify-content: center;
+      min-width: auto;
+    }
+
+    .results-grid {
+      grid-template-columns: 1fr;
+      gap: 1rem;
+    }
+
+    .result-value {
+      font-size: 1.75rem;
+    }
+
+    .calculator-cta-button {
+      width: 100%;
+      justify-content: center;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .roi-calculator-section {
+      padding: 2rem 1rem;
+    }
+
+    .calculator-card {
+      padding: 1.25rem;
+    }
+
+    .calculator-title {
+      font-size: 1.5rem;
+    }
+
+    .result-card {
+      padding: 1rem;
+    }
+
+    .result-value {
+      font-size: 1.5rem;
+    }
+
+    .value-number {
+      font-size: 1.25rem;
+    }
+  }
+
+  /* Animations */
+  @keyframes pulse-glow {
+    0%, 100% {
+      box-shadow: 0 0 20px rgba(139, 92, 246, 0.3);
+    }
+    50% {
+      box-shadow: 0 0 30px rgba(139, 92, 246, 0.5);
+    }
+  }
+
+  .value-changed .value-number {
+    animation: pulse-glow 0.6s ease-in-out;
+  }
+
+  /* Accessibility */
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+
+  /* Focus Styles */
+  .input-slider:focus-visible {
+    outline: 2px solid #8b5cf6;
+    outline-offset: 2px;
+  }
+
+  .btn-reset:focus-visible {
+    outline: 2px solid #8b5cf6;
+    outline-offset: 2px;
+  }
+
+  .calculator-cta-button:focus-visible {
+    outline: 2px solid #8b5cf6;
+    outline-offset: 2px;
+  }
+</style>
+
+<script>
+  // ROI Calculator Logic
+  document.addEventListener('DOMContentLoaded', () => {
+    const missedCallsInput = document.getElementById('missed-calls') as HTMLInputElement;
+    const averageProfitInput = document.getElementById('average-profit') as HTMLInputElement;
+    const conversionRateInput = document.getElementById('conversion-rate') as HTMLInputElement;
+    const resetButton = document.getElementById('reset-calculator');
+
+    const missedCallsValue = document.getElementById('missed-calls-value');
+    const averageProfitValue = document.getElementById('average-profit-value');
+    const conversionRateValue = document.getElementById('conversion-rate-value');
+
+    const lostRevenueDisplay = document.getElementById('lost-revenue');
+    const recoveredRevenueDisplay = document.getElementById('recovered-revenue');
+    const annualImpactDisplay = document.getElementById('annual-impact');
+    const leadsCapturedDisplay = document.getElementById('leads-captured');
+
+    // Default values
+    const defaults = {
+      missedCalls: 10,
+      averageProfit: 500,
+      conversionRate: 50
+    };
+
+    // Format currency
+    function formatCurrency(value: number): string {
+      return new Intl.NumberFormat('en-US', {
+        style: 'currency',
+        currency: 'USD',
+        minimumFractionDigits: 0,
+        maximumFractionDigits: 0
+      }).format(value);
+    }
+
+    // Format number with commas
+    function formatNumber(value: number): string {
+      return new Intl.NumberFormat('en-US').format(value);
+    }
+
+    // Add pulse animation to value display
+    function pulseValue(element: HTMLElement | null) {
+      if (!element) return;
+      const parent = element.closest('.input-value-display');
+      if (parent) {
+        parent.classList.add('value-changed');
+        setTimeout(() => parent.classList.remove('value-changed'), 600);
+      }
+    }
+
+    // Calculate ROI
+    function calculateROI() {
+      const missedCalls = parseInt(missedCallsInput.value);
+      const averageProfit = parseInt(averageProfitInput.value);
+      const conversionRate = parseInt(conversionRateInput.value) / 100;
+
+      // Monthly calculations (4.33 weeks per month average)
+      const monthlyMissedCalls = missedCalls * 4.33;
+      const potentialCustomers = monthlyMissedCalls * conversionRate;
+      const lostRevenue = potentialCustomers * averageProfit;
+
+      // With ZeroMotion CRM, assume 85% capture rate
+      const captureRate = 0.85;
+      const recoveredRevenue = lostRevenue * captureRate;
+
+      // Annual impact
+      const annualImpact = recoveredRevenue * 12;
+
+      // Leads captured
+      const leadsCaptured = Math.round(potentialCustomers * captureRate);
+
+      // Update displays with animation
+      if (lostRevenueDisplay) {
+        lostRevenueDisplay.textContent = formatCurrency(lostRevenue);
+        lostRevenueDisplay.classList.add('value-changed');
+        setTimeout(() => lostRevenueDisplay.classList.remove('value-changed'), 600);
+      }
+
+      if (recoveredRevenueDisplay) {
+        recoveredRevenueDisplay.textContent = formatCurrency(recoveredRevenue);
+        recoveredRevenueDisplay.classList.add('value-changed');
+        setTimeout(() => recoveredRevenueDisplay.classList.remove('value-changed'), 600);
+      }
+
+      if (annualImpactDisplay) {
+        annualImpactDisplay.textContent = formatCurrency(annualImpact);
+        annualImpactDisplay.classList.add('value-changed');
+        setTimeout(() => annualImpactDisplay.classList.remove('value-changed'), 600);
+      }
+
+      if (leadsCapturedDisplay) {
+        leadsCapturedDisplay.textContent = formatNumber(leadsCaptured);
+        leadsCapturedDisplay.classList.add('value-changed');
+        setTimeout(() => leadsCapturedDisplay.classList.remove('value-changed'), 600);
+      }
+
+      // Track calculation event
+      if (window.dataLayer) {
+        window.dataLayer.push({
+          event: 'roi_calculation',
+          missed_calls: missedCalls,
+          average_profit: averageProfit,
+          conversion_rate: conversionRate * 100,
+          lost_revenue: lostRevenue,
+          recovered_revenue: recoveredRevenue
+        });
+      }
+    }
+
+    // Update slider values and calculate
+    if (missedCallsInput) {
+      missedCallsInput.addEventListener('input', () => {
+        if (missedCallsValue) {
+          missedCallsValue.textContent = missedCallsInput.value;
+          pulseValue(missedCallsValue);
+        }
+        missedCallsInput.setAttribute('aria-valuenow', missedCallsInput.value);
+        calculateROI();
+      });
+    }
+
+    if (averageProfitInput) {
+      averageProfitInput.addEventListener('input', () => {
+        if (averageProfitValue) {
+          averageProfitValue.textContent = formatNumber(parseInt(averageProfitInput.value));
+          pulseValue(averageProfitValue);
+        }
+        averageProfitInput.setAttribute('aria-valuenow', averageProfitInput.value);
+        calculateROI();
+      });
+    }
+
+    if (conversionRateInput) {
+      conversionRateInput.addEventListener('input', () => {
+        if (conversionRateValue) {
+          conversionRateValue.textContent = conversionRateInput.value;
+          pulseValue(conversionRateValue);
+        }
+        conversionRateInput.setAttribute('aria-valuenow', conversionRateInput.value);
+        calculateROI();
+      });
+    }
+
+    // Reset button
+    if (resetButton) {
+      resetButton.addEventListener('click', () => {
+        if (missedCallsInput) missedCallsInput.value = defaults.missedCalls.toString();
+        if (averageProfitInput) averageProfitInput.value = defaults.averageProfit.toString();
+        if (conversionRateInput) conversionRateInput.value = defaults.conversionRate.toString();
+
+        if (missedCallsValue) missedCallsValue.textContent = defaults.missedCalls.toString();
+        if (averageProfitValue) averageProfitValue.textContent = formatNumber(defaults.averageProfit);
+        if (conversionRateValue) conversionRateValue.textContent = defaults.conversionRate.toString();
+
+        calculateROI();
+
+        // Track reset event
+        if (window.dataLayer) {
+          window.dataLayer.push({
+            event: 'roi_calculator_reset'
+          });
+        }
+      });
+    }
+
+    // Initial calculation
+    calculateROI();
+  });
+</script>

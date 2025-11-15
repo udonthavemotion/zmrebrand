@@ -1,0 +1,380 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import ModernBookingModal from "../../components/ModernBookingModal.astro";
+import TextureVideoSection from "../../components/sections/TextureVideoSection.astro";
+import DarkContentSection from "../../components/sections/DarkContentSection.astro";
+import SEOInternalLinks from "../../components/SEOInternalLinks.astro";
+import ROICalculator from "../../components/ROICalculator.astro";
+import { getAlternatingTexture, getPreloadTextures } from "../../lib/textures.ts";
+
+// Get alternating textures for seamless flow
+const texture1 = getAlternatingTexture(0);
+const texture2 = getAlternatingTexture(1);
+const texture3 = getAlternatingTexture(2);
+const texture4 = getAlternatingTexture(3);
+
+// Preload critical textures for performance
+const preloadTextures = getPreloadTextures(2);
+
+// Hero video
+const HERO_VIDEO = "/photos/homepage_hero.mp4";
+
+// SEO Configuration for Reputation Management Service Page
+const title = "Reputation Management | 50+ Google Reviews in 90 Days | ZeroMotion CRM";
+const description = "Automated reputation management that turns customers into 5-star reviews. Multi-platform monitoring and automated responses. Guaranteed 50+ reviews in 90 days.";
+const keywords = "reputation management, Google reviews automation, review generation, online reputation, automated review requests, review monitoring, 5-star reviews, business reputation";
+const canonical = "/services/reputation-management";
+const ogImage = "/og-webdesign.png";
+
+// Reputation Management Service Schema
+const reputationManagementSchema = [
+  {
+    "@context": "https://schema.org",
+    "@type": "Service",
+    "name": "Reputation Management & Review Automation",
+    "description": "Automated reputation management system that generates 5-star reviews, monitors multiple platforms, and responds automatically. Guaranteed 50+ reviews in 90 days.",
+    "provider": {
+      "@type": "Organization",
+      "name": "ZeroMotion Marketing",
+      "url": "https://zeromotion.marketing"
+    },
+    "serviceType": "Reputation Management Services",
+    "areaServed": [
+      {
+        "@type": "Country",
+        "name": "United States"
+      }
+    ]
+  }
+];
+---
+
+<BaseLayout {title} {description} {keywords} {canonical} {ogImage} schema={reputationManagementSchema}>
+  <!-- Preload critical texture videos for smooth experience -->
+  {preloadTextures.map(texture => (
+    <link rel="preload" as="video" href={texture} />
+  ))}
+
+  <div class="reputation-management">
+    <!-- Hero Section -->
+    <section class="hero" data-hero>
+      <video src={HERO_VIDEO} autoplay muted loop playsinline
+        aria-label="Reputation management showcase video"
+      ></video>
+      <div class="container-page">
+        <h1 class="h1">50+ Google Reviews in 90 Days, Guaranteed</h1>
+        <p class="sub centered-subtext">
+          Automated reputation management that turns customers into 5-star reviews. Multi-platform monitoring and automated responses—all working 24/7 to build your online presence.
+        </p>
+        <div class="reputation-benefits-preview" style="display: flex; flex-wrap: wrap; gap: 24px; justify-content: center; margin: 32px 0; color: rgba(255,255,255,0.9);">
+          <div style="display: flex; align-items: center; gap: 8px;">
+            <span style="color: #8b5cf6; font-size: 1.2rem;">⭐</span>
+            <span>50+ reviews in 90 days guaranteed</span>
+          </div>
+          <div style="display: flex; align-items: center; gap: 8px;">
+            <span style="color: #8b5cf6; font-size: 1.2rem;">🤖</span>
+            <span>Automated review requests after each appointment</span>
+          </div>
+          <div style="display: flex; align-items: center; gap: 8px;">
+            <span style="color: #8b5cf6; font-size: 1.2rem;">📊</span>
+            <span>Multi-platform monitoring (Google, Facebook, Yelp)</span>
+          </div>
+          <div style="display: flex; align-items: center; gap: 8px;">
+            <span style="color: #8b5cf6; font-size: 1.2rem;">💬</span>
+            <span>Automated response to all reviews</span>
+          </div>
+        </div>
+        <div class="hero-buttons">
+          <button class="btn btn-primary hero-btn" onclick="openStrategistModal('reputation-hero')">
+            <span class="btn-text-main">Book Free CRM Strategy Call</span>
+          </button>
+          <a class="btn-ghost hero-btn-ghost" href="#how-it-works">
+            <span class="btn-text-main">See How It Works</span>
+          </a>
+        </div>
+        <div style="opacity:.7;margin-top:14px">
+          More reviews • Higher ratings • Better local SEO • Zero manual work
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 1: The Problem -->
+    <TextureVideoSection videoSrc={texture1}>
+      <DarkContentSection>
+        <div class="container-page">
+          <h2 class="h2">Your Competition Has 47 Reviews. You Have 3.</h2>
+          <div class="content-split">
+            <div class="content-text">
+              <p class="lead-paragraph">
+                Louisiana customers check Google reviews before calling. If you don't have enough 5-star reviews, you're invisible—or worse, they're calling your competitor.
+              </p>
+              <p>
+                Most business owners know they need reviews. But asking customers manually is awkward, time-consuming, and rarely works. That's why ZeroMotion CRM automates the entire process.
+              </p>
+              <p>
+                Our reputation management system sends review requests automatically after every completed appointment, monitors all major platforms, and responds to reviews instantly—all without you thinking about it.
+              </p>
+            </div>
+          </div>
+        </div>
+      </DarkContentSection>
+    </TextureVideoSection>
+
+    <!-- Section 2: How It Works -->
+    <TextureVideoSection videoSrc={texture2}>
+      <DarkContentSection>
+        <div class="container-page" id="how-it-works">
+          <h2 class="h2">How Reputation Management Works</h2>
+          <div class="content-split">
+            <div class="content-text">
+              <h3 class="h3">Step 1: Automatic Review Requests</h3>
+              <p>
+                After every completed appointment (tracked automatically in your CRM), we send a personalized review request via SMS or email. The message includes a direct link to your Google Business Profile, making it effortless for customers to leave a review.
+              </p>
+
+              <h3 class="h3">Step 2: Multi-Platform Monitoring</h3>
+              <p>
+                We monitor Google, Facebook, Yelp, and other platforms 24/7. The moment a review comes in (positive or negative), you're notified instantly so you can address it.
+              </p>
+
+              <h3 class="h3">Step 3: Automated Responses</h3>
+              <p>
+                For 5-star reviews, we send automated thank-you messages in your brand voice. For negative reviews, we alert you immediately and draft professional responses to help you turn the situation around.
+              </p>
+
+              <h3 class="h3">Step 4: Reporting & Insights</h3>
+              <p>
+                Every month, you get a reputation report showing total reviews, average rating, competitive analysis, and SEO impact. We track what's working and continuously optimize.
+              </p>
+            </div>
+          </div>
+        </div>
+      </DarkContentSection>
+    </TextureVideoSection>
+
+    <!-- Section 3: What's Included -->
+    <TextureVideoSection videoSrc={texture3}>
+      <DarkContentSection>
+        <div class="container-page">
+          <h2 class="h2">What's Included in Reputation Management</h2>
+          <div class="content-split">
+            <div class="content-text">
+              <div class="feature-grid">
+                <div class="feature-item">
+                  <div class="feature-icon">⭐</div>
+                  <div>
+                    <h4 class="feature-title">Automated Review Generation</h4>
+                    <p>Smart timing, personalized messages, direct links to review platforms. We make it easy for happy customers to leave reviews.</p>
+                  </div>
+                </div>
+
+                <div class="feature-item">
+                  <div class="feature-icon">📊</div>
+                  <div>
+                    <h4 class="feature-title">Multi-Platform Monitoring</h4>
+                    <p>Google, Facebook, Yelp, industry-specific platforms. We track reviews everywhere so you don't miss a single one.</p>
+                  </div>
+                </div>
+
+                <div class="feature-item">
+                  <div class="feature-icon">💬</div>
+                  <div>
+                    <h4 class="feature-title">Automated Response Templates</h4>
+                    <p>Thank-you messages for positive reviews, professional templates for negative ones. All in your brand voice.</p>
+                  </div>
+                </div>
+
+                <div class="feature-item">
+                  <div class="feature-icon">📈</div>
+                  <div>
+                    <h4 class="feature-title">Competitive Analysis</h4>
+                    <p>See how your reviews stack up against competitors. Identify gaps and opportunities to dominate local search.</p>
+                  </div>
+                </div>
+
+                <div class="feature-item">
+                  <div class="feature-icon">🔔</div>
+                  <div>
+                    <h4 class="feature-title">Real-Time Alerts</h4>
+                    <p>Instant notifications when reviews come in. Respond quickly to negative feedback before it damages your reputation.</p>
+                  </div>
+                </div>
+
+                <div class="feature-item">
+                  <div class="feature-icon">🎯</div>
+                  <div>
+                    <h4 class="feature-title">SEO Impact Tracking</h4>
+                    <p>Monitor how reviews improve your local SEO rankings and organic traffic. See the ROI of reputation management.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </DarkContentSection>
+    </TextureVideoSection>
+
+    <!-- ROI Calculator -->
+    <ROICalculator
+      title="Calculate Your Reputation ROI"
+      subtitle="See how many customers are choosing your competitors due to poor reviews—and what automated reputation management recovers."
+    />
+
+    <!-- Section 4: Pricing & Plans -->
+    <TextureVideoSection videoSrc={texture4}>
+      <DarkContentSection>
+        <div class="container-page">
+          <h2 class="h2">Simple, Transparent Pricing</h2>
+          <div class="content-split">
+            <div class="content-text">
+              <p class="lead-paragraph">
+                Reputation Management is included in all ZeroMotion CRM plans starting at $97/month. No setup fees, no hidden costs.
+              </p>
+
+              <div class="pricing-highlight" style="background: rgba(139, 92, 246, 0.1); border: 1px solid rgba(139, 92, 246, 0.3); padding: 32px; border-radius: 16px; margin: 32px 0;">
+                <h3 class="h3" style="margin-bottom: 16px;">90-Day Review Growth Guarantee</h3>
+                <p style="font-size: 1.125rem; color: rgba(255,255,255,0.9); margin-bottom: 16px;">
+                  We guarantee you'll gain at least 50 Google reviews in the first 90 days, or we work for free until you do.
+                </p>
+                <ul style="list-style: none; padding: 0; margin: 16px 0; color: rgba(255,255,255,0.8);">
+                  <li style="padding: 8px 0; display: flex; align-items: center; gap: 8px;">
+                    <span style="color: #8b5cf6;">✓</span> 50+ reviews in 90 days
+                  </li>
+                  <li style="padding: 8px 0; display: flex; align-items: center; gap: 8px;">
+                    <span style="color: #8b5cf6;">✓</span> 4.7+ average rating
+                  </li>
+                  <li style="padding: 8px 0; display: flex; align-items: center; gap: 8px;">
+                    <span style="color: #8b5cf6;">✓</span> 100% response rate
+                  </li>
+                </ul>
+              </div>
+
+              <div style="text-align: center; margin-top: 40px;">
+                <a href="/pricing" class="btn btn-primary" style="display: inline-block;">
+                  <span class="btn-text-main">View All CRM Plans</span>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </DarkContentSection>
+    </TextureVideoSection>
+
+    <!-- Final CTA Section -->
+    <section class="hero" data-hero style="min-height: 60vh;">
+      <video src={HERO_VIDEO} autoplay muted loop playsinline
+        aria-label="Final CTA background video"
+      ></video>
+      <div class="container-page" style="text-align: center;">
+        <h2 class="h2">Stop Losing Customers to Your Competition</h2>
+        <p class="sub" style="max-width: 600px; margin: 0 auto 32px;">
+          Book a free 30-minute CRM strategy call. We'll show you exactly how to dominate local search with reviews.
+        </p>
+        <button class="btn btn-primary hero-btn" onclick="openStrategistModal('reputation-final-cta')">
+          <span class="btn-text-main">Book Free CRM Strategy Call</span>
+        </button>
+        <div style="opacity:.7;margin-top:14px">
+          Free consultation • No obligation • Louisiana businesses only
+        </div>
+      </div>
+    </section>
+
+    <!-- Internal SEO Links -->
+    <SEOInternalLinks />
+  </div>
+
+  <!-- Booking Modal -->
+  <ModernBookingModal />
+</BaseLayout>
+
+<style>
+  .hero {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+    background: #000;
+    min-height: 85vh;
+    display: grid;
+    place-items: center;
+    padding: 80px 20px;
+  }
+
+  .hero video {
+    pointer-events: none;
+    position: absolute;
+    inset: 0;
+    z-index: -10;
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+    opacity: 0.6;
+    filter: brightness(0.9) contrast(1.2) saturate(1.3);
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: -9;
+    background: linear-gradient(to bottom, rgba(0,0,0,0.8), rgba(0,0,0,0.2), rgba(0,0,0,0.7));
+  }
+
+  .hero-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    justify-content: center;
+    margin-top: 32px;
+  }
+
+  .feature-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 24px;
+    margin-top: 32px;
+  }
+
+  .feature-item {
+    display: flex;
+    gap: 16px;
+    padding: 24px;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    transition: all 0.3s ease;
+  }
+
+  .feature-item:hover {
+    background: rgba(255, 255, 255, 0.06);
+    border-color: rgba(139, 92, 246, 0.4);
+    transform: translateY(-2px);
+  }
+
+  .feature-icon {
+    font-size: 2rem;
+    flex-shrink: 0;
+  }
+
+  .feature-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.95);
+    margin-bottom: 8px;
+  }
+
+  .feature-item p {
+    color: rgba(255, 255, 255, 0.7);
+    margin: 0;
+  }
+
+  @media (max-width: 768px) {
+    .hero {
+      min-height: 70vh;
+      padding: 60px 20px;
+    }
+
+    .feature-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

@@ -7,7 +7,13 @@
       "Bash(wc:*)",
       "Bash(npm run build:*)",
       "Bash(cd:*)",
-      "mcp__ide__getDiagnostics"
+      "mcp__ide__getDiagnostics",
+      "Bash(git add:*)",
+      "Bash(git commit -m \"$(cat <<''EOF''\nfix: Update remaining component messaging from digital marketing to automation platform\n\n- Update Hero.astro video aria-label to reference \"automation and CRM systems\" instead of \"digital marketing\"\n- Update TransparentLogo.astro alt text (3 instances) to \"automation platform and CRM solutions\"\n- Update RegionalContent.astro regional variants and messages to focus on AI automation and CRM\n- All references now consistently emphasize automation platform positioning over marketing agency\n\n🤖 Generated with Claude Code\n\nCo-Authored-By: Claude <noreply@anthropic.com>\nEOF\n)\")",
+      "Bash(git push:*)",
+      "Bash(git fetch:*)",
+      "Bash(git clone:*)",
+      "Bash(ls:*)"
     ],
     "deny": [],
     "ask": []

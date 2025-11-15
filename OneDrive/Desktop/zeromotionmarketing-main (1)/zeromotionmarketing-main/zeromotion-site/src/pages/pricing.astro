@@ -6,6 +6,7 @@ import FAQBlock from "../components/pricing/FAQBlock.astro";
 import BackgroundSectionVideo from "../components/BackgroundSectionVideo.astro";
 import SocialProofStrip from "../components/SocialProofStrip.astro";
 import ModernBookingModal from "../components/ModernBookingModal.astro";
+import TestimonialsSection from "../components/TestimonialsSection.astro";
 import { pricingTiers } from "../data/packages.ts";
 import { getAlternatingTexture } from "../lib/textures.ts";
 
@@ -19,9 +20,9 @@ const SECTION_VIDEO_3 = "/assets/textures/36471-410610193_small.mp4"; // Geometr
 const preloadVideos = [HERO_VIDEO, SECTION_VIDEO_1, SECTION_VIDEO_2, SECTION_VIDEO_3];
 
 // SEO Configuration for Pricing Page
-const title = "Custom Pricing Plans | AI-Powered Automation & CRM | ZeroMotion | Houma, LA";
-const description = "Choose from our flexible pricing plans for AI-powered automation, CRM systems, and lead conversion tools. Request a custom quote tailored to your business needs. Serving Houma, Thibodaux, and Louisiana businesses.";
-const keywords = "business automation pricing Houma LA, CRM setup cost Thibodaux Louisiana, AI automation pricing, ZeroMotion CRM cost Louisiana, automation solutions Terrebonne Parish";
+const title = "ZeroMotion CRM Pricing | Automation Platform Plans | Houma, LA";
+const description = "Transparent CRM automation pricing. Starter ($97-197/mo), Growth ($297-497/mo), Complete ($697-997/mo). Missed call text-back, AI agents, smart automations. Louisiana businesses.";
+const keywords = "CRM pricing Louisiana, automation platform cost, missed call text back pricing, AI voice agent cost, business automation pricing Houma";
 const canonical = "/pricing";
 const ogImage = "/og-webdesign.png";
 ---
@@ -79,25 +80,34 @@ const ogImage = "/og-webdesign.png";
       >
       </div>
       <div class="relative container-page text-center">
-        <h1 id="pricing-title" class="h1 mb-6">Choose Your Automation Level</h1>
+        <h1 id="pricing-title" class="h1 mb-6">How Many Customers Called While You Were Busy?</h1>
         <p class="text-white/85 max-w-2xl mx-auto text-lg">
-          From basic to enterprise. Zero manual effort, maximum conversion. We build the automation, you watch leads turn into customers—automatically.
+          Stop losing money to missed calls. Simple CRM plans that capture every lead, automate follow-ups, and book more appointments—24/7.
         </p>
         <div class="mt-8 flex flex-col sm:flex-row gap-4 justify-center">
           <button
             type="button"
             class="btn-primary btn-lg"
-            onclick="openLeadModal('pricing-hero'); window.dataLayer&&dataLayer.push({event:'cta_click',label:'Get My Quote'})"
+            onclick="openLeadModal('pricing-hero'); window.dataLayer&&dataLayer.push({event:'cta_click',label:'Get My CRM Quote'})"
           >
-            <span class="btn-text-main">Get My Quote</span>
+            <span class="btn-text-main">Get My CRM Quote</span>
           </button>
           <button
             type="button"
             class="btn-ghost btn-lg"
-            onclick="openStrategistModal('pricing-hero'); window.dataLayer&&dataLayer.push({event:'cta_click',label:'Talk to Strategist'})"
+            onclick="openStrategistModal('pricing-hero'); window.dataLayer&&dataLayer.push({event:'cta_click',label:'Book Free CRM Strategy Call'})"
           >
-            <span class="btn-text-main">Talk to a Strategist</span>
+            <span class="btn-text-main">Book Free CRM Strategy Call</span>
           </button>
+        </div>
+
+        <!-- Urgency Indicator -->
+        <div class="mt-6 inline-flex items-center gap-2 px-4 py-2 rounded-full bg-purple-500/20 border border-purple-500/30 text-purple-200 text-sm font-medium">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="10"/>
+            <polyline points="12 6 12 12 16 14"/>
+          </svg>
+          <span>Only 3 Growth CRM spots left this month</span>
         </div>
       </div>
     </section>
@@ -115,7 +125,7 @@ const ogImage = "/og-webdesign.png";
       <section class="section-padding relative" id="plans">
         <div class="container-page relative z-10">
           <div class="text-center mb-16 reveal">
-            <h2 class="h2 mb-4">Plan Selector</h2>
+            <h2 class="h2 mb-4">Choose Your CRM Automation Plan</h2>
             <p class="text-white/70 max-w-2xl mx-auto">
               Choose the perfect solution for every stage of your business journey.
             </p>
@@ -201,6 +211,9 @@ const ogImage = "/og-webdesign.png";
           <ComparisonTable />
         </div>
       </section>
+
+      <!-- Testimonials Section -->
+      <TestimonialsSection />
     </BackgroundSectionVideo>
 
     <!-- FAQ Section with beautiful geometric video -->
@@ -265,16 +278,16 @@ const ogImage = "/og-webdesign.png";
               <button
                 type="button"
                 class="btn-primary btn-lg"
-                onclick="openLeadModal('growth-plan'); window.dataLayer&&dataLayer.push({event:'cta_click',label:'Get Growth Plan'})"
+                onclick="openLeadModal('growth-plan'); window.dataLayer&&dataLayer.push({event:'cta_click',label:'Get Growth CRM Plan'})"
               >
-                <span class="btn-text-main">Get Growth Plan</span>
+                <span class="btn-text-main">Get Growth CRM Plan</span>
               </button>
               <button
                 type="button"
                 class="btn-ghost btn-lg"
-                onclick="openStrategistModal('pricing-cta'); window.dataLayer&&dataLayer.push({event:'cta_click',label:'Talk to Strategist CTA'})"
+                onclick="openStrategistModal('pricing-cta'); window.dataLayer&&dataLayer.push({event:'cta_click',label:'Book Free CRM Strategy Call'})"
               >
-                <span class="btn-text-main">Talk to a Strategist</span>
+                <span class="btn-text-main">Book Free CRM Strategy Call</span>
               </button>
             </div>
             <p class="text-white/50 text-sm mt-6">

@@ -1,5 +1,5 @@
 # GOHIGHLEVEL AUTOMATION BLUEPRINT
-## ZeroMotion Marketing - Lead Management System
+## ZeroMotion - AI-Powered Automation Platform
 
 **Audit Date:** October 25, 2025
 
@@ -42,7 +42,7 @@
 **Personalization Tokens:**
 - `{{contact.first_name}}`
 - `{{contact.company}}`
-- `{{custom_field.recommended_plan}}` (e.g., "Growth Marketing")
+- `{{custom_field.recommended_plan}}` (e.g., "Automation Pro")
 - `{{custom_field.estimated_cost}}` (e.g., "$1,200 setup + $200/month")
 - `{{custom_field.projected_roi}}` (calculated based on budget/industry)
 - `{{custom_field.calendar_link}}` (unique per owner)
@@ -54,9 +54,11 @@
 let score = 0;
 
 // Services interested (multi-select)
-if (services_interested.includes('Paid Ads')) score += 10;
-if (services_interested.includes('Marketing Automation')) score += 8;
-if (services_interested.includes('New Website')) score += 5;
+if (services_interested.includes('AI Voice Agents')) score += 10;
+if (services_interested.includes('ZeroMotion Automations')) score += 10;
+if (services_interested.includes('Missed Call Text-Back')) score += 8;
+if (services_interested.includes('ZeroMotion CRM')) score += 8;
+if (services_interested.includes('Paid Ads')) score += 5;
 // ... +5 per service
 
 // Timeline
@@ -378,7 +380,7 @@ Questions? Reply anytime or text me: [Owner Phone]
 
 Let's do this,
 [Owner Name]
-ZeroMotion Marketing
+ZeroMotion
 
 [Access Client Portal →]
 ```
@@ -450,7 +452,7 @@ I know you decided not to move forward with ZeroMotion right now—no worries!
 
 If anything changes or you have questions down the road, I'm here.
 
-In the meantime, I'll send you our monthly newsletter with Louisiana marketing tips (free, no spam). Want to stay on the list?
+In the meantime, I'll send you our monthly newsletter with Louisiana automation insights and AI updates (free, no spam). Want to stay on the list?
 
 [Yes, Keep Me Subscribed] [No, Unsubscribe]
 

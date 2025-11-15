@@ -1,5 +1,5 @@
 # COPY SYSTEM & MESSAGING FRAMEWORK
-## ZeroMotion Marketing - Pricing Gate Implementation
+## ZeroMotion - AI-Powered Automation Platform
 
 **Audit Date:** October 25, 2025
 
@@ -11,11 +11,11 @@
 
 | ICP Segment | Primary Pain | Desired Outcome | Proof Point | Primary CTA |
 |-------------|-------------|----------------|-------------|-------------|
-| **Small Business Owner (Louisiana)** | "My website doesn't bring in leads" | Get 3x more qualified inquiries in 90 days | "40+ Louisiana businesses trust us" | Get My Custom Quote |
-| **Marketing Manager (Multi-Location)** | "We're invisible on Google" | Rank #1 for local keywords in 6 weeks | "Avg. #1 ranking in 45 days" | Request Proposal |
-| **Founder (Tech-Forward)** | "Our marketing is all manual chaos" | Automate 80% of follow-ups with AI | "Cut response time from 4 days to 4 hours" | See How It Works |
-| **Service Business (HVAC, Roofing, etc.)** | "We spend $5k/mo on ads with no ROI" | Get 10+ qualified calls/month from ads | "3.5x avg. ROI in 90 days" | Get Pricing |
-| **E-commerce/Retail (Local)** | "Nobody knows we exist" | Build a recognizable brand in Houma/Thibodaux | "Grew ABC Shop from 0 to 500 followers in 60 days" | Talk to a Strategist |
+| **Small Business Owner (Louisiana)** | "I'm losing leads due to slow follow-up" | Never miss a lead with automated text-back | "40+ Louisiana businesses trust us" | Get My Custom Quote |
+| **Operations Manager (Multi-Location)** | "Manual lead tracking is costing us deals" | Automate lead routing and follow-up across all locations | "Cut lead response time from 24hrs to 2 minutes" | Request Proposal |
+| **Founder (Tech-Forward)** | "Our sales process is all manual chaos" | Automate 80% of follow-ups with AI voice agents | "Cut response time from 4 days to 4 hours" | See How It Works |
+| **Service Business (HVAC, Roofing, etc.)** | "We miss calls and lose leads to competitors" | Capture every lead with missed call text-back + AI agents | "3.5x avg. lead conversion in 90 days" | Get Pricing |
+| **E-commerce/Retail (Local)** | "Customer service is overwhelming our team" | 24/7 AI chat agents handle FAQs and bookings | "Reduced support tickets by 60% in 60 days" | Talk to a Strategist |
 
 ---
 
@@ -24,11 +24,11 @@
 ### Homepage Headlines
 
 **Problem → Solution Format:**
-1. "Stop Losing Leads to Slow Websites & Invisible Marketing."
-2. "Your Competitors Are on Google. Are You?"
-3. "Louisiana Businesses Choose ZeroMotion to Finally Get ROI from Marketing."
-4. "AI-Powered Marketing That Drives Revenue, Not Vanity Metrics."
-5. "From Invisible to Unstoppable: Digital Marketing for Growing Louisiana Businesses."
+1. "Never Miss a Lead Again with AI-Powered Automation."
+2. "Your Competitors Are Automating. Are You?"
+3. "Louisiana Businesses Choose ZeroMotion to Automate Lead Conversion."
+4. "AI-Powered Automation That Drives Revenue, Not Manual Tasks."
+5. "From Manual Chaos to Automated Growth: Business Automation for Louisiana."
 
 **Outcome-Focused:**
 6. "3x Your Qualified Leads in 90 Days—or We Work for Free."
@@ -36,8 +36,8 @@
 8. "Turn Your Website Into a 24/7 Lead-Generating Machine."
 
 **Authority/Trust:**
-9. "40+ Louisiana Businesses Trust ZeroMotion to Dominate Their Markets."
-10. "The #1 Digital Marketing Agency Houma & Thibodaux Business Owners Recommend."
+9. "40+ Louisiana Businesses Trust ZeroMotion to Automate Their Growth."
+10. "The #1 AI-Powered Automation Platform Houma & Thibodaux Business Owners Recommend."
 
 ### Pricing Page Headlines
 
@@ -50,30 +50,31 @@
 **Social Proof:**
 5. "See Why 40+ Louisiana Businesses Choose Our Pricing: Fair, Flexible, Results-Driven."
 
-### Plan Detail Headlines (Growth Example)
+### Plan Detail Headlines (Automation Pro Example)
 
 **Outcome-First:**
-1. "Growth Marketing: Funnels + Automation That Make Phones Ring."
-2. "Stop Chasing Leads. Let Them Come to You with Growth Marketing."
-3. "The Exact System 30 Louisiana Businesses Use to 3x Their Leads."
+1. "Automation Pro: AI Agents + Smart Workflows That Close Deals 24/7."
+2. "Stop Chasing Leads. Let AI Qualify and Book Them Automatically."
+3. "The Exact System 30 Louisiana Businesses Use to 3x Their Lead Conversion."
 
 **Process-Focused:**
-4. "Build a Marketing Machine That Runs While You Sleep."
+4. "Build an Automation Engine That Runs While You Sleep."
 
 ### Service Page Headlines
 
-**Web Design:**
-1. "Websites That Convert Visitors Into Paying Customers—Guaranteed."
-2. "Beautiful Websites Built in 2 Weeks. No Templates. No Fluff."
-3. "Get a Website That Ranks #1 on Google for What You Sell."
+**Missed Call Text-Back:**
+1. "Never Miss a Lead Again—Instant SMS to Every Missed Caller."
+2. "Turn Missed Calls Into Booked Appointments Automatically."
+3. "Capture Leads 24/7 with Automated Text-Back Technology."
 
-**CRM/Automation:**
+**ZeroMotion Automations:**
 4. "Automate 80% of Your Follow-Ups. Close 2x More Deals."
 5. "Never Lose a Lead Again with ZeroMotion's AI-Powered CRM."
+6. "Complete Business Automation Platform for Louisiana Businesses."
 
-**Paid Ads:**
-6. "Stop Wasting $5k/Month on Ads That Don't Work."
-7. "Google & Facebook Ads That Actually Drive Sales (Not Just Clicks)."
+**AI Voice + Chat Agents:**
+7. "24/7 AI Agents That Sound Human, Book Appointments, and Qualify Leads."
+8. "Let AI Handle Your Calls While You Focus on Closing Deals."
 
 ---
 
@@ -136,7 +137,7 @@
 ```
 We get it—nobody likes forms. But here's why we ask:
 
-Every Louisiana business is different. A roofing company in Houma needs different marketing than a retail shop in Thibodaux. By answering 3 quick questions, we can show you:
+Every Louisiana business is different. A roofing company in Houma needs different automation than a retail shop in Thibodaux. By answering 3 quick questions, we can show you:
 ✅ Exactly what you'll pay (no hidden fees)
 ✅ What ROI to expect based on businesses like yours
 ✅ A custom roadmap to hit your goals
@@ -165,7 +166,7 @@ Smart! You should compare. Here's what makes ZeroMotion different:
 ```
 Fair concern. Let's put it in perspective:
 
-Our Growth plan starts at $1,000 setup + $150/month. That's $300/month total in Year 1.
+Our Automation Pro plan includes setup + monthly automation management. Custom pricing based on your needs.
 
 What if it brought you 10 extra customers/month? At $500 avg. customer value, that's $5,000/month in new revenue. **That's 16x ROI.**
 
@@ -174,7 +175,7 @@ Most Louisiana businesses see ROI in 30-60 days. If you don't, we'll work for fr
 [Calculate My ROI] [See Case Studies]
 ```
 
-### Objection 4: "I've been burned by agencies before"
+### Objection 4: "I've been burned by automation vendors before"
 
 **Handling:**
 ```
@@ -182,9 +183,9 @@ We hear this a lot. And we don't blame you.
 
 Here's our promise:
 1. **No Surprises:** Fixed pricing. No hidden fees. Cancel anytime.
-2. **You Own Everything:** Your website, your ads, your data. We build it, you keep it.
+2. **You Own Everything:** Your CRM data, your workflows, your automations. We build it, you keep it.
 3. **Satisfaction Guarantee:** 30-day trial. If you're not thrilled, full refund.
-4. **Local Accountability:** We're Louisiana-based. You can visit our office in Houma.
+4. **Local Accountability:** We're Louisiana-based. You can reach us anytime.
 
 [Read Reviews] [Get My Quote]
 ```
@@ -196,7 +197,7 @@ Here's our promise:
 We get it. Speed matters.
 
 Here's our timeline:
-• **Starter Website:** Live in 2 weeks
+• **Automation Starter:** Live in 2 weeks
 • **Growth Marketing:** Funnels live in 3 weeks
 • **Paid Ads:** Campaigns running in 7 days
 

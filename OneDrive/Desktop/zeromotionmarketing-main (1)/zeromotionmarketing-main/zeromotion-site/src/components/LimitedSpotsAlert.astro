@@ -1,0 +1,28 @@
+---
+interface Props {
+  spotsLeft?: number;
+  planName?: string;
+}
+
+const { spotsLeft = 3, planName = "Growth CRM" } = Astro.props;
+---
+
+<div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-red-500/20 border border-red-500/30 text-red-200 text-sm font-medium animate-pulse-subtle">
+  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+    <circle cx="12" cy="12" r="10"/>
+    <line x1="12" y1="8" x2="12" y2="12"/>
+    <line x1="12" y1="16" x2="12.01" y2="16"/>
+  </svg>
+  <span>Only {spotsLeft} {planName} spots left this month</span>
+</div>
+
+<style>
+  @keyframes pulse-subtle {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.7; }
+  }
+
+  .animate-pulse-subtle {
+    animation: pulse-subtle 3s ease-in-out infinite;
+  }
+</style>

@@ -4,6 +4,7 @@ import ModernBookingModal from "../../components/ModernBookingModal.astro";
 import TextureVideoSection from "../../components/sections/TextureVideoSection.astro";
 import DarkContentSection from "../../components/sections/DarkContentSection.astro";
 import SEOInternalLinks from "../../components/SEOInternalLinks.astro";
+import ROICalculator from "../../components/ROICalculator.astro";
 import { getAlternatingTexture, getPreloadTextures } from "../../lib/textures.ts";
 
 // Get alternating textures for seamless flow
@@ -312,6 +313,12 @@ const aiVoiceChatAgentsSchema = [
     </div>
       </div>
     </DarkContentSection>
+
+    <!-- ROI Calculator -->
+    <ROICalculator
+      title="Calculate Your AI Agent ROI"
+      subtitle="See how many leads you're losing to slow response times—and what 24/7 AI agents recover."
+    />
 
     <!-- Section 4: Why Your Business Needs AI Agents -->
     <TextureVideoSection textureVideo={texture3}>
